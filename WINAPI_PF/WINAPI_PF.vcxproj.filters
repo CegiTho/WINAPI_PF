@@ -1,0 +1,355 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="소스 파일">
+      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
+      <Extensions>cpp;c;cc;cxx;c++;cppm;ixx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    </Filter>
+    <Filter Include="헤더 파일">
+      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
+      <Extensions>h;hh;hpp;hxx;h++;hm;inl;inc;ipp;xsd</Extensions>
+    </Filter>
+    <Filter Include="리소스 파일">
+      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
+      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
+    </Filter>
+    <Filter Include="Framework">
+      <UniqueIdentifier>{8785f1fd-c11e-4a92-9e7f-277e1c69c49c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Framework\BasicObject">
+      <UniqueIdentifier>{5fca681a-6952-4ec1-868b-9a16bb705716}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Framework\GameObject">
+      <UniqueIdentifier>{a673ad65-b0c2-467e-b69b-a210304361d4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Framework\GameObject\Character">
+      <UniqueIdentifier>{58a0e621-db6e-4ee1-afba-303cc2b93cb3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Framework\GameObject\Obstacle">
+      <UniqueIdentifier>{19db4aa9-8b17-430b-942d-8a18e102fec0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Framework\GameObject\Shade">
+      <UniqueIdentifier>{7c7f3ba5-4f0e-4aab-8b5c-331132dd03bf}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Program">
+      <UniqueIdentifier>{a069dc79-edcc-486a-ac84-ba7399679dc1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Scene">
+      <UniqueIdentifier>{08569791-7d97-47dd-a54a-f61ca0cad0f3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Framework\Utility">
+      <UniqueIdentifier>{63493833-7612-46d0-afa3-cc39b9cdbae8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Framework\Texture">
+      <UniqueIdentifier>{2a7737fc-4d41-44db-9bda-37079bb3c543}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Framework\GameObject\Manager">
+      <UniqueIdentifier>{84217238-b068-4c61-84e3-d4a060eae4e8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Framework\GameObject\Apex">
+      <UniqueIdentifier>{a0751f74-76c4-4ca9-a36e-461c55ba5689}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Framework\GameObject\Goal">
+      <UniqueIdentifier>{b654fe30-cada-4ce3-9946-67eaefe9bab8}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="Framework.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="targetver.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="Resource.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="WINAPI_PF.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="Vector2.h">
+      <Filter>Framework\BasicObject</Filter>
+    </ClInclude>
+    <ClInclude Include="Rect.h">
+      <Filter>Framework\BasicObject</Filter>
+    </ClInclude>
+    <ClInclude Include="Object.h">
+      <Filter>Framework\BasicObject</Filter>
+    </ClInclude>
+    <ClInclude Include="Circle.h">
+      <Filter>Framework\BasicObject</Filter>
+    </ClInclude>
+    <ClInclude Include="Polygon2.h">
+      <Filter>Framework\BasicObject</Filter>
+    </ClInclude>
+    <ClInclude Include="Line.h">
+      <Filter>Framework\BasicObject</Filter>
+    </ClInclude>
+    <ClInclude Include="Program.h">
+      <Filter>Program</Filter>
+    </ClInclude>
+    <ClInclude Include="Scene.h">
+      <Filter>Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="Timer.h">
+      <Filter>Framework\Utility</Filter>
+    </ClInclude>
+    <ClInclude Include="TestScene.h">
+      <Filter>Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="Keyboard.h">
+      <Filter>Framework\Utility</Filter>
+    </ClInclude>
+    <ClInclude Include="SyncKeyboard.h">
+      <Filter>Framework\Utility</Filter>
+    </ClInclude>
+    <ClInclude Include="Bitmap.h">
+      <Filter>Framework\Texture</Filter>
+    </ClInclude>
+    <ClInclude Include="Plusmap.h">
+      <Filter>Framework\Texture</Filter>
+    </ClInclude>
+    <ClInclude Include="Texture.h">
+      <Filter>Framework\Texture</Filter>
+    </ClInclude>
+    <ClInclude Include="Animation.h">
+      <Filter>Framework\Texture</Filter>
+    </ClInclude>
+    <ClInclude Include="TextureManager.h">
+      <Filter>Framework\Texture</Filter>
+    </ClInclude>
+    <ClInclude Include="SoundManager.h">
+      <Filter>Framework\Utility</Filter>
+    </ClInclude>
+    <ClInclude Include="TextureRect.h">
+      <Filter>Framework\Texture</Filter>
+    </ClInclude>
+    <ClInclude Include="Camera.h">
+      <Filter>Framework\Utility</Filter>
+    </ClInclude>
+    <ClInclude Include="ProgramCamera.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="SceneCamera.h">
+      <Filter>Framework\Utility</Filter>
+    </ClInclude>
+    <ClInclude Include="SceneManager.h">
+      <Filter>Framework\Utility</Filter>
+    </ClInclude>
+    <ClInclude Include="Xml.h">
+      <Filter>Framework\Utility</Filter>
+    </ClInclude>
+    <ClInclude Include="Character.h">
+      <Filter>Framework\GameObject\Character</Filter>
+    </ClInclude>
+    <ClInclude Include="Thomas.h">
+      <Filter>Framework\GameObject\Character</Filter>
+    </ClInclude>
+    <ClInclude Include="Obstacle.h">
+      <Filter>Framework\GameObject\Obstacle</Filter>
+    </ClInclude>
+    <ClInclude Include="NormalObstacle.h">
+      <Filter>Framework\GameObject\Obstacle</Filter>
+    </ClInclude>
+    <ClInclude Include="CharacterManager.h">
+      <Filter>Framework\GameObject\Manager</Filter>
+    </ClInclude>
+    <ClInclude Include="ObstacleManager.h">
+      <Filter>Framework\GameObject\Manager</Filter>
+    </ClInclude>
+    <ClInclude Include="ObjManager.h">
+      <Filter>Framework\GameObject\Manager</Filter>
+    </ClInclude>
+    <ClInclude Include="Math.h">
+      <Filter>Framework\Utility</Filter>
+    </ClInclude>
+    <ClInclude Include="RectAnimation.h">
+      <Filter>Framework\BasicObject</Filter>
+    </ClInclude>
+    <ClInclude Include="Clare.h">
+      <Filter>Framework\GameObject\Character</Filter>
+    </ClInclude>
+    <ClInclude Include="Chris.h">
+      <Filter>Framework\GameObject\Character</Filter>
+    </ClInclude>
+    <ClInclude Include="James.h">
+      <Filter>Framework\GameObject\Character</Filter>
+    </ClInclude>
+    <ClInclude Include="John.h">
+      <Filter>Framework\GameObject\Character</Filter>
+    </ClInclude>
+    <ClInclude Include="Laura.h">
+      <Filter>Framework\GameObject\Character</Filter>
+    </ClInclude>
+    <ClInclude Include="Sarah.h">
+      <Filter>Framework\GameObject\Character</Filter>
+    </ClInclude>
+    <ClInclude Include="Shade.h">
+      <Filter>Framework\GameObject\Shade</Filter>
+    </ClInclude>
+    <ClInclude Include="ShadeManager.h">
+      <Filter>Framework\GameObject\Manager</Filter>
+    </ClInclude>
+    <ClInclude Include="T_Object.h">
+      <Filter>Framework\GameObject\Apex</Filter>
+    </ClInclude>
+    <ClInclude Include="Goal.h">
+      <Filter>Framework\GameObject\Goal</Filter>
+    </ClInclude>
+    <ClInclude Include="Enum.h">
+      <Filter>Framework\GameObject</Filter>
+    </ClInclude>
+    <ClInclude Include="GoalManager.h">
+      <Filter>Framework\GameObject\Manager</Filter>
+    </ClInclude>
+    <ClInclude Include="PreDefined.h">
+      <Filter>Framework\GameObject</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="WINAPI_PF.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="Framework.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="Vector2.cpp">
+      <Filter>Framework\BasicObject</Filter>
+    </ClCompile>
+    <ClCompile Include="Object.cpp">
+      <Filter>Framework\BasicObject</Filter>
+    </ClCompile>
+    <ClCompile Include="Rect.cpp">
+      <Filter>Framework\BasicObject</Filter>
+    </ClCompile>
+    <ClCompile Include="Circle.cpp">
+      <Filter>Framework\BasicObject</Filter>
+    </ClCompile>
+    <ClCompile Include="Polygon2.cpp">
+      <Filter>Framework\BasicObject</Filter>
+    </ClCompile>
+    <ClCompile Include="Line.cpp">
+      <Filter>Framework\BasicObject</Filter>
+    </ClCompile>
+    <ClCompile Include="Program.cpp">
+      <Filter>Program</Filter>
+    </ClCompile>
+    <ClCompile Include="Timer.cpp">
+      <Filter>Framework\Utility</Filter>
+    </ClCompile>
+    <ClCompile Include="TestScene.cpp">
+      <Filter>Scene</Filter>
+    </ClCompile>
+    <ClCompile Include="Keyboard.cpp">
+      <Filter>Framework\Utility</Filter>
+    </ClCompile>
+    <ClCompile Include="SyncKeyboard.cpp">
+      <Filter>Framework\Utility</Filter>
+    </ClCompile>
+    <ClCompile Include="Texture.cpp">
+      <Filter>Framework\Texture</Filter>
+    </ClCompile>
+    <ClCompile Include="Bitmap.cpp">
+      <Filter>Framework\Texture</Filter>
+    </ClCompile>
+    <ClCompile Include="Plusmap.cpp">
+      <Filter>Framework\Texture</Filter>
+    </ClCompile>
+    <ClCompile Include="Animation.cpp">
+      <Filter>Framework\Texture</Filter>
+    </ClCompile>
+    <ClCompile Include="TextureManager.cpp">
+      <Filter>Framework\Texture</Filter>
+    </ClCompile>
+    <ClCompile Include="SoundManager.cpp">
+      <Filter>Framework\Utility</Filter>
+    </ClCompile>
+    <ClCompile Include="TextureRect.cpp">
+      <Filter>Framework\Texture</Filter>
+    </ClCompile>
+    <ClCompile Include="Camera.cpp">
+      <Filter>Framework\Utility</Filter>
+    </ClCompile>
+    <ClCompile Include="SceneCamera.cpp">
+      <Filter>Framework\Utility</Filter>
+    </ClCompile>
+    <ClCompile Include="SceneManager.cpp">
+      <Filter>Framework\Utility</Filter>
+    </ClCompile>
+    <ClCompile Include="Xml.cpp">
+      <Filter>Framework\Utility</Filter>
+    </ClCompile>
+    <ClCompile Include="Character.cpp">
+      <Filter>Framework\GameObject\Character</Filter>
+    </ClCompile>
+    <ClCompile Include="Thomas.cpp">
+      <Filter>Framework\GameObject\Character</Filter>
+    </ClCompile>
+    <ClCompile Include="Obstacle.cpp">
+      <Filter>Framework\GameObject\Obstacle</Filter>
+    </ClCompile>
+    <ClCompile Include="NormalObstacle.cpp">
+      <Filter>Framework\GameObject\Obstacle</Filter>
+    </ClCompile>
+    <ClCompile Include="CharacterManager.cpp">
+      <Filter>Framework\GameObject\Manager</Filter>
+    </ClCompile>
+    <ClCompile Include="ObstacleManager.cpp">
+      <Filter>Framework\GameObject\Manager</Filter>
+    </ClCompile>
+    <ClCompile Include="ObjManager.cpp">
+      <Filter>Framework\GameObject\Manager</Filter>
+    </ClCompile>
+    <ClCompile Include="Math.cpp">
+      <Filter>Framework\Utility</Filter>
+    </ClCompile>
+    <ClCompile Include="RectAnimation.cpp">
+      <Filter>Framework\BasicObject</Filter>
+    </ClCompile>
+    <ClCompile Include="Clare.cpp">
+      <Filter>Framework\GameObject\Character</Filter>
+    </ClCompile>
+    <ClCompile Include="Chris.cpp">
+      <Filter>Framework\GameObject\Character</Filter>
+    </ClCompile>
+    <ClCompile Include="James.cpp">
+      <Filter>Framework\GameObject\Character</Filter>
+    </ClCompile>
+    <ClCompile Include="John.cpp">
+      <Filter>Framework\GameObject\Character</Filter>
+    </ClCompile>
+    <ClCompile Include="Laura.cpp">
+      <Filter>Framework\GameObject\Character</Filter>
+    </ClCompile>
+    <ClCompile Include="Sarah.cpp">
+      <Filter>Framework\GameObject\Character</Filter>
+    </ClCompile>
+    <ClCompile Include="Shade.cpp">
+      <Filter>Framework\GameObject\Shade</Filter>
+    </ClCompile>
+    <ClCompile Include="ShadeManager.cpp">
+      <Filter>Framework\GameObject\Manager</Filter>
+    </ClCompile>
+    <ClCompile Include="T_Object.cpp">
+      <Filter>Framework\GameObject\Apex</Filter>
+    </ClCompile>
+    <ClCompile Include="Goal.cpp">
+      <Filter>Framework\GameObject\Goal</Filter>
+    </ClCompile>
+    <ClCompile Include="GoalManager.cpp">
+      <Filter>Framework\GameObject\Manager</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="WINAPI_PF.rc">
+      <Filter>리소스 파일</Filter>
+    </ResourceCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="small.ico">
+      <Filter>리소스 파일</Filter>
+    </Image>
+    <Image Include="WINAPI_PF.ico">
+      <Filter>리소스 파일</Filter>
+    </Image>
+  </ItemGroup>
+</Project>
