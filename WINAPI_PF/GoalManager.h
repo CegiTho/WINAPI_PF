@@ -8,10 +8,10 @@ private:
 
 
 public:
-	GoalManager();
+	GoalManager(vector<Character*> characters, STAGE_NUM stage);
 	~GoalManager();
 
-	vector<Goal*> CreateGoals(vector<Character*> characters);
+	vector<Goal*> CreateGoals(vector<Character*> characters, STAGE_NUM stage);
 	bool Check();
 
 

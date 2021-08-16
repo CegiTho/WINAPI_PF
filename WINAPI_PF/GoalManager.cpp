@@ -1,19 +1,19 @@
 #include "Framework.h"
 
-GoalManager::GoalManager()
+GoalManager::GoalManager(vector<Character*> characters, STAGE_NUM stage)
 	:isClear(true)
 {
+	CreateGoals(characters, stage);
 }
 
 GoalManager::~GoalManager()
 {
 }
 
-vector<Goal*> GoalManager::CreateGoals(vector<Character*> characters)
+vector<Goal*> GoalManager::CreateGoals(vector<Character*> characters,STAGE_NUM stage)
 {
-	for(Character* character : characters)
-		goals.emplace_back(new Goal(character,))
 
+	return goals;
 }
 
 bool GoalManager::Check()
