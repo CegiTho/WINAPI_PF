@@ -66,8 +66,19 @@ void Sarah::Update()
 
 void Sarah::Render(HDC hdc)
 {
-	HBRUSH tempB = (HBRUSH)SelectObject(hdc, color);
-	HPEN tempP = (HPEN)SelectObject(hdc, edge);
+	HBRUSH tempB;
+	HPEN tempP;
+
+	if (this->isGoal == true)
+	{
+		tempB = (HBRUSH)SelectObject(hdc, goalColor);
+		tempP = (HPEN)SelectObject(hdc, goalEdge);
+	}
+	else
+	{
+		tempB = (HBRUSH)SelectObject(hdc, color);
+		tempP = (HPEN)SelectObject(hdc, edge);
+	}
 
 	anim->Render(hdc);
 

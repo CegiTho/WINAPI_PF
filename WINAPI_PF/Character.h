@@ -11,6 +11,8 @@ protected:
 	bool isJump;
 	bool isDoubleJump;
 	bool isFalling;
+
+	bool isGoal;
 	
 	Name name;
 
@@ -18,6 +20,8 @@ protected:
 
 	RectAnimation* anim;
 	
+	HBRUSH goalColor;
+	HPEN goalEdge;
 
 public:
 	Character();
@@ -42,6 +46,7 @@ public:
 
 	Side Collision(T_Object* obj);
 
+	void GoalCheck(bool isGoal) { this->isGoal = isGoal; }
 
 	virtual void Collision(vector<T_Object*> objects) = 0;
 	virtual void CharacterCollision(T_Object* character) = 0;

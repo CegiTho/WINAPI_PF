@@ -6,6 +6,9 @@ private:
 	bool isGoal;
 	Character* character;
 
+	//Render할때 사용
+	vector<Line*> lines;
+
 	Name name;
 
 public:
@@ -22,8 +25,6 @@ public:
 	bool GoalCheck() { return isGoal; }
 	Name GetName() { return name; }
 
-	void SetCheck(function<bool()> Check) { this->Check = Check; }
-	function<bool()> Check;
 
 };
 

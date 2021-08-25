@@ -5,10 +5,14 @@ Character::Character()
 {
 	side.assign(5, false);
 
+	goalColor = CreateSolidBrush(WHITE);
+	goalEdge = CreatePen(PS_SOLID, 1, WHITE);
 }
 
 Character::~Character()
 {
+	DeleteObject(goalColor);
+	DeleteObject(goalEdge);
 }
 
 void Character::Move()

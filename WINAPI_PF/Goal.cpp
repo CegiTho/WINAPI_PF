@@ -8,6 +8,8 @@ Goal::Goal(Character* character, Vector2 pos, STAGE_NUM stage)
 
 Goal::~Goal()
 {
+	for (Line* line : lines)
+		delete line;
 }
 
 void Goal::CreateElement(Character* character, Vector2 pos, STAGE_NUM stage)
@@ -19,27 +21,10 @@ void Goal::CreateElement(Character* character, Vector2 pos, STAGE_NUM stage)
 
 	edge = CreatePen(PS_SOLID, 1, WHITE);
 	
-	//Render시 배경이랑 색이 맞아야 테두리만 나옴.
-	//그림자도 감안해야되는데 이건 방법이 안떠오르네.
-	//그림자 외곽선이랑 사각형 외곽선 충돌로 영역 특정하면 될거같은데 엄청나게 성가실거같은 느낌.
-	switch (stage)
-	{
-	case STAGE_1:
-		color = CreateSolidBrush(BG_COLOR_1);
-		break;
-	case STAGE_2:
-		color = CreateSolidBrush(BG_COLOR_2);
-		break;
-	case STAGE_3:
-		color = CreateSolidBrush(BG_COLOR_3);
-		break;
-	case STAGE_4:
-		color = CreateSolidBrush(BG_COLOR_4);
-		break;
-	case STAGE_5:
-		color = CreateSolidBrush(BG_COLOR_5);
-		break;
-	}
+	lines.emplace_back(new Line(this->rect->LeftTopV(), this->rect->RightTopV()));
+	lines.emplace_back(new Line(this->rect->RightTopV(), this->rect->RightBottomV()));
+	lines.emplace_back(new Line(this->rect->RightBottomV(), this->rect->LeftBottomV()));
+	lines.emplace_back(new Line(this->rect->LeftBottomV(), this->rect->LeftTopV()));
 	
 
 }
@@ -52,13 +37,11 @@ void Goal::Update()
 
 void Goal::Render(HDC hdc)
 {
-	HBRUSH prevBrush = (HBRUSH)SelectObject(hdc, color);
-	HPEN prevPen = (HPEN)SelectObject(hdc, edge);
+	HPEN temp = (HPEN)SelectObject(hdc, edge);
+	for (Line* line : lines)
+		line->Render(hdc);
 
-	rect->Render(hdc);
-
-	SelectObject(hdc, prevBrush);
-	SelectObject(hdc, prevPen);
+	SelectObject(hdc, temp);
 }
 
 void Goal::Collision()
@@ -70,10 +53,13 @@ void Goal::Collision()
 		if (temp.Area() >= this->GetRect()->Area() * 0.7)
 		{
 			isGoal = true;
+			character->GoalCheck(true);
 		}
 	}
 	else
+	{
 		isGoal = false;
-
+		character->GoalCheck(false);
+	}
 }
 

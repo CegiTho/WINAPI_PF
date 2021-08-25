@@ -48,6 +48,7 @@ void ShadeManager::Render(HDC hdc)
 
 void ShadeManager::AlphaRender()
 {
+	//stageColor색으로 전체 초기화
 	PatBlt(alphaMemDC, 0, 0, WIN_WIDTH, WIN_HEIGHT, PATCOPY);
 	PatBlt(memDC, 0, 0, WIN_WIDTH, WIN_HEIGHT, PATCOPY);
 

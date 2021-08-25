@@ -18,6 +18,7 @@ public:
 	ID		GetID()		{ return id; }
 
 
+
 };
 
 
