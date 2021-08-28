@@ -57,3 +57,13 @@
 #define SHADE_COLOR_3 RGB(27,28,21)
 #define SHADE_COLOR_4 RGB(45,44,26)
 #define SHADE_COLOR_5 RGB(27,34,39)
+
+
+//=============Stage Goal Pos ===================
+#define STAGEPOS_CHRIS_1 {200,250}
+#define STAGEPOS_CLARE_1 {200,250}
+#define STAGEPOS_JAMES_1 {200,250}
+#define STAGEPOS_JOHN_1 {200,250}
+#define STAGEPOS_LAURA_1 {200,250}
+#define STAGEPOS_SARAH_1 {200,250}
+#define STAGEPOS_THOMAS_1 {200,250}
