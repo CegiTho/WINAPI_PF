@@ -20,13 +20,16 @@ private:
 	double constant;
 
 	HBRUSH color;
+	HPEN edge;
 
 	bool isStatic;
 
 public:
-	Shade(T_Object* obj,Vector2* lSource);
-	Shade(T_Object* obj,double constant);
+	Shade(T_Object* obj,Vector2* lSource, STAGE_NUM stage);
+	Shade(T_Object* obj,double constant, STAGE_NUM stage);
 	~Shade();
+
+	void AlphaOperatedColor(STAGE_NUM stage);
 
 	void CreateCurtainShade();
 	void CreateSpotShade();

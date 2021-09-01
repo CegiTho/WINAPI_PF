@@ -1,7 +1,7 @@
 #include "Framework.h"
 
 ShadeManager::ShadeManager(STAGE_NUM num, Vector2 lSource)
-	:constant(0)
+	:constant(0),stage(num)
 {
 	this->lSource = new Vector2(lSource.x, lSource.y);
 
@@ -43,7 +43,7 @@ void ShadeManager::Update()
 void ShadeManager::Render(HDC hdc)
 {
 	BitBlt(hdc, 0, 0, WIN_WIDTH, WIN_HEIGHT,
-		alphaMemDC, 0, 0, SRCCOPY);
+		memDC, 0, 0, SRCCOPY);
 }
 
 void ShadeManager::AlphaRender()
@@ -56,11 +56,11 @@ void ShadeManager::AlphaRender()
 		s->Render(memDC);
 	}
 
-	blendFunc.SourceConstantAlpha = SHADE_ALPHA;
-	
-	GdiAlphaBlend(alphaMemDC, 0, 0, WIN_WIDTH, WIN_HEIGHT,
-		memDC, 0, 0, WIN_WIDTH, WIN_HEIGHT,
-		blendFunc);
+	//blendFunc.SourceConstantAlpha = SHADE_ALPHA;
+	//
+	//GdiAlphaBlend(alphaMemDC, 0, 0, WIN_WIDTH, WIN_HEIGHT,
+	//	memDC, 0, 0, WIN_WIDTH, WIN_HEIGHT,
+	//	blendFunc);
 	//AlphaBlend에서 지금같은 경우 기본 비트맵 위에 알파채널이 있는 비트맵을 덫씌우는 방식임.
 	//따라서 Dest.rgb = Src.rgb * (alpha/255) + Dest.rgb{1-(alpha/255)}의
 	//계산식으로 rgb값이 변함. GdiAlphaBlend함수사용으로 거의 프레임이 50넘게 떨어지는중인데
@@ -70,9 +70,9 @@ void ShadeManager::AlphaRender()
 void ShadeManager::SetShade(T_Object* objects)
 {
 	if (lSource == nullptr)
-		shade.emplace_back(new Shade(objects, constant));
+		shade.emplace_back(new Shade(objects, constant,stage));
 	else
-		shade.emplace_back(new Shade(objects, lSource));
+		shade.emplace_back(new Shade(objects, lSource, stage));
 }
 
 void ShadeManager::CreateAlphaDC(STAGE_NUM num)

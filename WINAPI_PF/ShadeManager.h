@@ -5,6 +5,8 @@ class ShadeManager
 private:
 	vector<Shade*> shade;
 
+	STAGE_NUM stage;
+
 	HDC memDC;
 	HBITMAP bitmap;
 

@@ -16,7 +16,7 @@ enum STAGE_NUM
 	STAGE_5
 };
 
-enum class Name
+enum Name
 {
 	THOMAS,
 	CHRIS,
