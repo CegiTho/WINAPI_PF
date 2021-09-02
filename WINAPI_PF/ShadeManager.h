@@ -10,9 +10,6 @@ private:
 	HDC memDC;
 	HBITMAP bitmap;
 
-	HDC alphaMemDC;
-	HBITMAP alphaBitmap;
-
 	HBRUSH stageColor;
 
 	Vector2* lSource;
@@ -28,8 +25,6 @@ public:
 	void CreateAlphaDC(STAGE_NUM num);
 	void Update();
 	void Render(HDC hdc);		//BG관련 함수의 DC에 뒷배경 그린 다음에 호출
-
-	void AlphaRender();	
 
 	void SetShade(T_Object* objects);
 

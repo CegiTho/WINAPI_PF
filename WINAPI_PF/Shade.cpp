@@ -10,8 +10,7 @@ Shade::Shade(T_Object* obj, Vector2* lSource, STAGE_NUM stage)
 
 	CreateSpotShade();
 
-	AlphaOperatedColor(stage);
-	//color = CreateSolidBrush(BLACK);
+	AlphaColor(stage);
 }
 
 Shade::Shade(T_Object* obj, double constant, STAGE_NUM stage)
@@ -24,7 +23,7 @@ Shade::Shade(T_Object* obj, double constant, STAGE_NUM stage)
 
 	CreateCurtainShade();
 
-	AlphaOperatedColor(stage);
+	AlphaColor(stage);
 
 	//color = CreateSolidBrush(BLACK);
 }
@@ -37,7 +36,7 @@ Shade::~Shade()
 	DeleteObject(color);
 }
 
-void Shade::AlphaOperatedColor(STAGE_NUM stage)
+void Shade::AlphaColor(STAGE_NUM stage)
 {
 	COLORREF bg_Color;
 	switch (stage)

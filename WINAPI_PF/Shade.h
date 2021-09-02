@@ -29,7 +29,7 @@ public:
 	Shade(T_Object* obj,double constant, STAGE_NUM stage);
 	~Shade();
 
-	void AlphaOperatedColor(STAGE_NUM stage);
+	void AlphaColor(STAGE_NUM stage);
 
 	void CreateCurtainShade();
 	void CreateSpotShade();
