@@ -4,7 +4,6 @@ class ObjManager
 {
 private:
 	vector<T_Object*> objects;
-	vector<T_Object*> characters;
 
 	CharacterManager* m_Character;
 	ObstacleManager* m_Obstacle;
@@ -15,9 +14,6 @@ public:
 
 	void Update();
 	void Render(HDC hdc);
-
-	void SetCharacter(vector<Character*> characters);
-	void SetObstacle(vector<Obstacle*> obstacles);
 
 	void Collision();
 

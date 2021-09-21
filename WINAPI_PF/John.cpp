@@ -132,19 +132,6 @@ void John::Update()
 	InitAgain();
 }
 
-void John::Render(HDC hdc)
-{
-	HBRUSH tempB = (HBRUSH)SelectObject(hdc, color);
-	HPEN tempP = (HPEN)SelectObject(hdc, edge);
-
-	anim->Render(hdc);
-
-	SelectObject(hdc, tempB);
-	SelectObject(hdc, tempP);
-
-	PrintElement(1000);
-}
-
 void John::Jump()
 {//======Jump===========
 	if (KEYDOWN(VK_UP) && isJump == false)

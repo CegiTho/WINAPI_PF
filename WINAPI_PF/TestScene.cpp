@@ -16,20 +16,17 @@ TestScene::TestScene()
 	m_Obj->PlusCharacter(Name::JAMES);
 	m_Obj->PlusCharacter(Name::JOHN);
 	m_Obj->PlusCharacter(Name::LAURA);
-	m_Obj->PlusCharacter(Name::SARAH);
+	//m_Obj->PlusCharacter(Name::SARAH);
 
 	m_Obj->PlusObstacle(Type::NORMAL, { CENTER_X,WIN_HEIGHT - 25 }, { WIN_WIDTH,50 });
 	m_Obj->PlusObstacle(Type::NORMAL, { CENTER_X,100 }, { WIN_WIDTH,50 });
 	m_Obj->PlusObstacle(Type::NORMAL, { 200,900 }, { 400,50 });
 
-	m_Obj->SetCharacter(m_Obj->GetCM()->GetObj());
-	m_Obj->SetObstacle(m_Obj->GetOM()->GetObj());
-
 	for (Character* character : m_Obj->GetCM()->GetObj())
-		m_Shade->SetShade(dynamic_cast<T_Object*>(character));
-
-	//for(Obstacle* obs : om->GetObj())
-	//	shadeManager->SetShade(dynamic_cast<T_Object*>(obs));	
+	{
+		if(character != nullptr)
+			m_Shade->SetShade(dynamic_cast<T_Object*>(character));
+	}
 	m_Shade->SetShade(dynamic_cast<T_Object*>(m_Obj->GetOM()->GetObj()[2]));
 
 }

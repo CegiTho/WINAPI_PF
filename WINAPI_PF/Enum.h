@@ -24,7 +24,8 @@ enum Name
 	JAMES,
 	JOHN,
 	LAURA,
-	SARAH
+	SARAH,
+	CHARACTER_COUNT
 };
 
 enum Side

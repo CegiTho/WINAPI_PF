@@ -2,13 +2,19 @@
 #include "Character.h"
 
 Character::Character()
+	:isGoal(false)
 {
 	side.assign(5, false);
+
+	goalColor = CreateSolidBrush(WHITE);
+	goalEdge = CreatePen(PS_SOLID, 1, WHITE);
 
 }
 
 Character::~Character()
 {
+	DeleteObject(goalColor);
+	DeleteObject(goalEdge);
 }
 
 void Character::Move()
@@ -105,13 +111,11 @@ Side Character::Collision(T_Object* obj)
 			{
 
 				this->GetRect()->center.y += overlap.size.y;
-				//this->GetRect()->center.y = obj->GetRect()->Bottom() + this->GetRect()->Half().y;
 				return Side::DOWN;
 			}
 			else
 			{
 				this->GetRect()->center.y -= overlap.size.y;
-				//this->GetRect()->center.y = obj->GetRect()->Top() - this->GetRect()->Half().y;
 				return Side::UP;
 			}
 		}
@@ -120,46 +124,61 @@ Side Character::Collision(T_Object* obj)
 			if (this->GetRect()->center.x > obj->GetRect()->center.x)
 			{
 				this->GetRect()->center.x += overlap.size.x;
-				//this->GetRect()->center.x = obj->GetRect()->Right() + this->GetRect()->Half().x;
 				return Side::RIGHT;
 			}
 			else
 			{
 				this->GetRect()->center.x -= overlap.size.x;
-				//this->GetRect()->center.x = obj->GetRect()->Left() - this->GetRect()->Half().x;
 				return Side::LEFT;
 			}
 		}
 	}
 	return Side::NONE;
-	
+}
 
-	/*
-	if (this->GetRect()->Right() > obj->GetRect()->Left() && this->GetRect()->Left() < obj->GetRect()->Right())
+void Character::Render(HDC hdc)
+{
+	HBRUSH tempB;
+	HPEN tempP;
+	if (isGoal == true)
 	{
-		if (this->GetRect()->center.y > obj->GetRect()->center.y)
-		{
-			this->GetRect()->center.y = obj->GetRect()->Bottom() + this->GetRect()->Half().y;
-			return Side::DOWN;
-		}
-		else
-		{
-			this->GetRect()->center.y = obj->GetRect()->Top() - this->GetRect()->Half().y;
-			return Side::UP;
-		}
+		tempB = (HBRUSH)SelectObject(hdc, goalColor);
+		tempP = (HPEN)SelectObject(hdc, goalEdge);
 	}
-	else if (this->GetRect()->Right() <= obj->GetRect()->Left() || this->GetRect()->Left() >= obj->GetRect()->Right())
+	else
 	{
-		if (this->GetRect()->center.x > obj->GetRect()->center.x)
-		{
-			this->GetRect()->center.x = obj->GetRect()->Right() + this->GetRect()->Half().x;
-			return Side::RIGHT;
-		}
-		else
-		{
-			this->GetRect()->center.x = obj->GetRect()->Left() - this->GetRect()->Half().x;
-			return Side::LEFT;
-		}
+		tempB = (HBRUSH)SelectObject(hdc, color);
+		tempP = (HPEN)SelectObject(hdc, edge);
 	}
-	*/
+
+	anim->Render(hdc);
+
+	SelectObject(hdc, tempB);
+	SelectObject(hdc, tempP);
+
+	switch (name)
+	{
+	case THOMAS:
+		PrintElement(200);
+		break;
+	case CHRIS:
+		PrintElement(400);
+		break;
+	case CLARE:
+		PrintElement(600);
+		break;
+	case JAMES:
+		PrintElement(800);
+		break;
+	case JOHN:
+		PrintElement(1000);
+		break;
+	case LAURA:
+		PrintElement(1200);
+		break;
+	case SARAH:
+		PrintElement(1400);
+		break;
+	}
+
 }

@@ -2,8 +2,8 @@
 #include "CharacterManager.h"
 
 CharacterManager::CharacterManager()
-	:characters{}
 {
+	characters.assign(CHARACTER_COUNT, nullptr);
 }
 
 CharacterManager::~CharacterManager()
@@ -15,41 +15,48 @@ CharacterManager::~CharacterManager()
 void CharacterManager::Update()
 {
 	for (Character* obj : characters)
-		obj->Update();
+	{
+		if (obj != nullptr)
+			obj->Update();
+	}
 }
 
 void CharacterManager::Render(HDC hdc)
 {
 	for (Character* obj : characters)
-		obj->Render(hdc);
+	{
+		if(obj != nullptr)
+			obj->Render(hdc);
+		
+	}
 }
 
-void CharacterManager::PlusCharacter(Name name)
+T_Object* CharacterManager::PlusCharacter(Name name)
 {
 	switch (name)
 	{
 	case Name::THOMAS:
-		characters.emplace_back(new Thomas());
-		break;
+		characters[THOMAS] = new Thomas();
+		return characters[THOMAS];
 	case Name::CHRIS:
-		characters.emplace_back(new Chris());
-		break;
+		characters[CHRIS] = new Chris();
+		return characters[CHRIS];
 	case Name::CLARE:
-		characters.emplace_back(new Clare());
-		break;
+		characters[CLARE] = new Clare ();
+		return characters[CLARE];
 	case Name::JAMES:
-		characters.emplace_back(new James());
-		break;
+		characters[JAMES] = new James();
+		return characters[JAMES];
 	case Name::JOHN:
-		characters.emplace_back(new John());
-		break;
+		characters[JOHN] = new John();
+		return characters[JOHN];
 	case Name::LAURA:
-		characters.emplace_back(new Laura());
-		break;
+		characters[LAURA] = new Laura();
+		return characters[LAURA];
 	case Name::SARAH:
-		characters.emplace_back(new Sarah());
-		break;
-	default:
-		break;
+		characters[SARAH] = new Sarah();
+		return characters[SARAH];
 	}
+
+	
 }

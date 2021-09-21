@@ -8,6 +8,8 @@ Goal::Goal(Character* character, Vector2 pos, STAGE_NUM stage)
 
 Goal::~Goal()
 {
+
+
 }
 
 void Goal::CreateElement(Character* character, Vector2 pos, STAGE_NUM stage)
@@ -49,10 +51,14 @@ void Goal::Collision()
 		if (temp.Area() >= this->GetRect()->Area() * 0.7)
 		{
 			isGoal = true;
+			character->SetGoal(true);
 		}
 	}
 	else
+	{
 		isGoal = false;
+		character->SetGoal(false);
+	}
 
 }
 

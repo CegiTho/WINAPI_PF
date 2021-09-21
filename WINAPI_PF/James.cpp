@@ -129,19 +129,6 @@ void James::Update()
 	InitAgain();
 }
 
-void James::Render(HDC hdc)
-{
-	HBRUSH tempB = (HBRUSH)SelectObject(hdc, color);
-	HPEN tempP = (HPEN)SelectObject(hdc, edge);
-
-	anim->Render(hdc);
-
-	SelectObject(hdc, tempB);
-	SelectObject(hdc, tempP);
-
-	PrintElement(600);
-}
-
 void James::Jump()
 {
 	//======Jump===========

@@ -21,19 +21,22 @@ void ObstacleManager::Render(HDC hdc)
 		obs->Render(hdc);
 }
 
-void ObstacleManager::PlusObstacle(Type type, Vector2 center, Vector2 size)
+T_Object* ObstacleManager::PlusObstacle(Type type, Vector2 center, Vector2 size)
 {
 	switch (type)
 	{
 	case Type::NORMAL:
-		obstacles.emplace_back(new NormalObstacle(center, size));
-		break;
+	{
+		NormalObstacle* newObs = new NormalObstacle(center, size);
+		obstacles.emplace_back(newObs);
+		return newObs;
+	}
 	case Type::SPIKE:
-		break;
+	{
+	}
 	case Type::WATER:
-		break;
-	default:
-		break;
+	{
+	}
 	}
 }
 

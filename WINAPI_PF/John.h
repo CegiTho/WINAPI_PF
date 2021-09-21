@@ -17,7 +17,6 @@ public:
 
 	virtual void InitAgain() override;
 	virtual void Update() override;
-	virtual void Render(HDC hdc) override;
 	virtual void Jump() override;
 
 

@@ -12,6 +12,7 @@ GoalManager::~GoalManager()
 
 vector<Goal*> GoalManager::CreateGoals(vector<Character*> characters,STAGE_NUM stage)
 {
+	
 
 	return goals;
 }
