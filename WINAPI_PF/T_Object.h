@@ -10,6 +10,7 @@ protected:
 	HBRUSH	color;
 	HPEN	edge;
 
+
 public:
 	T_Object();
 	virtual ~T_Object();

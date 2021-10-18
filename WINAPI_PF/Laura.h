@@ -7,6 +7,7 @@ private:
 
 public:
 	Laura();
+	Laura(Vector2 pos);
 	~Laura();
 
 	void CreateLaura(Vector2 pos);

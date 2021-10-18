@@ -5,6 +5,11 @@ Laura::Laura()
 	CreateLaura(LAURA_START);
 }
 
+Laura::Laura(Vector2 pos)
+{
+	CreateLaura(pos);
+}
+
 Laura::~Laura()
 {
 	delete rect;

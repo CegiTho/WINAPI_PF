@@ -5,6 +5,11 @@ Sarah::Sarah()
 	CreateSarah(SARAH_START);
 }
 
+Sarah::Sarah(Vector2 pos)
+{
+	CreateSarah(pos);
+}
+
 Sarah::~Sarah()
 {
 	delete rect;

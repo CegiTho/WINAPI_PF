@@ -1,18 +1,24 @@
 #include "Framework.h"
 
-Goal::Goal(Character* character, Vector2 pos, STAGE_NUM stage)
+Goal::Goal(Character* character, Vector2 pos)
 	:character(character)
 {
-	CreateElement(character, pos,stage);
+	CreateElement(character, pos);
 }
 
 Goal::~Goal()
 {
+	delete rect;
 
+	for (Line* line : lines)
+		delete line;
+
+	DeleteObject(color);
+	DeleteObject(edge);
 
 }
 
-void Goal::CreateElement(Character* character, Vector2 pos, STAGE_NUM stage)
+void Goal::CreateElement(Character* character, Vector2 pos)
 {
 	this->id = ID::GOAL;
 	this->rect = new Rect(pos, character->GetRect()->size);
@@ -29,7 +35,7 @@ void Goal::CreateElement(Character* character, Vector2 pos, STAGE_NUM stage)
 
 void Goal::Update()
 {
-	Collision();
+	this->Collision();
 
 }
 
@@ -46,7 +52,7 @@ void Goal::Collision()
 {
 	Rect temp;
 
-	if (character->GetRect()->Collision(this->GetRect(), &temp) == true)
+	if (character->GetRect()->Collision(&temp,this->GetRect()) == true)
 	{
 		if (temp.Area() >= this->GetRect()->Area() * 0.7)
 		{

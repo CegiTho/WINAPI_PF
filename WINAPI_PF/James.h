@@ -7,6 +7,7 @@ private:
 
 public:
 	James();
+	James(Vector2 pos);
 	~James();
 
 	void CreateJames(Vector2 pos);

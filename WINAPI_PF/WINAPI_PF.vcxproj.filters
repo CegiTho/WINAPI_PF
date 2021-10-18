@@ -204,6 +204,9 @@
     <ClInclude Include="PreDefined.h">
       <Filter>Framework\GameObject</Filter>
     </ClInclude>
+    <ClInclude Include="MapReader.h">
+      <Filter>Framework\Utility</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="WINAPI_PF.cpp">
@@ -235,9 +238,6 @@
     </ClCompile>
     <ClCompile Include="Timer.cpp">
       <Filter>Framework\Utility</Filter>
-    </ClCompile>
-    <ClCompile Include="TestScene.cpp">
-      <Filter>Framework\GameObject\Scene</Filter>
     </ClCompile>
     <ClCompile Include="Keyboard.cpp">
       <Filter>Framework\Utility</Filter>
@@ -338,6 +338,9 @@
     <ClCompile Include="GoalManager.cpp">
       <Filter>Framework\GameObject\Manager</Filter>
     </ClCompile>
+    <ClCompile Include="TestScene.cpp">
+      <Filter>Framework\GameObject\Scene</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="WINAPI_PF.rc">
@@ -351,5 +354,13 @@
     <Image Include="WINAPI_PF.ico">
       <Filter>리소스 파일</Filter>
     </Image>
+  </ItemGroup>
+  <ItemGroup>
+    <Xml Include="Resource\Stage_4_Data.xml">
+      <Filter>리소스 파일</Filter>
+    </Xml>
+    <Xml Include="Resource\Stage_3_Data.xml">
+      <Filter>리소스 파일</Filter>
+    </Xml>
   </ItemGroup>
 </Project>

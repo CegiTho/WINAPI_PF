@@ -7,6 +7,7 @@ private:
 
 public:
 	Chris();
+	Chris(Vector2 pos);
 	~Chris();
 
 	void CreateChris(Vector2 pos);

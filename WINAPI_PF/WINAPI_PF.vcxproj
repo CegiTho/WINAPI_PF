@@ -166,6 +166,7 @@
     <ClInclude Include="Keyboard.h" />
     <ClInclude Include="Laura.h" />
     <ClInclude Include="Line.h" />
+    <ClInclude Include="MapReader.h" />
     <ClInclude Include="Math.h" />
     <ClInclude Include="NormalObstacle.h" />
     <ClInclude Include="Object.h" />
@@ -257,6 +258,10 @@
   <ItemGroup>
     <Image Include="small.ico" />
     <Image Include="WINAPI_PF.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <Xml Include="Resource\Stage_3_Data.xml" />
+    <Xml Include="Resource\Stage_4_Data.xml" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

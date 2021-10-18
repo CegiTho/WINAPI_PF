@@ -6,6 +6,11 @@ Chris::Chris()
 
 }
 
+Chris::Chris(Vector2 pos)
+{
+	CreateChris(pos);
+}
+
 Chris::~Chris()
 {
 	delete rect;

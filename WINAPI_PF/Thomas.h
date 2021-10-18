@@ -6,6 +6,7 @@ private:
 
 public:
 	Thomas();
+	Thomas(Vector2 pos);
 	~Thomas();
 
 	void CreateThomas(Vector2 pos);

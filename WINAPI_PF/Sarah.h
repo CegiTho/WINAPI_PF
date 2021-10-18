@@ -7,6 +7,7 @@ private:
 
 public:
 	Sarah();
+	Sarah(Vector2 pos);
 	~Sarah();
 
 	void CreateSarah(Vector2 pos);

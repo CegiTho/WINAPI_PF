@@ -31,30 +31,30 @@ void CharacterManager::Render(HDC hdc)
 	}
 }
 
-T_Object* CharacterManager::PlusCharacter(Name name)
+T_Object* CharacterManager::PlusCharacter(Name name,Vector2 pos)
 {
 	switch (name)
 	{
 	case Name::THOMAS:
-		characters[THOMAS] = new Thomas();
+		characters[THOMAS] = new Thomas(pos);
 		return characters[THOMAS];
 	case Name::CHRIS:
-		characters[CHRIS] = new Chris();
+		characters[CHRIS] = new Chris(pos);
 		return characters[CHRIS];
 	case Name::CLARE:
-		characters[CLARE] = new Clare ();
+		characters[CLARE] = new Clare (pos);
 		return characters[CLARE];
 	case Name::JAMES:
-		characters[JAMES] = new James();
+		characters[JAMES] = new James(pos);
 		return characters[JAMES];
 	case Name::JOHN:
-		characters[JOHN] = new John();
+		characters[JOHN] = new John(pos);
 		return characters[JOHN];
 	case Name::LAURA:
-		characters[LAURA] = new Laura();
+		characters[LAURA] = new Laura(pos);
 		return characters[LAURA];
 	case Name::SARAH:
-		characters[SARAH] = new Sarah();
+		characters[SARAH] = new Sarah(pos);
 		return characters[SARAH];
 	}
 

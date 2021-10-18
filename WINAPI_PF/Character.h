@@ -23,6 +23,7 @@ protected:
 
 public:
 	Character();
+	Character(Vector2 pos);
 	virtual ~Character();
 
 	void Move();

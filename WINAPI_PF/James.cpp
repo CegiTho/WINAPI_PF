@@ -1,9 +1,15 @@
 #include "Framework.h"
+#include "James.h"
 
 James::James()
 {
 	CreateJames(JAMES_START);
 
+}
+
+James::James(Vector2 pos)
+{
+	CreateJames(pos);
 }
 
 James::~James()

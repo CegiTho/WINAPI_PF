@@ -1,6 +1,6 @@
 #pragma once
 
-enum class Type
+enum Type
 {
 	NORMAL,
 	SPIKE,

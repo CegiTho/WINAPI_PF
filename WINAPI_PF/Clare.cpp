@@ -6,6 +6,11 @@ Clare::Clare()
 
 }
 
+Clare::Clare(Vector2 pos)
+{
+	CreateClare(pos);
+}
+
 Clare::~Clare()
 {
 	delete rect;

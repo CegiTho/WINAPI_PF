@@ -145,9 +145,9 @@ SCAM이 실질적인 카메라이고 내가 원하는데로 동작하는 객체�
 
 #include "CharacterManager.h"
 #include "ObstacleManager.h"
+#include "GoalManager.h"
 #include "ObjManager.h"
 #include "ShadeManager.h"
-#include "GoalManager.h"
 
 //Scene Header
 #include "Scene.h"

@@ -6,6 +6,11 @@ Thomas::Thomas()
 	CreateThomas(THOMAS_START);
 }
 
+Thomas::Thomas(Vector2 pos)
+{
+	CreateThomas(pos);
+}
+
 Thomas::~Thomas()
 {
 	delete rect;

@@ -7,6 +7,7 @@ private:
 
 public:
 	John();
+	John(Vector2 pos);
 	~John();
 
 	void CreateJohn(Vector2 pos);

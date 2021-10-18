@@ -11,6 +11,16 @@ Character::Character()
 
 }
 
+Character::Character(Vector2 pos)
+{
+	side.assign(5, false);
+
+	goalColor = CreateSolidBrush(WHITE);
+	goalEdge = CreatePen(PS_SOLID, 1, WHITE);
+
+	this->rect->center = pos;
+}
+
 Character::~Character()
 {
 	DeleteObject(goalColor);

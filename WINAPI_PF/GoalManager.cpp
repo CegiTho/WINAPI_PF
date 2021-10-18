@@ -1,20 +1,39 @@
 #include "Framework.h"
 
-GoalManager::GoalManager(vector<Character*> characters, STAGE_NUM stage)
-	:isClear(true)
+GoalManager::GoalManager()
+	:isClear(false)
 {
-	CreateGoals(characters, stage);
+
+	this->goals.assign(CHARACTER_COUNT, nullptr);
 }
 
 GoalManager::~GoalManager()
 {
+	for (Goal* goal : goals)
+		delete goal;
 }
 
-vector<Goal*> GoalManager::CreateGoals(vector<Character*> characters,STAGE_NUM stage)
+void GoalManager::Update()
 {
-	
+	for (Goal* goal : goals)
+		goal->Update();
+}
 
-	return goals;
+void GoalManager::Render(HDC hdc)
+{
+	for (Goal* goal : goals)
+		goal->Render(hdc);
+}
+
+
+Goal* GoalManager::PlusGoal(Character* character, Vector2 pos)
+{
+	Goal* goal = new Goal(character, pos);
+
+	int index = (int)character->GetName();
+	this->goals[index] = goal;
+
+	return goal;
 }
 
 bool GoalManager::Check()

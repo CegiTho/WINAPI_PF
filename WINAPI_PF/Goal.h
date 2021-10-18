@@ -12,10 +12,10 @@ private:
 	Name name;
 
 public:
-	Goal(Character* character,Vector2 pos, STAGE_NUM stage);
+	Goal(Character* character,Vector2 pos);
 	~Goal();
 
-	void CreateElement(Character* character, Vector2 pos,STAGE_NUM stage);
+	void CreateElement(Character* character, Vector2 pos);
 
 	void Update();
 	void Render(HDC hdc);

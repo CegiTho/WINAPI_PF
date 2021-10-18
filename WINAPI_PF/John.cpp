@@ -5,6 +5,11 @@ John::John()
 	CreateJohn(JOHN_START);
 }
 
+John::John(Vector2 pos)
+{
+	CreateJohn(pos);
+}
+
 John::~John()
 {
 }

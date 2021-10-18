@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<StageElement>
+  <Character>
+    <Thomas consist="1" name ="0">
+      <position posX="300" posY="300"/>
+    </Thomas>
+    <Chris consist="1" name ="1">
+      <position posX ="500" posY="300"/>
+    </Chris>  
+    <Clare consist="1" name ="2">
+      <position posX ="700" posY="300"/>
+    </Clare>
+    <James consist="1" name ="3">
+      <position posX ="900" posY="300"/>
+    </James>
+    <John consist="1" name ="4">
+      <position posX ="1100" posY="300"/>
+    </John>
+    <Laura consist="1" name ="5">
+      <position posX ="1300" posY="300"/>
+    </Laura>
+    <Sarah consist="1" name ="6">
+      <position posX ="1500" posY="300"/>
+    </Sarah>
+  </Character>
+  <Goal>
+    <Thomas consist="1">
+      <position posX="400" posY="1050"/>
+    </Thomas>
+    <Chris consist="1">
+      <position posX ="600" posY="1050"/>
+    </Chris>  
+    <Clare consist="1">
+      <position posX ="800" posY="1050"/>
+    </Clare>
+    <James consist="1">
+      <position posX ="1000" posY="1050"/>
+    </James>
+    <John consist="1">
+      <position posX ="1200" posY="1050"/>
+    </John>
+    <Laura consist="1">
+      <position posX ="1400" posY="1050"/>
+    </Laura>
+     <Sarah consist="1">
+      <position posX ="1700" posY="1050"/>
+    </Sarah>
+  </Goal>
+  <Obstacle>
+    <!--type 0 = normal , type 1 = spike , type 2 = water-->
+    <obs1>
+      <type type ="0"/>
+      <position posX ="1100" posY ="1175"/>
+      <size sizeX="2200" sizeY ="50"/>
+    </obs1>
+    <obs2>
+      <type type ="0"/>
+      <position posX ="1100" posY ="100"/>
+      <size sizeX="2200" sizeY ="50"/>
+    </obs2>
+    <obs3>
+      <type type ="0"/>
+      <position posX ="200" posY ="900"/>
+      <size sizeX="400" sizeY ="50"/>
+    </obs3>
+  </Obstacle>
+</StageElement>

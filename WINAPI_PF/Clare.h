@@ -7,6 +7,7 @@ private:
 
 public:
 	Clare();
+	Clare(Vector2 pos);
 	~Clare();
 
 	void CreateClare(Vector2 pos);
