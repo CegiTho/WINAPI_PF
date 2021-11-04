@@ -11,7 +11,7 @@
       <position posX ="700" posY="300"/>
     </Clare>
     <James consist="1" name ="3">
-      <position posX ="900" posY="300"/>
+      <position posX ="900" posY="400"/>
     </James>
     <John consist="1" name ="4">
       <position posX ="1100" posY="300"/>
@@ -25,37 +25,37 @@
   </Character>
   <Goal>
     <Thomas consist="1">
-      <position posX="400" posY="1050"/>
+      <position posX="400" posY="500"/>
     </Thomas>
     <Chris consist="1">
-      <position posX ="600" posY="1050"/>
+      <position posX ="600" posY="500"/>
     </Chris>  
     <Clare consist="1">
-      <position posX ="800" posY="1050"/>
+      <position posX ="800" posY="500"/>
     </Clare>
     <James consist="1">
-      <position posX ="1000" posY="1050"/>
+      <position posX ="1000" posY="500"/>
     </James>
     <John consist="1">
-      <position posX ="1200" posY="1050"/>
+      <position posX ="1200" posY="500"/>
     </John>
     <Laura consist="1">
-      <position posX ="1400" posY="1050"/>
+      <position posX ="1400" posY="500"/>
     </Laura>
      <Sarah consist="1">
-      <position posX ="1700" posY="1050"/>
+      <position posX ="1700" posY="500"/>
     </Sarah>
   </Goal>
   <Obstacle>
     <!--type 0 = normal , type 1 = spike , type 2 = water-->
     <obs1>
       <type type ="0"/>
-      <position posX ="1100" posY ="1175"/>
+      <position posX ="1100" posY ="900"/>
       <size sizeX="2200" sizeY ="50"/>
     </obs1>
     <obs2>
       <type type ="0"/>
-      <position posX ="1100" posY ="100"/>
+      <position posX ="1100" posY ="200"/>
       <size sizeX="2200" sizeY ="50"/>
     </obs2>
     <obs3>
@@ -64,4 +64,7 @@
       <size sizeX="400" sizeY ="50"/>
     </obs3>
   </Obstacle>
+  <StageSize>
+    <size sizeX ="3200" sizeY ="2000"/>
+  </StageSize>
 </StageElement>

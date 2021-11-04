@@ -13,6 +13,7 @@ public:
 
 	void Update();
 	void Render(HDC hdc);
+	void Render(HDC hdc,Vector2 offset);
 
 	Goal* PlusGoal(Character* character, Vector2 pos);
 	bool Check();

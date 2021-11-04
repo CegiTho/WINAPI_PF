@@ -18,7 +18,19 @@ void ObstacleManager::Update()
 void ObstacleManager::Render(HDC hdc)
 {
 	for (Obstacle* obs : obstacles)
-		obs->Render(hdc);
+	{
+		if (obs->GetRect()->Collision(M_CAM->GetScreen()) == true)
+			obs->Render(hdc);
+	}
+}
+
+void ObstacleManager::Render(HDC hdc, Vector2 offset)
+{
+	for (Obstacle* obs : obstacles)
+	{
+		if (obs->GetRect()->Collision(M_CAM->GetScreen()) == true)
+			obs->Render(hdc);	
+	}
 }
 
 T_Object* ObstacleManager::PlusObstacle(Type type, Vector2 center, Vector2 size)

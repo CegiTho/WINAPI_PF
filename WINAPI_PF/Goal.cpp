@@ -52,19 +52,24 @@ void Goal::Collision()
 {
 	Rect temp;
 
-	if (character->GetRect()->Collision(&temp,this->GetRect()) == true)
+	if (character->GetRect()->Collision(&temp, this->GetRect()) == true)
 	{
 		if (temp.Area() >= this->GetRect()->Area() * 0.7)
 		{
 			isGoal = true;
 			character->SetGoal(true);
+			return;
 		}
-	}
-	else
-	{
-		isGoal = false;
-		character->SetGoal(false);
-	}
+		else
+		{
+			isGoal = false;
+			character->SetGoal(false);
+			return;
+		}
 
+	}
+	
+	isGoal = false;
+	character->SetGoal(false);
 }
 

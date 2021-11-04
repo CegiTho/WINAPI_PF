@@ -65,9 +65,9 @@ void ObjManager::LoadStage(STAGE_NUM num)
 	goal = goal->FirstChildElement("Thomas");
 	for (; goal != nullptr; goal = goal->NextSiblingElement())
 	{
-		int consist = goal->IntAttribute("consist");
+		bool consist = goal->IntAttribute("consist");
 		//m_Character->GetObj의 null 체크가 불필요할지 아닐지 모르겠음.
-		if (consist != 1 || m_Character->GetObj()[index] == nullptr)
+		if (consist != true || m_Character->GetObj()[index] == nullptr)
 		{
 			index++;
 			continue;
@@ -126,6 +126,14 @@ void ObjManager::Render(HDC hdc)
 	m_Character->Render(hdc);
 	m_Obstacle->Render(hdc);
 	m_Goal->Render(hdc);
+}
+
+void ObjManager::Render(HDC hdc, Vector2 offset)
+{
+	m_Character->Render(hdc, offset);
+	m_Obstacle->Render(hdc, offset);
+	m_Goal->Render(hdc, offset);
+
 }
 
 void ObjManager::Collision()

@@ -149,7 +149,6 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
         TextureManager::Create();
         SoundManager::Create();
         Keyboard::Create();
-        SceneCamera::Create();
 
         program = new Program(hWnd);
         break;
@@ -189,7 +188,6 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
         TextureManager::Delete();
         SoundManager::Delete();
         Keyboard::Delete();
-        SceneCamera::Delete();
 
         delete program;
 

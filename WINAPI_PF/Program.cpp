@@ -17,7 +17,7 @@ Program::Program(HWND hWindow)
 
 	ReleaseDC(hWnd, hdc);
 
-	SetBkMode(Program::backBuffer, TRANSPARENT);
+	SetBkMode(Program::backBuffer, TRANSPARENT);	
 
 	SCENE->Add("Test", new TestScene());
 	SCENE->ChangeScene("Test");
@@ -36,6 +36,8 @@ void Program::Update()
 	KEYBOARD->Update();
 	TIMER->Update();
 
+	M_CAM->Update();
+
 	SCENE->Update();
 
 	InvalidateRect(hWnd, nullptr, false);
@@ -51,6 +53,6 @@ void Program::Render(HDC hdc)
 
 	BitBlt(
 		hdc, 0, 0, WIN_WIDTH, WIN_HEIGHT,
-		backBuffer, 0, 0, SRCCOPY
+		backBuffer,0, 0 , SRCCOPY
 	);
 }

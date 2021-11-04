@@ -36,7 +36,7 @@ using namespace std;
 #define WIN_START_Y 100
 
 #define WIN_WIDTH 2200
-#define WIN_HEIGHT 1200
+#define WIN_HEIGHT 1300
 
 #define CENTER_X WIN_WIDTH * 0.5
 #define CENTER_Y WIN_HEIGHT * 0.5
@@ -72,7 +72,7 @@ using namespace std;
 #define TEX TextureManager::Get()
 #define SOUND SoundManager::Get()
 #define CAM Camera::Get()
-#define SCAM SceneCamera::Get()
+#define M_CAM MasterCamera::Get()
 #define SCENE SceneManager::Get()
 
 
@@ -113,8 +113,8 @@ SCAM이 실질적인 카메라이고 내가 원하는데로 동작하는 객체�
 #include "SoundManager.h"
 #include "SceneManager.h"
 
+#include "MasterCamera.h"
 #include "Camera.h"
-#include "SceneCamera.h"
 
 
 //Object Header

@@ -140,8 +140,9 @@ void Chris::Update()
 }
 
 void Chris::Jump()
-{//======Jump===========
-	if (KEYDOWN(VK_UP) && isJump == false)
+{
+	//======Jump===========
+	if (KEYDOWN(VK_UP) && isJump == false )
 	{
 		thrust = CHRIS_THRUST;
 		isJump = true;

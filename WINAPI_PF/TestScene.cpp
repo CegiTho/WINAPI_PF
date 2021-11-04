@@ -12,20 +12,6 @@ TestScene::TestScene()
 
 	m_Obj->LoadStage(STAGE_4);
 
-	/*
-	m_Obj->PlusCharacter(Name::THOMAS);
-	m_Obj->PlusCharacter(Name::CLARE);
-	m_Obj->PlusCharacter(Name::CHRIS);
-	m_Obj->PlusCharacter(Name::JAMES);
-	m_Obj->PlusCharacter(Name::JOHN);
-	m_Obj->PlusCharacter(Name::LAURA);
-	m_Obj->PlusCharacter(Name::SARAH);
-
-	m_Obj->PlusObstacle(Type::NORMAL, { CENTER_X,WIN_HEIGHT - 25 }, { WIN_WIDTH,50 });
-	m_Obj->PlusObstacle(Type::NORMAL, { CENTER_X,100 }, { WIN_WIDTH,50 });
-	m_Obj->PlusObstacle(Type::NORMAL, { 200,900 }, { 400,50 });
-	*/
-
 	for (Character* character : m_Obj->GetCM()->GetObj())
 	{
 		if (character != nullptr)
@@ -33,6 +19,7 @@ TestScene::TestScene()
 	}
 	m_Shade->SetShade(m_Obj->GetOM()->GetObj()[2]);
 
+	M_CAM->TargetChange(m_Obj->GetCM()->GetObj()[THOMAS]);
 }
 
 TestScene::~TestScene()
@@ -47,11 +34,18 @@ void TestScene::Update()
 	m_Obj->Update();
 
 	m_Shade->Update();
+
+	
 }
 
 void TestScene::Render(HDC hdc)
 {
-	m_Shade->Render(hdc);
+	m_Shade->Render();
 
-	m_Obj->Render(hdc);
+	m_Obj->Render(m_Shade->GetMemDC());
+
+	BitBlt(
+		hdc, 0, 0, WIN_WIDTH, WIN_HEIGHT,
+		m_Shade->GetMemDC(), M_CAM->GetPos().x, M_CAM->GetPos().y,
+	SRCCOPY);
 }

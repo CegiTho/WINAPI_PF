@@ -17,6 +17,7 @@ public:
 
 	void Update();
 	void Render(HDC hdc);
+	void Render(HDC hdc,Vector2 offset);
 
 	void Collision();
 

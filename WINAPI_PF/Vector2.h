@@ -14,6 +14,7 @@ public:
 	Vector2(double x, double y);
 	~Vector2();
 
+	
 	//============수학적으로는 틀린 정의들(편의용)================
 	Vector2 operator*(const Vector2& value) const
 	{
@@ -80,6 +81,11 @@ public:
 	{
 		x /= value;
 		y /= value;
+	}
+
+	bool operator==(const Vector2& value)
+	{
+		return (x == value.x && y == value.y) ? true : false;
 	}
 
 	double Cross(const Vector2& value) const;

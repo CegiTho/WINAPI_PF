@@ -167,6 +167,7 @@
     <ClInclude Include="Laura.h" />
     <ClInclude Include="Line.h" />
     <ClInclude Include="MapReader.h" />
+    <ClInclude Include="MasterCamera.h" />
     <ClInclude Include="Math.h" />
     <ClInclude Include="NormalObstacle.h" />
     <ClInclude Include="Object.h" />
@@ -183,7 +184,6 @@
     <ClInclude Include="Resource.h" />
     <ClInclude Include="Sarah.h" />
     <ClInclude Include="Scene.h" />
-    <ClInclude Include="SceneCamera.h" />
     <ClInclude Include="SceneManager.h" />
     <ClInclude Include="Shade.h" />
     <ClInclude Include="ShadeManager.h" />
@@ -223,6 +223,7 @@
     <ClCompile Include="Keyboard.cpp" />
     <ClCompile Include="Laura.cpp" />
     <ClCompile Include="Line.cpp" />
+    <ClCompile Include="MasterCamera.cpp" />
     <ClCompile Include="Math.cpp" />
     <ClCompile Include="NormalObstacle.cpp" />
     <ClCompile Include="Object.cpp" />
@@ -235,7 +236,6 @@
     <ClCompile Include="Rect.cpp" />
     <ClCompile Include="RectAnimation.cpp" />
     <ClCompile Include="Sarah.cpp" />
-    <ClCompile Include="SceneCamera.cpp" />
     <ClCompile Include="SceneManager.cpp" />
     <ClCompile Include="Shade.cpp" />
     <ClCompile Include="ShadeManager.cpp" />

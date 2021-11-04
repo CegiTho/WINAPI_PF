@@ -43,14 +43,14 @@
     <Filter Include="Framework\GameObject\Manager">
       <UniqueIdentifier>{84217238-b068-4c61-84e3-d4a060eae4e8}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Framework\GameObject\Apex">
-      <UniqueIdentifier>{a0751f74-76c4-4ca9-a36e-461c55ba5689}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Framework\GameObject\Goal">
       <UniqueIdentifier>{b654fe30-cada-4ce3-9946-67eaefe9bab8}</UniqueIdentifier>
     </Filter>
     <Filter Include="Framework\GameObject\Scene">
       <UniqueIdentifier>{08569791-7d97-47dd-a54a-f61ca0cad0f3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Framework\GameObject\Origin">
+      <UniqueIdentifier>{a0751f74-76c4-4ca9-a36e-461c55ba5689}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -129,9 +129,6 @@
     <ClInclude Include="ProgramCamera.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
-    <ClInclude Include="SceneCamera.h">
-      <Filter>Framework\Utility</Filter>
-    </ClInclude>
     <ClInclude Include="SceneManager.h">
       <Filter>Framework\Utility</Filter>
     </ClInclude>
@@ -190,7 +187,7 @@
       <Filter>Framework\GameObject\Manager</Filter>
     </ClInclude>
     <ClInclude Include="T_Object.h">
-      <Filter>Framework\GameObject\Apex</Filter>
+      <Filter>Framework\GameObject\Origin</Filter>
     </ClInclude>
     <ClInclude Include="Goal.h">
       <Filter>Framework\GameObject\Goal</Filter>
@@ -205,6 +202,9 @@
       <Filter>Framework\GameObject</Filter>
     </ClInclude>
     <ClInclude Include="MapReader.h">
+      <Filter>Framework\Utility</Filter>
+    </ClInclude>
+    <ClInclude Include="MasterCamera.h">
       <Filter>Framework\Utility</Filter>
     </ClInclude>
   </ItemGroup>
@@ -269,9 +269,6 @@
     <ClCompile Include="Camera.cpp">
       <Filter>Framework\Utility</Filter>
     </ClCompile>
-    <ClCompile Include="SceneCamera.cpp">
-      <Filter>Framework\Utility</Filter>
-    </ClCompile>
     <ClCompile Include="SceneManager.cpp">
       <Filter>Framework\Utility</Filter>
     </ClCompile>
@@ -330,7 +327,7 @@
       <Filter>Framework\GameObject\Manager</Filter>
     </ClCompile>
     <ClCompile Include="T_Object.cpp">
-      <Filter>Framework\GameObject\Apex</Filter>
+      <Filter>Framework\GameObject\Origin</Filter>
     </ClCompile>
     <ClCompile Include="Goal.cpp">
       <Filter>Framework\GameObject\Goal</Filter>
@@ -340,6 +337,9 @@
     </ClCompile>
     <ClCompile Include="TestScene.cpp">
       <Filter>Framework\GameObject\Scene</Filter>
+    </ClCompile>
+    <ClCompile Include="MasterCamera.cpp">
+      <Filter>Framework\Utility</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

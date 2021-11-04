@@ -50,7 +50,7 @@ void Timer::Render()
 	wstring str;
 
 	str = L"FPS : " + to_wstring(frameRate);
-	TextOut(Program::backBuffer, 0, 0, str.c_str(), str.size());
+	TextOut(Program::backBuffer, 0, 500, str.c_str(), str.size());
 
 	str = L"RunTime : " + to_wstring(runTime);
 	TextOut(Program::backBuffer, 0, 20, str.c_str(), str.size());

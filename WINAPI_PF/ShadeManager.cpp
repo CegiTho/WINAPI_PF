@@ -4,16 +4,20 @@ ShadeManager::ShadeManager(STAGE_NUM num, Vector2 lSource)
 	:constant(0),stage(num)
 {
 	this->lSource = new Vector2(lSource.x, lSource.y);
-
+	mapSize = { 0,0 };
 	
+	LoadDCSize(num);
 	CreateAlphaDC(num);
 }
 
 ShadeManager::ShadeManager(STAGE_NUM num, double constant)
-	:constant(constant),lSource(nullptr)
+	:lSource(nullptr),stage(num)
 {
-	CreateAlphaDC(num);
+	this->constant = constant;
+	mapSize = { 0,0 };
 
+	LoadDCSize(num);
+	CreateAlphaDC(num);
 }
 
 ShadeManager::~ShadeManager()
@@ -27,6 +31,37 @@ ShadeManager::~ShadeManager()
 		delete lSource;
 }
 
+void ShadeManager::LoadDCSize(STAGE_NUM num)
+{
+	string file;
+	switch (num)
+	{
+	case STAGE_1:
+		break;
+	case STAGE_2:
+		break;
+	case STAGE_3:
+		break;
+	case STAGE_4:		
+		file = "Resource/Stage_4_Data.xml";
+		break;
+	case STAGE_5:
+		break;
+	}
+
+	XmlDocument* document = new XmlDocument();
+	document->LoadFile(file.c_str());
+
+	XmlElement* root = document->FirstChildElement("StageElement");
+	XmlElement* stageSize = root->FirstChildElement("StageSize");
+	stageSize = stageSize->FirstChildElement("size");
+
+	mapSize.x = stageSize->IntAttribute("sizeX");
+	mapSize.y = stageSize->IntAttribute("sizeY");
+	
+	M_CAM->SetMapSize(mapSize);
+}
+
 void ShadeManager::Update()
 {
 	for (Shade* s : shade)
@@ -37,15 +72,28 @@ void ShadeManager::Update()
 
 void ShadeManager::Render(HDC hdc)
 {
-	PatBlt(memDC, 0, 0, WIN_WIDTH, WIN_HEIGHT, PATCOPY);
+	PatBlt(memDC, 0, 0, mapSize.x, mapSize.y, PATCOPY);
 
 	for (Shade* s : shade)
 	{
 		s->Render(memDC);
 	}
 
-	BitBlt(hdc, 0, 0, WIN_WIDTH, WIN_HEIGHT,
-		memDC, 0, 0, SRCCOPY);
+	//BitBlt(
+	//	hdc, 0, 0, WIN_WIDTH , WIN_HEIGHT ,
+	//	memDC, M_CAM->GetPos().x, M_CAM->GetPos().y, SRCCOPY
+	//);
+}
+
+void ShadeManager::Render()
+{
+	PatBlt(memDC, 0, 0, mapSize.x, mapSize.y, PATCOPY);
+
+	for (Shade* s : shade)
+	{
+		s->Render(memDC);
+	}
+
 }
 
 void ShadeManager::SetShade(T_Object* objects)
@@ -60,7 +108,7 @@ void ShadeManager::CreateAlphaDC(STAGE_NUM num)
 {
 	HDC hdc = GetDC(hWnd);
 	memDC = CreateCompatibleDC(hdc);
-	bitmap = CreateCompatibleBitmap(hdc, WIN_WIDTH, WIN_HEIGHT);
+	bitmap = CreateCompatibleBitmap(hdc, mapSize.x, mapSize.y);
 	SelectObject(memDC, bitmap);
 
 	ReleaseDC(hWnd, hdc);

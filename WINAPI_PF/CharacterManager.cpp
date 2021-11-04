@@ -25,10 +25,19 @@ void CharacterManager::Render(HDC hdc)
 {
 	for (Character* obj : characters)
 	{
-		if(obj != nullptr)
+		if(obj != nullptr && obj->GetRect()->Collision(M_CAM->GetScreen()) == true)
 			obj->Render(hdc);
-		
 	}
+}
+
+void CharacterManager::Render(HDC hdc, Vector2 offset)
+{
+	for (Character* obj : characters)
+	{
+		if (obj != nullptr && obj->GetRect()->Collision(M_CAM->GetScreen()) == true)
+			obj->Render(hdc);
+	}
+
 }
 
 T_Object* CharacterManager::PlusCharacter(Name name,Vector2 pos)
