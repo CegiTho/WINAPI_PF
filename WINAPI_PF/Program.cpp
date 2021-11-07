@@ -3,21 +3,10 @@
 
 #include "TestScene.h"
 
-HDC Program::backBuffer = nullptr;
-
 Program::Program(HWND hWindow)
 {
 	srand((unsigned)time(nullptr));
 	hWnd = hWindow;
-
-	HDC hdc = GetDC(hWnd);
-	backBuffer = CreateCompatibleDC(hdc);
-	hBit = CreateCompatibleBitmap(hdc, WIN_WIDTH, WIN_HEIGHT);
-	SelectObject(backBuffer, (HGDIOBJ)hBit);
-
-	ReleaseDC(hWnd, hdc);
-
-	SetBkMode(Program::backBuffer, TRANSPARENT);	
 
 	SCENE->Add("Test", new TestScene());
 	SCENE->ChangeScene("Test");
@@ -26,9 +15,7 @@ Program::Program(HWND hWindow)
 
 Program::~Program()
 {
-	DeleteObject(backBuffer);
-	DeleteObject(hBit);
-
+	
 }
 
 void Program::Update()
@@ -45,14 +32,15 @@ void Program::Update()
 
 void Program::Render(HDC hdc)
 {
-	PatBlt(Program::backBuffer, 0, 0, WIN_WIDTH, WIN_HEIGHT, WHITENESS);	//backBuffer Èò»ö ÃÊ±âÈ­.
+	//backBuffer Èò»ö ÃÊ±âÈ­.
+	PatBlt(M_CAM->GetBackBuffer(), 0, 0, M_CAM->GetScreen()->size.x, M_CAM->GetScreen()->size.y, WHITENESS);	
 
-	SCENE->Render(backBuffer);
+	SCENE->Render(M_CAM->GetBackBuffer());
 
 	TIMER->Render();
 
 	BitBlt(
 		hdc, 0, 0, WIN_WIDTH, WIN_HEIGHT,
-		backBuffer,0, 0 , SRCCOPY
+		M_CAM->GetBackBuffer(),M_CAM->GetPos().x, M_CAM->GetPos().y , SRCCOPY
 	);
 }

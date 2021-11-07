@@ -24,32 +24,18 @@ void ObstacleManager::Render(HDC hdc)
 	}
 }
 
-void ObstacleManager::Render(HDC hdc, Vector2 offset)
+T_Object* ObstacleManager::PlusObstacle( Vector2 center, Vector2 size)
 {
-	for (Obstacle* obs : obstacles)
-	{
-		if (obs->GetRect()->Collision(M_CAM->GetScreen()) == true)
-			obs->Render(hdc);	
-	}
+	NormalObstacle* newObs = new NormalObstacle(center, size);
+	obstacles.emplace_back(newObs);
+	return newObs;
 }
 
-T_Object* ObstacleManager::PlusObstacle(Type type, Vector2 center, Vector2 size)
+T_Object* ObstacleManager::PlusObstacle(Vector2 center, Vector2 size, bool left, bool up, bool right, bool down)
 {
-	switch (type)
-	{
-	case Type::NORMAL:
-	{
-		NormalObstacle* newObs = new NormalObstacle(center, size);
-		obstacles.emplace_back(newObs);
-		return newObs;
-	}
-	case Type::SPIKE:
-	{
-	}
-	case Type::WATER:
-	{
-	}
-	}
+	SpikeObstacle* newObs = new SpikeObstacle(center, size, left, up, right, down);
+	obstacles.emplace_back(newObs);
+	return newObs;
 }
 
 void ObstacleManager::PlusObstacle(Type type, Vector2 center, Vector2 size, Vector2 pathEnd, double speed)

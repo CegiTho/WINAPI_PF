@@ -31,7 +31,7 @@ void Thomas::CreateThomas(Vector2 pos)
 
 	speed = SPEED;
 	thrust = 0;
-	isActive = true;
+	isActive = false;
 	isJump = false;
 	isDoubleJump = false;
 	isFalling = true;
@@ -62,18 +62,19 @@ void Thomas::CreateThomas(Vector2 pos)
 
 void Thomas::Update()
 {
-	Move();
 	Jump();
 	anim->Update();
-
 	InitAgain();
 
+	if (isActive == false)
+		return;
+	Move();
 }
 
 void Thomas::Jump()
 {
 	//======Jump===========
-	if (KEYDOWN(VK_UP) && isJump == false)
+	if (KEYDOWN(VK_UP) && isJump == false && isActive == true)
 	{
 		thrust = THOMAS_THRUST;
 		isJump = true;

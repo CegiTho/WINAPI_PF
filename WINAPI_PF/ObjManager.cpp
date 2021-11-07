@@ -97,12 +97,24 @@ void ObjManager::LoadStage(STAGE_NUM num)
 		size.x = obs_Size->IntAttribute("sizeX");
 		size.y = obs_Size->IntAttribute("sizeY");
 
+		vector<bool> side;
+		side.assign(4, false);
+		if (name == Type::SPIKE)
+		{
+			XmlElement* spikeSide = obstacle->FirstChildElement("side");
+			side[Side::LEFT] = spikeSide->IntAttribute("left");
+			side[Side::UP] = spikeSide->IntAttribute("top");
+			side[Side::RIGHT] = spikeSide->IntAttribute("right");
+			side[Side::DOWN] = spikeSide->IntAttribute("bottom");
+		}
+
 		switch ((Type)name)
 		{
 		case NORMAL:
-			this->PlusObstacle((Type)name, pos, size);
+			this->PlusObstacle( pos, size);
 			break;
 		case SPIKE:
+			this->PlusObstacle( pos, size,side[Side::LEFT], side[Side::UP], side[Side::RIGHT], side[Side::DOWN]);
 			break;
 		case WATER:
 			break;
@@ -128,14 +140,6 @@ void ObjManager::Render(HDC hdc)
 	m_Goal->Render(hdc);
 }
 
-void ObjManager::Render(HDC hdc, Vector2 offset)
-{
-	m_Character->Render(hdc, offset);
-	m_Obstacle->Render(hdc, offset);
-	m_Goal->Render(hdc, offset);
-
-}
-
 void ObjManager::Collision()
 {
 	for (Character* character : m_Character->GetObj())
@@ -151,9 +155,14 @@ void ObjManager::PlusCharacter(Name name,Vector2 pos)
 	this->objects.emplace_back(this->m_Character->PlusCharacter(name,pos));
 }
 
-void ObjManager::PlusObstacle(Type type, Vector2 center, Vector2 size)
+void ObjManager::PlusObstacle( Vector2 center, Vector2 size)
 {
-	this->objects.emplace_back(this->m_Obstacle->PlusObstacle(type, center, size));
+	this->objects.emplace_back(this->m_Obstacle->PlusObstacle(center, size));
+}
+
+void ObjManager::PlusObstacle( Vector2 center, Vector2 size, bool left, bool up, bool right, bool down)
+{
+	this->objects.emplace_back(this->m_Obstacle->PlusObstacle(center, size,left,up,right,down));
 }
 
 void ObjManager::PlusGoal(Character* character, Vector2 pos)

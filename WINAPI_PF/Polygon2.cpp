@@ -35,7 +35,7 @@ void Polygon2::Update()
 
 void Polygon2::SetArr()
 {
-	if (rect != nullptr)
+	if (rect == nullptr)
 	{
 		for (int i = 0; i < vertices.size(); i++)
 		{

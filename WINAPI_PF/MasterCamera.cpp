@@ -1,6 +1,8 @@
 #include "Framework.h"
 #include "MasterCamera.h"
 
+HDC MasterCamera::backBuffer = nullptr;
+
 MasterCamera::MasterCamera()
 {
 	target = nullptr;
@@ -8,11 +10,21 @@ MasterCamera::MasterCamera()
 	isMoving = true;
 	offset = { CENTER_X,CENTER_Y };
 	mapSize = { 0,0 };
+
+	HDC hdc = GetDC(hWnd);
+	MasterCamera::backBuffer = CreateCompatibleDC(hdc);
+	hBitmap = nullptr;
+
+	ReleaseDC(hWnd, hdc);
+	SetBkMode(MasterCamera::backBuffer, TRANSPARENT);
 }
 
 MasterCamera::~MasterCamera()
 {
 	delete screen;
+
+	DeleteObject(MasterCamera::backBuffer);
+	DeleteObject(hBitmap);
 }
 
 void MasterCamera::Update()
@@ -50,4 +62,18 @@ void MasterCamera::SetMapSize(Vector2 size)
 	mapSize = size; 
 	screen->center.x = mapSize.x / 2;
 	screen->center.y = mapSize.y / 2;
+
+	//MasterCamera::backBuffer가 CompatibleDC이지 hWnd랑 직접 관련있는 DC는 아니여서 그런가 아래 bitmap생성할 때 backBuffer넣으면 
+	//색이 안나옴.
+	HDC hdc = GetDC(hWnd);
+	if (hBitmap == nullptr)
+		hBitmap = CreateCompatibleBitmap(hdc, mapSize.x, mapSize.y);
+	else 
+	{
+		DeleteObject(hBitmap);
+		hBitmap = CreateCompatibleBitmap(hdc, mapSize.x, mapSize.y);
+	}
+	ReleaseDC(hWnd,hdc);
+
+	SelectObject(MasterCamera::backBuffer, (HGDIOBJ)hBitmap);
 }

@@ -50,12 +50,12 @@ void Timer::Render()
 	wstring str;
 
 	str = L"FPS : " + to_wstring(frameRate);
-	TextOut(Program::backBuffer, 0, 500, str.c_str(), str.size());
+	TextOut(MasterCamera::backBuffer, 0, 500, str.c_str(), str.size());
 
 	str = L"RunTime : " + to_wstring(runTime);
-	TextOut(Program::backBuffer, 0, 20, str.c_str(), str.size());
+	TextOut(MasterCamera::backBuffer, 0, 20, str.c_str(), str.size());
 
 	str = L"TimeElapsed : " + to_wstring(timeElapsed);
-	TextOut(Program::backBuffer, 0, 40, str.c_str(), str.size());
+	TextOut(MasterCamera::backBuffer, 0, 40, str.c_str(), str.size());
 
 }

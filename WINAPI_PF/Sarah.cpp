@@ -31,7 +31,7 @@ void Sarah::CreateSarah(Vector2 pos)
 
 	speed = SPEED;
 	thrust = 0;
-	isActive = true;
+	isActive = false;
 	isJump = false;
 	isDoubleJump = false;
 	isFalling = true;
@@ -62,16 +62,18 @@ void Sarah::CreateSarah(Vector2 pos)
 
 void Sarah::Update()
 {
-	Move();
 	Jump();
 	anim->Update();
-
 	InitAgain();
+
+	if (isActive == false)
+		return;
+	Move();
 }
 
 void Sarah::Jump()
 {//======Jump===========
-	if (KEYDOWN(VK_UP) && isJump == true && isDoubleJump == false)
+	if (KEYDOWN(VK_UP) && isJump == true && isDoubleJump == false && isActive == true)
 	{
 		thrust += SARAH_THRUST;
 		isDoubleJump = true;
@@ -79,7 +81,7 @@ void Sarah::Jump()
 		anim->SetState(State::JUMP);
 	}
 
-	if (KEYDOWN(VK_UP) && isJump == false)
+	if (KEYDOWN(VK_UP) && isJump == false && isActive == true)
 	{
 		thrust = SARAH_THRUST;
 		isJump = true;

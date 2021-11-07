@@ -44,10 +44,14 @@
 #define SARAH_THRUST 550
 #define SARAH_START {1500,300}
 
-
 //==========Moving=============
 #define SPEED 200
 #define GRAVITY 980
+
+//==========Obstacle===========
+#define SPIKE_WIDTH 18
+#define SPIKE_HEIGHT 24
+
 
 //==========Shade=============
 #define ShadeLength 5000

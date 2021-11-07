@@ -6,6 +6,9 @@ private:
 	Character* target;
 	Rect* screen;
 
+	
+	HBITMAP hBitmap;
+
 	Vector2 mapSize;
 	Vector2 offset;
 
@@ -31,6 +34,9 @@ public:
 	void SetPos(Vector2 pos) { this->screen->center = pos;}
 	void SetMapSize(Vector2 size);
 
+	HDC GetBackBuffer() { return this->backBuffer; }
+
+	static HDC backBuffer;
 };
 
 

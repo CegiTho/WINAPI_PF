@@ -48,7 +48,7 @@ void Bitmap::CreateBitmap(wstring file, int width, int height)
 void Bitmap::Render(Rect* rect)
 {
 	GdiTransparentBlt(
-		Program::backBuffer, (int)rect->Left(), (int)rect->Top(), (int)rect->size.x, (int)rect->size.y,
+		MasterCamera::backBuffer, (int)rect->Left(), (int)rect->Top(), (int)rect->size.x, (int)rect->size.y,
 		memDC, 0, 0, frameSize.x, frameSize.y,
 		transColor
 	);
@@ -59,7 +59,7 @@ void Bitmap::Render(Rect* rect)
 void Bitmap::Render(Rect* rect, Vector2 curFrame)
 {
 	GdiTransparentBlt(
-		Program::backBuffer, (int)rect->Left(), (int)rect->Top(), (int)rect->size.x, (int)rect->size.y,
+		MasterCamera::backBuffer, (int)rect->Left(), (int)rect->Top(), (int)rect->size.x, (int)rect->size.y,
 		memDC, frameSize.x * curFrame.x, frameSize.y * curFrame.y, frameSize.x, frameSize.y,
 		transColor
 	);
@@ -73,7 +73,7 @@ void Bitmap::AlphaRender(Rect* rect, int alpha)
 
 	BitBlt(
 		alphaMemDC, 0, 0, originSize.x, originSize.y,
-		Program::backBuffer,rect->Left(),rect->Top(),
+		MasterCamera::backBuffer,rect->Left(),rect->Top(),
 		SRCCOPY
 	);
 
@@ -85,7 +85,7 @@ void Bitmap::AlphaRender(Rect* rect, int alpha)
 
 
 	GdiAlphaBlend(
-		Program::backBuffer, (int)rect->Left(), (int)rect->Top(), (int)rect->size.x, (int)rect->size.y,
+		MasterCamera::backBuffer, (int)rect->Left(), (int)rect->Top(), (int)rect->size.x, (int)rect->size.y,
 		alphaMemDC, 0, 0, rect->size.x, rect->size.y,
 		blendFunc
 	);
@@ -102,7 +102,7 @@ void Bitmap::AlphaRender(Rect* rect, Vector2 curFrame, int alpha)
 	//따라서 일단 뒷배경을 alphaMemDC에 그린 다음 그 위에 alpha처리 할 비트맵 그린 다음 transparentblt으로 alpha처리 이미지 배경을 지워야함
 	BitBlt(
 		alphaMemDC, frameSize.x * curFrame.x, frameSize.y * curFrame.y, frameSize.x, frameSize.y,
-		Program::backBuffer, (int)rect->Left(), (int)rect->Top(),
+		MasterCamera::backBuffer, (int)rect->Left(), (int)rect->Top(),
 		SRCCOPY
 	);
 	//출력을 원하는 frame 위치 뒷배경에 backBuffer의 전체이미지 중 그려질 위치(rect)를 그려줌
@@ -117,7 +117,7 @@ void Bitmap::AlphaRender(Rect* rect, Vector2 curFrame, int alpha)
 
 	//배경 알파처리 완료된 이미지 전체의 알파처리
 	GdiAlphaBlend(
-		Program::backBuffer, (int)rect->Left(), (int)rect->Top(), (int)rect->size.x, (int)rect->size.y,
+		MasterCamera::backBuffer, (int)rect->Left(), (int)rect->Top(), (int)rect->size.x, (int)rect->size.y,
 		alphaMemDC, frameSize.x * curFrame.x, frameSize.y * curFrame.y, frameSize.x, frameSize.y,
 		blendFunc
 	);

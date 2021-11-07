@@ -63,6 +63,12 @@
       <position posX ="200" posY ="900"/>
       <size sizeX="400" sizeY ="50"/>
     </obs3>
+    <obs4>
+      <type type ="1"/>
+      <position posX ="600" posY ="500"/>
+      <size sizeX="20" sizeY ="5"/>
+      <side left ="1" top ="1" right ="1" bottom="1"/>
+    </obs4>
   </Obstacle>
   <StageSize>
     <size sizeX ="3200" sizeY ="2000"/>

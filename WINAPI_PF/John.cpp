@@ -12,6 +12,12 @@ John::John(Vector2 pos)
 
 John::~John()
 {
+	delete rect;
+
+	DeleteObject(color);
+	DeleteObject(edge);
+
+	delete anim;
 }
 
 void John::CreateJohn(Vector2 pos)
@@ -24,7 +30,7 @@ void John::CreateJohn(Vector2 pos)
 
 	speed = SPEED;
 	thrust = 0;
-	isActive = true;
+	isActive = false;
 	isJump = false;
 	isDoubleJump = false;
 	isFalling = true;
@@ -130,16 +136,18 @@ void John::InitAgain()
 
 void John::Update()
 {
-	Move();
 	Jump();
 	anim->Update();
-
 	InitAgain();
+
+	if (isActive == false)
+		return;
+	Move();
 }
 
 void John::Jump()
 {//======Jump===========
-	if (KEYDOWN(VK_UP) && isJump == false)
+	if (KEYDOWN(VK_UP) && isJump == false && isActive == true)
 	{
 		thrust = JOHN_THRUST;
 		isJump = true;

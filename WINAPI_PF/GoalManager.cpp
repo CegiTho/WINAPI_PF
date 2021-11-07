@@ -31,16 +31,6 @@ void GoalManager::Render(HDC hdc)
 	}
 }
 
-void GoalManager::Render(HDC hdc, Vector2 offset)
-{
-	for (Goal* goal : goals)
-	{
-		if (goal->GetRect()->Collision(M_CAM->GetScreen()) == true)
-			goal->Render(hdc);
-	}
-}
-
-
 Goal* GoalManager::PlusGoal(Character* character, Vector2 pos)
 {
 	Goal* goal = new Goal(character, pos);
@@ -58,8 +48,5 @@ bool GoalManager::Check()
 		isClear = isClear && goal->GoalCheck();
 	}
 
-	if (isClear == true)
-		return isClear;
-	else
-		return false;
+	return isClear;
 }

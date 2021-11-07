@@ -46,38 +46,38 @@ void Character::Move()
 
 }
 
-void Character::PrintElement(int x)
+void Character::PrintElement(HDC hdc,int x)
 {
 	wstring s_Height;
 	switch (this->name)
 	{
 	case Name::THOMAS:
 		s_Height = L"Name : THOMAS";
-		TextOut(Program::backBuffer, x, 0, s_Height.c_str(), s_Height.size());
+		TextOut(hdc, x, 0, s_Height.c_str(), s_Height.size());
 		break;
 	case Name::CHRIS:
 		s_Height = L"Name : CHRIS";
-		TextOut(Program::backBuffer, x, 0, s_Height.c_str(), s_Height.size());
+		TextOut(hdc, x, 0, s_Height.c_str(), s_Height.size());
 		break;
 	case Name::CLARE:
 		s_Height = L"Name : CLARE";
-		TextOut(Program::backBuffer, x, 0, s_Height.c_str(), s_Height.size());
+		TextOut(hdc, x, 0, s_Height.c_str(), s_Height.size());
 		break;
 	case Name::JAMES:
 		s_Height = L"Name : JAMES";
-		TextOut(Program::backBuffer, x, 0, s_Height.c_str(), s_Height.size());
+		TextOut(hdc, x, 0, s_Height.c_str(), s_Height.size());
 		break;
 	case Name::JOHN:
 		s_Height = L"Name : JOHN";
-		TextOut(Program::backBuffer, x, 0, s_Height.c_str(), s_Height.size());
+		TextOut(hdc, x, 0, s_Height.c_str(), s_Height.size());
 		break;
 	case Name::LAURA:
 		s_Height = L"Name : LAURA";
-		TextOut(Program::backBuffer, x, 0, s_Height.c_str(), s_Height.size());
+		TextOut(hdc, x, 0, s_Height.c_str(), s_Height.size());
 		break;
 	case Name::SARAH:
 		s_Height = L"Name : SARAH";
-		TextOut(Program::backBuffer, x, 0, s_Height.c_str(), s_Height.size());
+		TextOut(hdc, x, 0, s_Height.c_str(), s_Height.size());
 		break;
 	}
 
@@ -85,22 +85,22 @@ void Character::PrintElement(int x)
 	double height = rect->center.y;
 	s_Height = to_wstring(height);
 	s_Height = L"Height : " + s_Height;
-	TextOut(Program::backBuffer, x, y, s_Height.c_str(), s_Height.size());
+	TextOut(hdc, x, y, s_Height.c_str(), s_Height.size());
 	y += 15;
 
 	wstring s_Thrust = to_wstring(thrust);
 	s_Thrust = L"Thrust : " + s_Thrust;
-	TextOut(Program::backBuffer, x, y, s_Thrust.c_str(), s_Thrust.size());
+	TextOut(hdc, x, y, s_Thrust.c_str(), s_Thrust.size());
 	y += 15;
 
 	wstring falling = isFalling ? L"True" : L"False";
 	falling = L"isFalling : " + falling;
-	TextOut(Program::backBuffer, x, y, falling.c_str(), falling.size());
+	TextOut(hdc, x, y, falling.c_str(), falling.size());
 	y += 15;
 
 	falling = isJump ? L"True" : L"False";
 	falling = L"isJump : " + falling;
-	TextOut(Program::backBuffer, x, y, falling.c_str(), falling.size());
+	TextOut(hdc, x, y, falling.c_str(), falling.size());
 	y += 15;
 
 	falling = L"======================";
@@ -113,6 +113,7 @@ Side Character::Collision(T_Object* obj)
 {
 	Rect overlap;
 	
+	//해당 객체가 obj의 사면중 어느 부분이랑 접촉했는지
 	if (this->GetRect()->Collision(&overlap, obj->GetRect()) == true)
 	{
 		if (overlap.size.x > overlap.size.y)	//상하충돌
@@ -169,25 +170,25 @@ void Character::Render(HDC hdc)
 	switch (name)
 	{
 	case THOMAS:
-		PrintElement(200);
+		PrintElement(hdc,200);
 		break;
 	case CHRIS:
-		PrintElement(400);
+		PrintElement(hdc, 400);
 		break;
 	case CLARE:
-		PrintElement(600);
+		PrintElement(hdc, 600);
 		break;
 	case JAMES:
-		PrintElement(800);
+		PrintElement(hdc, 800);
 		break;
 	case JOHN:
-		PrintElement(1000);
+		PrintElement(hdc, 1000);
 		break;
 	case LAURA:
-		PrintElement(1200);
+		PrintElement(hdc, 1200);
 		break;
 	case SARAH:
-		PrintElement(1400);
+		PrintElement(hdc, 1400);
 		break;
 	}
 

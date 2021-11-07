@@ -34,6 +34,7 @@ public:
 	bool GetDoubleJump()	{ return isDoubleJump; }
 	Name GetName()			{ return name; }
 
+	void SetActive(bool active) { this->isActive = active; }
 	void SetAnim(State value) { anim->SetState(value); }
 	void SetSide(Side index, bool value) { side[index] = value; }
 	void SetJump(bool value) { isJump = value; }
@@ -41,7 +42,7 @@ public:
 	void SetGoal(bool value) { isGoal = value; }
 	double& Thrust() { return thrust; }
 
-	void PrintElement(int x);
+	void PrintElement(HDC hdc,int x);
 
 	Side Collision(T_Object* obj);
 

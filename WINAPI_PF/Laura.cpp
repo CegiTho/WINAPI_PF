@@ -30,7 +30,7 @@ void Laura::CreateLaura(Vector2 pos)
 
 	speed = SPEED;
 	thrust = 0;
-	isActive = true;
+	isActive = false;
 	isJump = false;
 	isDoubleJump = false;
 	isFalling = true;
@@ -180,16 +180,18 @@ void Laura::ObstacleCollision(T_Object* obstacle)
 
 void Laura::Update()
 {
-	//Move();
 	Jump();
 	anim->Update();
-
 	InitAgain();
+
+	if (isActive == false)
+		return;
+	Move();
 }
 
 void Laura::Jump()
 {//======Jump===========
-	if (KEYDOWN(VK_UP) && isJump == false)
+	if (KEYDOWN(VK_UP) && isJump == false && isActive == true)
 	{
 		thrust = LAURA_THRUST;
 		isJump = true;

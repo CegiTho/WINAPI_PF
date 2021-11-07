@@ -159,6 +159,7 @@
     <ClInclude Include="Clare.h" />
     <ClInclude Include="Enum.h" />
     <ClInclude Include="Framework.h" />
+    <ClInclude Include="GameStreamManager.h" />
     <ClInclude Include="Goal.h" />
     <ClInclude Include="GoalManager.h" />
     <ClInclude Include="James.h" />
@@ -188,6 +189,7 @@
     <ClInclude Include="Shade.h" />
     <ClInclude Include="ShadeManager.h" />
     <ClInclude Include="SoundManager.h" />
+    <ClInclude Include="SpikeObstacle.h" />
     <ClInclude Include="SyncKeyboard.h" />
     <ClInclude Include="targetver.h" />
     <ClInclude Include="TestScene.h" />
@@ -240,6 +242,7 @@
     <ClCompile Include="Shade.cpp" />
     <ClCompile Include="ShadeManager.cpp" />
     <ClCompile Include="SoundManager.cpp" />
+    <ClCompile Include="SpikeObstacle.cpp" />
     <ClCompile Include="SyncKeyboard.cpp" />
     <ClCompile Include="TestScene.cpp" />
     <ClCompile Include="Texture.cpp" />

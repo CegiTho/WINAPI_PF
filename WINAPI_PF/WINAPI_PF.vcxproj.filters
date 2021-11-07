@@ -207,6 +207,12 @@
     <ClInclude Include="MasterCamera.h">
       <Filter>Framework\Utility</Filter>
     </ClInclude>
+    <ClInclude Include="SpikeObstacle.h">
+      <Filter>Framework\GameObject\Obstacle</Filter>
+    </ClInclude>
+    <ClInclude Include="GameStreamManager.h">
+      <Filter>Framework\GameObject\Manager</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="WINAPI_PF.cpp">
@@ -340,6 +346,9 @@
     </ClCompile>
     <ClCompile Include="MasterCamera.cpp">
       <Filter>Framework\Utility</Filter>
+    </ClCompile>
+    <ClCompile Include="SpikeObstacle.cpp">
+      <Filter>Framework\GameObject\Obstacle</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

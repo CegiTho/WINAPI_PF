@@ -22,9 +22,6 @@ ShadeManager::ShadeManager(STAGE_NUM num, double constant)
 
 ShadeManager::~ShadeManager()
 {
-	DeleteObject(memDC);
-	DeleteObject(bitmap);
-
 	DeleteObject(stageColor);
 
 	if (lSource != nullptr)
@@ -72,28 +69,12 @@ void ShadeManager::Update()
 
 void ShadeManager::Render(HDC hdc)
 {
-	PatBlt(memDC, 0, 0, mapSize.x, mapSize.y, PATCOPY);
+	PatBlt(hdc, 0, 0, mapSize.x, mapSize.y, PATCOPY);
 
 	for (Shade* s : shade)
 	{
-		s->Render(memDC);
+		s->Render(hdc);
 	}
-
-	//BitBlt(
-	//	hdc, 0, 0, WIN_WIDTH , WIN_HEIGHT ,
-	//	memDC, M_CAM->GetPos().x, M_CAM->GetPos().y, SRCCOPY
-	//);
-}
-
-void ShadeManager::Render()
-{
-	PatBlt(memDC, 0, 0, mapSize.x, mapSize.y, PATCOPY);
-
-	for (Shade* s : shade)
-	{
-		s->Render(memDC);
-	}
-
 }
 
 void ShadeManager::SetShade(T_Object* objects)
@@ -106,13 +87,6 @@ void ShadeManager::SetShade(T_Object* objects)
 
 void ShadeManager::CreateAlphaDC(STAGE_NUM num)
 {
-	HDC hdc = GetDC(hWnd);
-	memDC = CreateCompatibleDC(hdc);
-	bitmap = CreateCompatibleBitmap(hdc, mapSize.x, mapSize.y);
-	SelectObject(memDC, bitmap);
-
-	ReleaseDC(hWnd, hdc);
-
 	switch (num)
 	{
 	case STAGE_1:
@@ -132,5 +106,6 @@ void ShadeManager::CreateAlphaDC(STAGE_NUM num)
 		break;
 	}
 
-	SelectObject(memDC, stageColor);
+	SelectObject(MasterCamera::backBuffer, stageColor);
+
 }

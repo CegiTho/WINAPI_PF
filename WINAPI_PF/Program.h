@@ -3,7 +3,6 @@
 class Program
 {
 private:
-	HBITMAP hBit;
 
 
 
@@ -14,7 +13,6 @@ public:
 	void Update();
 	void Render(HDC hdc);
 
-	static HDC backBuffer;
 
 
 };

@@ -32,7 +32,7 @@ void James::CreateJames(Vector2 pos)
 
 	speed = SPEED;
 	thrust = 0;
-	isActive = true;
+	isActive = false;
 	isJump = false;
 	isDoubleJump = false;
 	isFalling = true;
@@ -128,17 +128,19 @@ void James::ObstacleCollision(T_Object* obstacle)
 
 void James::Update()
 {
-	Move();
 	Jump();
 	anim->Update();
-
 	InitAgain();
+
+	if (isActive == false)
+		return;
+	Move();
 }
 
 void James::Jump()
 {
 	//======Jump===========
-	if (KEYDOWN(VK_UP) && isJump == false)
+	if (KEYDOWN(VK_UP) && isJump == false && isActive == true)
 	{
 		thrust = JAMES_THRUST;
 		isJump = true;

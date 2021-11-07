@@ -18,8 +18,10 @@ TestScene::TestScene()
 			m_Shade->SetShade(character);
 	}
 	m_Shade->SetShade(m_Obj->GetOM()->GetObj()[2]);
+	m_Shade->SetShade(m_Obj->GetOM()->GetObj()[3]);
 
 	M_CAM->TargetChange(m_Obj->GetCM()->GetObj()[THOMAS]);
+	m_Obj->GetCM()->SetCharacterActive(THOMAS, true);
 }
 
 TestScene::~TestScene()
@@ -40,12 +42,8 @@ void TestScene::Update()
 
 void TestScene::Render(HDC hdc)
 {
-	m_Shade->Render();
+	//m_Shade->memDC : BG,Shade,Objects 전부 출력 / 크기는 맵 전체 크기
+	m_Shade->Render(hdc);
+	m_Obj->Render(hdc);
 
-	m_Obj->Render(m_Shade->GetMemDC());
-
-	BitBlt(
-		hdc, 0, 0, WIN_WIDTH, WIN_HEIGHT,
-		m_Shade->GetMemDC(), M_CAM->GetPos().x, M_CAM->GetPos().y,
-	SRCCOPY);
 }

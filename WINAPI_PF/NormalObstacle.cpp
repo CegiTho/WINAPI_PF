@@ -33,6 +33,8 @@ NormalObstacle::~NormalObstacle()
 	DeleteObject(color);
 	DeleteObject(edge);
 
+	if (path != nullptr)
+		delete path;
 }
 
 void NormalObstacle::Update()

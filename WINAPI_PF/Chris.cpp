@@ -31,7 +31,7 @@ void Chris::CreateChris(Vector2 pos)
 
 	speed = SPEED;
 	thrust = 0;
-	isActive = true;
+	isActive = false;
 	isJump = false;
 	isDoubleJump = false;
 	isFalling = true;
@@ -109,40 +109,73 @@ void Chris::CharacterCollision(T_Object* character)
 
 void Chris::ObstacleCollision(T_Object* obstacle)
 {
-	switch (dynamic_cast<Character*>(this)->Collision(obstacle))
+	Type type = dynamic_cast<Obstacle*>(obstacle)->GetType();
+	if (type == Type::NORMAL)
 	{
-	case Side::UP:
-		side[UP] = true;
-		break;
-	case Side::DOWN:
-		side[DOWN] = true;
-		break;
-	case Side::LEFT:
-		side[LEFT] = true;
-		break;
-	case Side::RIGHT:
-		side[RIGHT] = true;
-		break;
-	case Side::NONE:
-		break;
+		switch (dynamic_cast<Character*>(this)->Collision(obstacle))
+		{
+		case Side::UP:
+			side[UP] = true;
+			break;
+		case Side::DOWN:
+			side[DOWN] = true;
+			break;
+		case Side::LEFT:
+			side[LEFT] = true;
+			break;
+		case Side::RIGHT:
+			side[RIGHT] = true;
+			break;
+		case Side::NONE:
+			break;
+		}
 	}
+	else
+	{
+		if(type == Type::WATER)
+		{ }
+		else
+		{
+			vector<bool> spikeSide = dynamic_cast<SpikeObstacle*>(obstacle)->GetSpikeSide();
+			switch (dynamic_cast<Character*>(this)->Collision(obstacle))
+			{
+			case Side::UP:
+				break;
+			case Side::DOWN:
+				side[DOWN] = true;
+				break;
+			case Side::LEFT:
+				side[LEFT] = true;
+				break;
+			case Side::RIGHT:
+				side[RIGHT] = true;
+				break;
+			case Side::NONE:
+				break;
+			}
+		}
+	}
+
+
 
 }
 
 void Chris::Update()
 {
-	Move();
 	Jump();
 	anim->Update();
-
 	InitAgain();
+
+	if (isActive == false)
+		return;
+	Move();
 
 }
 
 void Chris::Jump()
 {
 	//======Jump===========
-	if (KEYDOWN(VK_UP) && isJump == false )
+	if (KEYDOWN(VK_UP) && isJump == false && isActive == true)
 	{
 		thrust = CHRIS_THRUST;
 		isJump = true;
