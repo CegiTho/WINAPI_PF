@@ -1,6 +1,8 @@
 #pragma once
 
 //=======Character=============
+#define PickTriangle 12
+
 //#define THOMAS_SIZE {48,68}
 #define THOMAS_SIZE {24,34}
 #define THOMAS_COLOR RGB(178,69,54)

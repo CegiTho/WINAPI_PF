@@ -57,6 +57,10 @@ void Laura::CreateLaura(Vector2 pos)
 		goal.emplace_back(Vector2(0, 0));
 		anim->SetAnim(State::GOAL, goal, 0.1);
 	}
+
+	{
+		pick = new Polygon2(this->GetRect());
+	}
 }
 
 void Laura::LauraJump(Character* character)
@@ -144,6 +148,7 @@ void Laura::CharacterCollision(T_Object* character)
 		side[UP] = true;
 		break;
 	case Side::DOWN:
+		
 		side[DOWN] = true;
 		break;
 	case Side::LEFT:
@@ -183,6 +188,7 @@ void Laura::Update()
 	Jump();
 	anim->Update();
 	InitAgain();
+	pick->Update();
 
 	if (isActive == false)
 		return;
@@ -235,4 +241,5 @@ void Laura::InitAgain()
 {
 	for (int i = 0; i < side.size(); i++)
 		side[i] = false;
+	
 }

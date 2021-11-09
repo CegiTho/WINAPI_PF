@@ -14,6 +14,7 @@ Chris::Chris(Vector2 pos)
 Chris::~Chris()
 {
 	delete rect;
+	delete pick;
 
 	DeleteObject(color);
 	DeleteObject(edge);
@@ -59,6 +60,10 @@ void Chris::CreateChris(Vector2 pos)
 		anim->SetAnim(State::GOAL, goal, 0.1);
 	}
 
+	{
+		pick = new Polygon2(this->GetRect());
+	}
+
 }
 
 void Chris::Collision(vector<T_Object*> objects)
@@ -95,6 +100,7 @@ void Chris::CharacterCollision(T_Object* character)
 			side[UP] = true;
 		break;
 	case Side::DOWN:
+		
 		side[DOWN] = true;
 		break;
 	case Side::LEFT:
@@ -165,6 +171,7 @@ void Chris::Update()
 	Jump();
 	anim->Update();
 	InitAgain();
+	pick->Update();
 
 	if (isActive == false)
 		return;
@@ -217,5 +224,6 @@ void Chris::InitAgain()
 {
 	for (int i = 0; i < side.size(); i++)
 		side[i] = false;
+
 }
 

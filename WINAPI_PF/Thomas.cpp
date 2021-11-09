@@ -58,6 +58,10 @@ void Thomas::CreateThomas(Vector2 pos)
 		goal.emplace_back(Vector2(0, 0));
 		anim->SetAnim(State::GOAL, goal, 0.1);
 	}
+
+	{
+		pick = new Polygon2(this->GetRect());
+	}
 }
 
 void Thomas::Update()
@@ -65,6 +69,7 @@ void Thomas::Update()
 	Jump();
 	anim->Update();
 	InitAgain();
+	pick->Update();
 
 	if (isActive == false)
 		return;
@@ -118,6 +123,7 @@ void Thomas::InitAgain()
 {
 	for (int i = 0 ; i < side.size() ; i++)
 		side[i] = false;
+	
 }
 
 void Thomas::Collision(vector<T_Object*> objects)

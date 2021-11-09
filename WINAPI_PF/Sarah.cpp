@@ -58,6 +58,10 @@ void Sarah::CreateSarah(Vector2 pos)
 		goal.emplace_back(Vector2(0, 0));
 		anim->SetAnim(State::GOAL, goal, 0.1);
 	}
+
+	{
+		pick = new Polygon2(this->GetRect());
+	}
 }
 
 void Sarah::Update()
@@ -65,6 +69,7 @@ void Sarah::Update()
 	Jump();
 	anim->Update();
 	InitAgain();
+	pick->Update();
 
 	if (isActive == false)
 		return;
@@ -126,6 +131,7 @@ void Sarah::InitAgain()
 {
 	for (int i = 0; i < side.size(); i++)
 		side[i] = false;
+
 }
 
 void Sarah::Collision(vector<T_Object*> objects)
@@ -163,6 +169,7 @@ void Sarah::CharacterCollision(T_Object* character)
 			side[UP] = true;
 		break;
 	case Side::DOWN:
+		
 		side[DOWN] = true;
 		break;
 	case Side::LEFT:

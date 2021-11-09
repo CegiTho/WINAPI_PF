@@ -5,6 +5,7 @@ Character::Character()
 	:isGoal(false)
 {
 	side.assign(5, false);
+	fused.assign(3, nullptr);
 
 	goalColor = CreateSolidBrush(WHITE);
 	goalEdge = CreatePen(PS_SOLID, 1, WHITE);
@@ -35,14 +36,16 @@ void Character::Move()
 	if (KEYPRESS(VK_RIGHT))
 	{
 		rect->center.x += speed * DELTA;
-
+		
 	}
 
 	if (KEYPRESS(VK_LEFT))
 	{
 		rect->center.x -= speed * DELTA;
-
+	
 	}
+
+
 
 }
 
@@ -164,9 +167,16 @@ void Character::Render(HDC hdc)
 
 	anim->Render(hdc);
 
+	if (this->isActive == true)
+	{
+		SelectObject(hdc, goalColor);
+		SelectObject(hdc, goalEdge);
+
+		pick->Render(hdc);
+	}
+
 	SelectObject(hdc, tempB);
 	SelectObject(hdc, tempP);
-
 	switch (name)
 	{
 	case THOMAS:

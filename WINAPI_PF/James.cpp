@@ -60,6 +60,9 @@ void James::CreateJames(Vector2 pos)
 		anim->SetAnim(State::GOAL, goal, 0.1);
 	}
 
+	{
+		pick = new Polygon2(this->GetRect());
+	}
 }
 
 void James::Collision(vector<T_Object*> objects)
@@ -92,6 +95,7 @@ void James::CharacterCollision(T_Object* character)
 		side[UP] = true;
 		break;
 	case Side::DOWN:
+		
 		side[DOWN] = true;
 		break;
 	case Side::LEFT:
@@ -131,6 +135,7 @@ void James::Update()
 	Jump();
 	anim->Update();
 	InitAgain();
+	pick->Update();
 
 	if (isActive == false)
 		return;
@@ -182,5 +187,6 @@ void James::Jump()
 void James::InitAgain()
 {
 	for (int i = 0; i < side.size(); i++)
-		side[i] = false;
+		side[i] = false; 
+	
 }

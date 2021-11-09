@@ -85,6 +85,16 @@ void ShadeManager::SetShade(T_Object* objects)
 		shade.emplace_back(new Shade(objects, lSource, stage));
 }
 
+void ShadeManager::SpikeSetShade(Rect* rect)
+{
+	
+	if (lSource == nullptr)
+		shade.emplace_back(new Shade(rect, constant, stage));
+	else
+		shade.emplace_back(new Shade(rect, lSource, stage));
+	
+}
+
 void ShadeManager::CreateAlphaDC(STAGE_NUM num)
 {
 	switch (num)

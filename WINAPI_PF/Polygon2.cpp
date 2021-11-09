@@ -13,7 +13,7 @@ Polygon2::Polygon2(Rect* rect)
 	:rect(rect)
 {
 
-	points = new POINT[4];
+	points = new POINT[3];
 	SetArr();
 
 }
@@ -25,7 +25,7 @@ Polygon2::~Polygon2()
 
 void Polygon2::Render(HDC hdc)
 {
-	Polygon(hdc, points, vertices.size());
+	Polygon(hdc, points, rect == nullptr ? vertices.size() : 3);
 }
 
 void Polygon2::Update()
@@ -45,17 +45,18 @@ void Polygon2::SetArr()
 	}
 	else
 	{
-		points[0].x = (LONG)rect->Left();
-		points[0].y = (LONG)rect->Top();
+		LONG deltaX = PickTriangle * 0.5;
+		LONG deltaY = PickTriangle * 0.5 * sqrt(3.0);
+
+		points[0].x = (LONG)rect->center.x;
+		points[0].y = (LONG)(rect->center.y - (rect->size.y * 0.5) - 3);	//-3안하면 묘하게 안맞는데 아마 테두리 두꼐 1 때문인거같음.
 	
-		points[1].x = (LONG)rect->Right();
-		points[1].y = (LONG)rect->Top();
+		points[1].x = points[0].x - deltaX;
+		points[1].y = points[0].y - deltaY;
 
-		points[2].x = (LONG)rect->Right();
-		points[2].y = (LONG)rect->Bottom();
+		points[2].x = points[0].x + deltaX;
+		points[2].y = points[0].y - deltaY;
 
-		points[3].x = (LONG)rect->Left();
-		points[3].y = (LONG)rect->Bottom();
 	}
 
 }

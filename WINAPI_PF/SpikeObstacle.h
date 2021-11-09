@@ -18,6 +18,8 @@ public:
 	virtual void Update() override;
 	virtual void Render(HDC hdc) override;
 
+	Rect* GetRectForShade() { return renderRect; }
+
 	void SetObs(Vector2 center, Vector2 size, bool left, bool up, bool right, bool down);
 	void SetSpikePolygon(Rect* renderRect);
 

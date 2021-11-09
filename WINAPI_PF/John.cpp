@@ -79,6 +79,10 @@ void John::Collision(vector<T_Object*> objects)
 			break;
 		}
 	}
+
+	{
+		pick = new Polygon2(this->GetRect());
+	}
 }
 
 void John::CharacterCollision(T_Object* character)
@@ -94,6 +98,7 @@ void John::CharacterCollision(T_Object* character)
 			side[UP] = true;
 		break;
 	case Side::DOWN:
+	
 		side[DOWN] = true;
 		break;
 	case Side::LEFT:
@@ -132,6 +137,7 @@ void John::InitAgain()
 {
 	for (int i = 0; i < side.size(); i++)
 		side[i] = false;
+	
 }
 
 void John::Update()
@@ -139,6 +145,7 @@ void John::Update()
 	Jump();
 	anim->Update();
 	InitAgain();
+	pick->Update();
 
 	if (isActive == false)
 		return;

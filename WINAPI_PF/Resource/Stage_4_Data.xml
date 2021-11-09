@@ -67,7 +67,7 @@
       <type type ="1"/>
       <position posX ="600" posY ="500"/>
       <size sizeX="20" sizeY ="5"/>
-      <side left ="1" top ="1" right ="1" bottom="1"/>
+      <side left ="1" top ="0" right ="0" bottom="1"/>
     </obs4>
   </Obstacle>
   <StageSize>

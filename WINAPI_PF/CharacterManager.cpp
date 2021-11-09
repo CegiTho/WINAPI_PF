@@ -5,6 +5,7 @@ CharacterManager::CharacterManager()
 {
 	characters.assign(CHARACTER_COUNT, nullptr);
 	nowActive = CHARACTER_COUNT;
+
 }
 
 CharacterManager::~CharacterManager()
@@ -88,7 +89,14 @@ void CharacterManager::CharacterRotation()
 		}
 
 		SetCharacterActive(nowActive, false);
-		nowActive = (index == indices.size() - 1) ? indices[0] : indices[++index];
+		if (index == indices.size() - 1)
+		{
+			nowActive = indices[0];
+			index = 0;
+		}
+		else
+			nowActive = indices[++index];
+		
 		SetCharacterActive(nowActive, true);
 		M_CAM->TargetChange(characters[nowActive]);
 	}
@@ -110,7 +118,14 @@ void CharacterManager::CharacterRotation()
 		}
 
 		SetCharacterActive(nowActive, false);
-		nowActive = (index == 0) ? indices[indices.size()-1] : indices[--index];
+		if (index == 0)
+		{
+			nowActive = indices[indices.size() - 1];
+			index = indices.size() - 1;
+		}
+		else
+			nowActive = indices[--index];
+		
 		SetCharacterActive(nowActive, true);
 		M_CAM->TargetChange(characters[nowActive]);
 	}

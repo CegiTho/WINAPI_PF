@@ -30,6 +30,15 @@ void Rect::Render(HDC hdc)
 		(int)Left(),(int)Top(),
 		(int)Right(),(int)Bottom()
 	);
+
+	//HPEN pen = CreatePen(PS_SOLID, 1, GREEN);
+	//HPEN tempP = (HPEN)SelectObject(hdc, (HPEN)pen);
+	//Rectangle(hdc,
+	//	Left(), Top(),
+	//	Right(), Bottom()
+	//);
+	//
+	//SelectObject(hdc, tempP);
 }
 
 bool Rect::Collision(Vector2 pos)

@@ -12,6 +12,7 @@ class Shade
 {
 private:
 	T_Object* object;
+	Rect* rect;
 
 	vector<POINT*> points;
 
@@ -27,6 +28,8 @@ private:
 public:
 	Shade(T_Object* obj,Vector2* lSource, STAGE_NUM stage);
 	Shade(T_Object* obj,double constant, STAGE_NUM stage);
+	Shade(Rect* rect,double constant, STAGE_NUM stage);
+	Shade(Rect* rect,Vector2* lSource, STAGE_NUM stage);
 	~Shade();
 
 	void AlphaColor(STAGE_NUM stage);

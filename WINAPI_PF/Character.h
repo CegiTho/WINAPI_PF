@@ -21,6 +21,10 @@ protected:
 	HBRUSH goalColor;
 	HPEN goalEdge;
 
+	Polygon2* pick;
+
+	vector<Character*> fused;
+
 public:
 	Character();
 	Character(Vector2 pos);

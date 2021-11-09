@@ -126,8 +126,8 @@ void ObjManager::Update()
 {
 	Collision();
 
-	m_Character->Update();
 	m_Obstacle->Update();
+	m_Character->Update();
 	m_Goal->Update();
 
 
@@ -135,8 +135,8 @@ void ObjManager::Update()
 
 void ObjManager::Render(HDC hdc)
 {
-	m_Character->Render(hdc);
 	m_Obstacle->Render(hdc);
+	m_Character->Render(hdc);
 	m_Goal->Render(hdc);
 }
 

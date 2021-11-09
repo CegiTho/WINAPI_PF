@@ -18,7 +18,7 @@ TestScene::TestScene()
 			m_Shade->SetShade(character);
 	}
 	m_Shade->SetShade(m_Obj->GetOM()->GetObj()[2]);
-	m_Shade->SetShade(m_Obj->GetOM()->GetObj()[3]);
+	m_Shade->SpikeSetShade(static_cast<SpikeObstacle*>(m_Obj->GetOM()->GetObj()[3])->GetRectForShade());
 
 	M_CAM->TargetChange(m_Obj->GetCM()->GetObj()[THOMAS]);
 	m_Obj->GetCM()->SetCharacterActive(THOMAS, true);

@@ -9,6 +9,10 @@ private:
 	Name nowActive;
 	int index;
 
+	Polygon2* pick;
+	HBRUSH pickColor;
+	HPEN pickEdge;
+
 public:
 	CharacterManager();
 	~CharacterManager();
