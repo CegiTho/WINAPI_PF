@@ -25,8 +25,8 @@ public:
 
 	void PlusCharacter(Name name,Vector2 pos);
 
-	void PlusObstacle( Vector2 center, Vector2 size);
-	void PlusObstacle( Vector2 center, Vector2 size,bool left,bool up , bool right,bool down);
+	void PlusObstacle(Type type, Vector2 center, Vector2 size);
+	void PlusObstacle(Vector2 center, Vector2 size,bool left,bool up , bool right,bool down);
 
 	void PlusGoal(Character* character, Vector2 pos);
 

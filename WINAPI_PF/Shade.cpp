@@ -1,33 +1,5 @@
 #include "Framework.h"
 
-Shade::Shade(T_Object* obj, Vector2* lSource, STAGE_NUM stage)
-	:object(obj),lSource(lSource),constant(0),isStatic(true)
-{
-	for (int i = 0; i < 4; i++)
-	{
-		points.emplace_back(new POINT[4]);
-	}
-	rect = obj->GetRect();
-
-	CreateSpotShade();
-
-	AlphaColor(stage);
-}
-
-Shade::Shade(T_Object* obj, double constant, STAGE_NUM stage)
-	:object(obj),lSource(nullptr),constant(constant),isStatic(true)
-{
-	for (int i = 0; i < 4; i++)
-	{
-		points.emplace_back(new POINT[4]);
-	}
-	rect = obj->GetRect();
-
-	CreateCurtainShade();
-
-	AlphaColor(stage);
-}
-
 Shade::Shade(Rect* rect, double constant, STAGE_NUM stage)
 	: rect(rect),lSource(nullptr), constant(constant), isStatic(true)
 {
@@ -89,7 +61,7 @@ void Shade::AlphaColor(STAGE_NUM stage)
 	DWORD green = GetGValue(bg_Color);
 	DWORD blue = GetBValue(bg_Color);
 
-	double alpha = SHADE_ALPHA / 255.0;
+	double alpha = ALPHA / 255.0;
 
 	//GdiAlphaBlend함수 동작식.
 	//dest.color = (src.color * alpha) + {dest.color * (1-alpha)}

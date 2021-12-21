@@ -15,7 +15,7 @@ Program::Program(HWND hWindow)
 
 Program::~Program()
 {
-	
+
 }
 
 void Program::Update()

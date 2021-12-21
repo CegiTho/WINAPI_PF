@@ -79,20 +79,22 @@ void ShadeManager::Render(HDC hdc)
 
 void ShadeManager::SetShade(T_Object* objects)
 {
-	if (lSource == nullptr)
-		shade.emplace_back(new Shade(objects, constant,stage));
-	else
-		shade.emplace_back(new Shade(objects, lSource, stage));
-}
+	switch (objects->GetID())
+	{
+	case ID::CHARACTER:
+		if (lSource == nullptr)
+			shade.emplace_back(new Shade(objects->GetRect(), constant, stage));
+		else
+			shade.emplace_back(new Shade(objects->GetRect(), lSource, stage));
+		break;
+	case ID::OBSTACLE:
+		if (lSource == nullptr)
+			shade.emplace_back(new Shade(static_cast<Obstacle*>(objects)->GetRenderRect(), constant, stage));
+		else
+			shade.emplace_back(new Shade(static_cast<Obstacle*>(objects)->GetRenderRect(), lSource, stage));
+		break;
 
-void ShadeManager::SpikeSetShade(Rect* rect)
-{
-	
-	if (lSource == nullptr)
-		shade.emplace_back(new Shade(rect, constant, stage));
-	else
-		shade.emplace_back(new Shade(rect, lSource, stage));
-	
+	}
 }
 
 void ShadeManager::CreateAlphaDC(STAGE_NUM num)

@@ -17,13 +17,15 @@ public:
 
 	virtual void Update() override;
 	virtual void Render(HDC hdc) override;
+	virtual Rect* GetRenderRect() override { return renderRect; }
 
-	Rect* GetRectForShade() { return renderRect; }
 
 	void SetObs(Vector2 center, Vector2 size, bool left, bool up, bool right, bool down);
 	void SetSpikePolygon(Rect* renderRect);
 
 	vector<bool> GetSpikeSide() { return spikeSide; }
+
+
 
 };
 

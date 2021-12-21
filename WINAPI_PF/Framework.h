@@ -10,6 +10,21 @@
 
 #include <cassert>
 
+//===========debug======================
+#define _CRTDBG_MAP_ALLOC
+#include <stdlib.h>
+#include <crtdbg.h>
+
+#ifdef _DEBUG
+#define DBG_NEW new( _NORMAL_BLOCK , __FILE__ , __LINE__ )
+// Replace _NORMAL_BLOCK with _CLIENT_BLOCK if you want the
+// allocations to be of _CLIENT_BLOCK type
+#else
+#define DBG_NEW new
+#endif
+//===========debug======================
+
+#include <random>
 #include <string>
 #include <map>
 #include <vector>
@@ -41,7 +56,7 @@ using namespace std;
 #define CENTER_X WIN_WIDTH * 0.5
 #define CENTER_Y WIN_HEIGHT * 0.5
 
-#define PI 3.141592
+#define PI 3.1
 
 
 
@@ -87,12 +102,16 @@ SCAM이 실질적인 카메라이고 내가 원하는데로 동작하는 객체�
 
 
 //Framework Header
+#include "PreDefined.h"
+#include "Enum.h"
+
 #include "Vector2.h"
 #include "Object.h"
 #include "Line.h"
 #include "Rect.h"
 #include "Circle.h"
 #include "Polygon2.h"
+#include "Wave.h"
 
 #include "RectAnimation.h"
 
@@ -122,8 +141,7 @@ SCAM이 실질적인 카메라이고 내가 원하는데로 동작하는 객체�
 
 
 //PF Object Header
-#include "PreDefined.h"
-#include "Enum.h"
+
 #include "T_Object.h"
 
 
@@ -143,6 +161,7 @@ SCAM이 실질적인 카메라이고 내가 원하는데로 동작하는 객체�
 #include "Obstacle.h"
 #include "NormalObstacle.h"
 #include "SpikeObstacle.h"
+#include "Water.h"
 
 #include "CharacterManager.h"
 #include "ObstacleManager.h"

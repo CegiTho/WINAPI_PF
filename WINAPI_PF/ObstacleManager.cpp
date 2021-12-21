@@ -3,32 +3,48 @@
 ObstacleManager::ObstacleManager()
 	:obstacles{}
 {
+	
 }
 
 ObstacleManager::~ObstacleManager()
 {
+	for (Obstacle* obs : obstacles)
+		delete obs;
 }
 
 void ObstacleManager::Update()
 {
 	for (Obstacle* obs : obstacles)
 		obs->Update();
+
 }
 
 void ObstacleManager::Render(HDC hdc)
 {
 	for (Obstacle* obs : obstacles)
 	{
-		if (obs->GetRect()->Collision(M_CAM->GetScreen()) == true)
-			obs->Render(hdc);
+		obs->Render(hdc);
 	}
+
 }
 
-T_Object* ObstacleManager::PlusObstacle( Vector2 center, Vector2 size)
+T_Object* ObstacleManager::PlusObstacle(Type type, Vector2 center, Vector2 size)
 {
-	NormalObstacle* newObs = new NormalObstacle(center, size);
-	obstacles.emplace_back(newObs);
-	return newObs;
+	switch (type)
+	{
+		case NORMAL:
+		{
+			NormalObstacle* normalObs = new NormalObstacle(center, size);
+			obstacles.emplace_back(normalObs);
+			return normalObs;
+		}
+		case WATER:
+		{
+			Water* waterObs = new Water(center, size);
+			obstacles.emplace_back(waterObs);
+			return waterObs;
+		}
+	}
 }
 
 T_Object* ObstacleManager::PlusObstacle(Vector2 center, Vector2 size, bool left, bool up, bool right, bool down)
@@ -38,18 +54,3 @@ T_Object* ObstacleManager::PlusObstacle(Vector2 center, Vector2 size, bool left,
 	return newObs;
 }
 
-void ObstacleManager::PlusObstacle(Type type, Vector2 center, Vector2 size, Vector2 pathEnd, double speed)
-{
-	switch (type)
-	{
-	case Type::NORMAL:
-		obstacles.emplace_back(new NormalObstacle(center, size,pathEnd,speed));
-		break;
-	case Type::SPIKE:
-		break;
-	case Type::WATER:
-		break;
-	default:
-		break;
-	}
-}

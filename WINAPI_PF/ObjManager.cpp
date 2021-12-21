@@ -111,12 +111,13 @@ void ObjManager::LoadStage(STAGE_NUM num)
 		switch ((Type)name)
 		{
 		case NORMAL:
-			this->PlusObstacle( pos, size);
+			this->PlusObstacle((Type)name,pos, size);
 			break;
 		case SPIKE:
 			this->PlusObstacle( pos, size,side[Side::LEFT], side[Side::UP], side[Side::RIGHT], side[Side::DOWN]);
 			break;
 		case WATER:
+			this->PlusObstacle((Type)name, pos, size);
 			break;
 		}
 	}
@@ -155,9 +156,9 @@ void ObjManager::PlusCharacter(Name name,Vector2 pos)
 	this->objects.emplace_back(this->m_Character->PlusCharacter(name,pos));
 }
 
-void ObjManager::PlusObstacle( Vector2 center, Vector2 size)
+void ObjManager::PlusObstacle(Type type, Vector2 center, Vector2 size)
 {
-	this->objects.emplace_back(this->m_Obstacle->PlusObstacle(center, size));
+	this->objects.emplace_back(this->m_Obstacle->PlusObstacle((Type)type, center, size));
 }
 
 void ObjManager::PlusObstacle( Vector2 center, Vector2 size, bool left, bool up, bool right, bool down)

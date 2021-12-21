@@ -213,6 +213,12 @@
     <ClInclude Include="GameStreamManager.h">
       <Filter>Framework\GameObject\Manager</Filter>
     </ClInclude>
+    <ClInclude Include="Water.h">
+      <Filter>Framework\GameObject\Obstacle</Filter>
+    </ClInclude>
+    <ClInclude Include="Wave.h">
+      <Filter>Framework\BasicObject</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="WINAPI_PF.cpp">
@@ -349,6 +355,12 @@
     </ClCompile>
     <ClCompile Include="SpikeObstacle.cpp">
       <Filter>Framework\GameObject\Obstacle</Filter>
+    </ClCompile>
+    <ClCompile Include="Water.cpp">
+      <Filter>Framework\GameObject\Obstacle</Filter>
+    </ClCompile>
+    <ClCompile Include="Wave.cpp">
+      <Filter>Framework\BasicObject</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

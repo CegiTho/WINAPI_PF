@@ -58,6 +58,9 @@ void John::CreateJohn(Vector2 pos)
 		anim->SetAnim(State::GOAL, goal, 0.1);
 	}
 
+	{
+		pick = new Polygon2(this->GetRect());
+	}
 }
 
 void John::Collision(vector<T_Object*> objects)
@@ -80,9 +83,7 @@ void John::Collision(vector<T_Object*> objects)
 		}
 	}
 
-	{
-		pick = new Polygon2(this->GetRect());
-	}
+	
 }
 
 void John::CharacterCollision(T_Object* character)

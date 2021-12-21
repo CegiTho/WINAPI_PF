@@ -26,7 +26,6 @@ public:
 	void Render(HDC hdc);		//BG관련 함수의 DC에 뒷배경 그린 다음에 호출
 
 	void SetShade(T_Object* objects);
-	void SpikeSetShade(Rect* rect);		//SpikeObs만 이걸로 따로 받아야함.
 };
 
 

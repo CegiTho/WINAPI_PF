@@ -26,8 +26,7 @@ private:
 	bool isStatic;
 
 public:
-	Shade(T_Object* obj,Vector2* lSource, STAGE_NUM stage);
-	Shade(T_Object* obj,double constant, STAGE_NUM stage);
+	
 	Shade(Rect* rect,double constant, STAGE_NUM stage);
 	Shade(Rect* rect,Vector2* lSource, STAGE_NUM stage);
 	~Shade();

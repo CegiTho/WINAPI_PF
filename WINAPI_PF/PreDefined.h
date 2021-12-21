@@ -57,16 +57,28 @@
 
 //==========Shade=============
 #define ShadeLength 5000
-#define SHADE_ALPHA 90
+#define ALPHA 90
 
 #define BG_COLOR_1 RGB(39,25,24)
 #define BG_COLOR_2 RGB(33,51,54)
 #define BG_COLOR_3 RGB(36,37,25)
+//#define BG_COLOR_4 RGB(21,25,47)   //4-6
 #define BG_COLOR_4 RGB(60,60,35)
 #define BG_COLOR_5 RGB(34,42,45)
 
-#define SHADE_COLOR_1 RGB(31,20,20)
-#define SHADE_COLOR_2 RGB(31,43,49)
-#define SHADE_COLOR_3 RGB(27,28,21)
-#define SHADE_COLOR_4 RGB(45,44,26)
-#define SHADE_COLOR_5 RGB(27,34,39)
+
+struct WaveElem
+{
+	int time;		
+
+	int lifespan;				//수명. 진폭 0 에서 height까지 sine형으로 증가했다가 다시 0으로 sine형으로 감소
+	int	height;				
+	int length;
+	int sliceCount;
+	double pi;
+	double delta;		//x방향 미소변위
+	double damp;		//감쇠상수
+	double k;			//파장관련 상수
+	double angular;		//각속도
+	double h_Angular;	//진폭 시간상수
+};

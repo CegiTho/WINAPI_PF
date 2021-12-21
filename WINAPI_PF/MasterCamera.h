@@ -28,6 +28,7 @@ public:
 	void Update();
 
 	Vector2 GetPos() { return screen->LeftTopV(); }
+	Vector2 GetMapSize() { return mapSize; }
 	Rect* GetScreen() { return screen; }
 
 	void TargetChange(Character* character);

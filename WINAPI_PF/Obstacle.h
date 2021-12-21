@@ -15,7 +15,7 @@ public:
 
 	virtual void Update() = 0;
 	virtual void Render(HDC hdc) = 0;
-
+	virtual Rect* GetRenderRect() = 0;
 	
 	void SetIsMove(bool value) { isMove = value; }
 	Type GetType() { return type; }

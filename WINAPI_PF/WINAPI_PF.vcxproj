@@ -200,6 +200,8 @@
     <ClInclude Include="Timer.h" />
     <ClInclude Include="T_Object.h" />
     <ClInclude Include="Vector2.h" />
+    <ClInclude Include="Water.h" />
+    <ClInclude Include="Wave.h" />
     <ClInclude Include="WINAPI_PF.h" />
     <ClInclude Include="Xml.h" />
   </ItemGroup>
@@ -252,6 +254,8 @@
     <ClCompile Include="Timer.cpp" />
     <ClCompile Include="T_Object.cpp" />
     <ClCompile Include="Vector2.cpp" />
+    <ClCompile Include="Water.cpp" />
+    <ClCompile Include="Wave.cpp" />
     <ClCompile Include="WINAPI_PF.cpp" />
     <ClCompile Include="Xml.cpp" />
   </ItemGroup>

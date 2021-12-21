@@ -146,6 +146,7 @@ void Chris::ObstacleCollision(T_Object* obstacle)
 			switch (dynamic_cast<Character*>(this)->Collision(obstacle))
 			{
 			case Side::UP:
+				side[UP] = true;
 				break;
 			case Side::DOWN:
 				side[DOWN] = true;

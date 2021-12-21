@@ -12,6 +12,7 @@ public:
 
 	virtual void Update() override;
 	virtual void Render(HDC hdc) override;
+	virtual Rect* GetRenderRect() override { return rect; }
 };
 
 

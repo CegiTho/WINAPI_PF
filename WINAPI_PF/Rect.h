@@ -16,6 +16,7 @@ public:
 	~Rect();
 
 	virtual void Render(HDC hdc) override;
+	void Render(HDC hdc,Vector2 center,Vector2 size);
 
 	//======object collision======
 	virtual bool Collision(Vector2 pos) override;
