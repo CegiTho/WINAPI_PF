@@ -32,6 +32,8 @@
 #include <cmath>
 #include <functional>
 #include <queue>
+#include <list>
+#include <deque>
 
 #include <Ole2.h>
 #include <gdiplus.h>
@@ -50,8 +52,8 @@ using namespace std;
 #define WIN_START_X 100
 #define WIN_START_Y 100
 
-#define WIN_WIDTH 2200
-#define WIN_HEIGHT 1300
+#define WIN_WIDTH 1920
+#define WIN_HEIGHT 1080
 
 #define CENTER_X WIN_WIDTH * 0.5
 #define CENTER_Y WIN_HEIGHT * 0.5
@@ -112,6 +114,8 @@ SCAM이 실질적인 카메라이고 내가 원하는데로 동작하는 객체�
 #include "Circle.h"
 #include "Polygon2.h"
 #include "Wave.h"
+#include "Cross.h"
+#include "Triangle.h"
 
 #include "RectAnimation.h"
 
@@ -155,6 +159,7 @@ SCAM이 실질적인 카메라이고 내가 원하는데로 동작하는 객체�
 #include "Sarah.h"
 
 #include "Goal.h"
+#include "SavePoint.h"
 
 #include "Shade.h"
 
@@ -162,6 +167,9 @@ SCAM이 실질적인 카메라이고 내가 원하는데로 동작하는 객체�
 #include "NormalObstacle.h"
 #include "SpikeObstacle.h"
 #include "Water.h"
+
+#include "TextCell.h"
+#include "TextCellSelect.h"
 
 #include "CharacterManager.h"
 #include "ObstacleManager.h"
@@ -173,6 +181,8 @@ SCAM이 실질적인 카메라이고 내가 원하는데로 동작하는 객체�
 #include "Scene.h"
 #include "Program.h"
 
+#include "MenuScene.h"
+#include "MainMenuScene.h"
 
 extern Vector2 mousePos;
 extern HWND hWnd;

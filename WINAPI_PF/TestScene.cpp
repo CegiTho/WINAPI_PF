@@ -21,6 +21,11 @@ TestScene::TestScene()
 	M_CAM->TargetChange(m_Obj->GetCM()->GetObj()[THOMAS]);
 	m_Obj->GetCM()->SetCharacterActive(THOMAS, true);
 
+	vector<string> tag;
+	tag.emplace_back("New Game");
+	tag.emplace_back("Scenario Select");
+	tag.emplace_back("Setting");
+	tag.emplace_back("Exit");
 
 }
 
@@ -34,7 +39,6 @@ TestScene::~TestScene()
 void TestScene::Update()
 {
 	m_Obj->Update();
-
 	m_Shade->Update();
 	
 }

@@ -14,13 +14,13 @@ CharacterManager::~CharacterManager()
 		delete character;
 }
 
-void CharacterManager::Update()
+void CharacterManager::Update(vector<T_Object*> obj)
 {
 	CharacterRotation();
-	for (Character* obj : characters)
+	for (Character* character : characters)
 	{
-		if (obj != nullptr)
-			obj->Update();
+		if (character != nullptr)
+			character->Update(obj);
 	}
 }
 
@@ -135,4 +135,13 @@ void CharacterManager::SetCharacterActive(Name character, bool isActive)
 {
 	this->characters[character]->SetActive(isActive); 
 	nowActive = character;
+}
+
+void CharacterManager::Collision(vector<T_Object*> obj)
+{
+	for (Character* character : characters)
+	{
+		if (character != nullptr)	//이거 나중에 지워도 되는지 확인 
+			character->Collision(obj);
+	}
 }

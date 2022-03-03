@@ -10,8 +10,8 @@ public:
 	virtual void Update() = 0;
 	virtual void Render(HDC hdc) = 0;
 
-	virtual void Start() {}
-	virtual void End() {}
+	virtual bool Start() { return true; }
+	virtual bool End() { return true; }
 
 
-};
+}; 

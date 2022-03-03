@@ -9,12 +9,15 @@
 #define ALPHA_WATER 50
 #define ALPHA_SURFACE 150
 
-#define HEIGHT 5
+#define HEIGHT 4
 #define WAVENUMBER 0.1
 #define PI 3.1
 #define ANTINODE PI/WAVENUMBER			//31
-#define WAVE_LENGTH ANTINODE * 6		//186
-#define SLICE_DELTA 3
+#define WAVE_LENGTH ANTINODE			
+#define SLICE_DELTA 5
+
+#define MAX_DISTB 3.3
+#define MIN_DISTB 1.4
 
 
 Water::Water( Vector2 pos, Vector2 size)
@@ -25,12 +28,8 @@ Water::Water( Vector2 pos, Vector2 size)
 Water::~Water()
 {
 	delete rect;
-	
-	delete[] areaPoints;	//POINT* points는 polygon2에서 지움
-
-	for (Polygon2* pol : surface)
-		delete pol;
-	
+	delete renderRect;
+		
 	DeleteObject(color);
 	DeleteObject(edge);
 	DeleteObject(surfaceColor);
@@ -45,11 +44,23 @@ Water::~Water()
 	DeleteObject(rectBitmap);
 	DeleteObject(transparentBitmap);
 	DeleteObject(surfaceBitmap);
+
+	delete[] centerPoints;
+
+	for (int i = 0; i < right.size(); i++)
+	{
+		delete right[i];
+		delete left[i];
+	}
+
 }
 
 void Water::Set( Vector2 pos, Vector2 size)
 {
 	rect = new Rect(pos, size);
+	renderRect = new Rect({ size.x / 2,size.y / 2 }, size);
+	
+	type = Type::WATER;
 
 	color = CreateSolidBrush(RGB(180, 180, 180));
 	edge = CreatePen(PS_SOLID, 1, RGB(180, 180, 180));
@@ -81,138 +92,104 @@ void Water::Set( Vector2 pos, Vector2 size)
 void Water::SurfaceEffect()
 {
 	elem.time = 2;
-	elem.height = 5;
+	elem.height = HEIGHT;
 	elem.pi = PI;
-	elem.length = WAVE_LENGTH;
-	elem.sliceCount = (WAVE_LENGTH / 2) / SLICE_DELTA;
-	elem.delta = SLICE_DELTA;		//x방향 미소변위
-	elem.damp = 0.005;				//감쇠상수
-	elem.k = WAVENUMBER;			//파장관련 상수
-	elem.angular = 0.2;				//각속도
-	elem.h_Angular = PI / elem.time;;	//진폭 시간상수
+	elem.length = 50;
+	elem.delta = SLICE_DELTA;				//x방향 미소변위
+	elem.sliceCount = (elem.length) / SLICE_DELTA;
+	elem.damp = 0.005;						//감쇠상수
+	elem.k = elem.pi / elem.length;			//파장관련 상수
+	elem.angular = 0.2;						//각속도
+	elem.lifespan = 1.4;					//파동의 수명
+	elem.h_Angular = PI / elem.lifespan;;	//진폭 시간상수
+	elem.pixelPerSec = 30;
 
 	int count = this->rect->size.x / elem.length;
 	int odd = (int)this->rect->size.x % elem.length;
+	
+	mt19937_64 mt(rd());
+	
 	centerPoints = new POINT[count];
-	areaPoints = new POINT * [count];
 	
 	for (int i = 0; i < count; i++)
 	{
-		centerPoints[i].x = (elem.length * i) + (elem.length * 0.5) - 60;
+		uniform_int_distribution<int> dist(0.0, odd);
+		int delta = dist(mt);
+		centerPoints[i].x = (elem.length * i) + (elem.length * 0.5) + ((odd >= 0) ? delta : 0);
 		centerPoints[i].y = elem.height;
+
+		odd -= delta;
 	}
 
+	//centerPoint 한개당 풀링용 Wave 좌우 각각 5개씩
 	for (int i = 0; i < count; i++)
 	{
-		areaPoints[i] = new POINT[elem.sliceCount * 4];
-	}
-
-	for (int i = 0; i < count; i++)
-	{
-		vector<Vector2*> vec;
-		surfaceArea.emplace_back(vec);
-		surfaceArea[i].assign(elem.sliceCount * 4, new Vector2(0,0));
-	}
-
-	SurfaceUpdate();
-	for (int i = 0 ; i < count ; i++)
-	{
-		surface.emplace_back(new Polygon2(areaPoints[i],elem.sliceCount*4));
-	}
-
-	
-}
-
-void Water::SurfaceUpdate()
-{
-	int count = this->rect->size.x / elem.length;
-	int odd = (int)this->rect->size.x % elem.length;
-	
-	for (int i = 0 ; i < count ; i++)
-	{
-		//north point
-		areaPoints[i][0].x = centerPoints[i].x;
-		areaPoints[i][0].y = centerPoints[i].y - elem.height;
+		for (int j = 0; j < 5; j++)
+		{
+			right.push_back(new Wave(elem, true));
+			left.push_back(new Wave(elem, false));
+		}
 		
-		//west point
-		areaPoints[i][elem.sliceCount].x = centerPoints[i].x - (elem.length * 0.5);
-		areaPoints[i][elem.sliceCount].y = elem.height;
-
-		//south point
-		areaPoints[i][elem.sliceCount * 2].x = centerPoints[i].x;
-		areaPoints[i][elem.sliceCount * 2].y = elem.height * 2;
-
-		//east point
-		areaPoints[i][elem.sliceCount * 3].x = centerPoints[i].x + (elem.length * 0.5);
-		areaPoints[i][elem.sliceCount * 3].y = elem.height;
-
-		int k = 1;
-		for (int j = -elem.sliceCount + 1 ; j < elem.sliceCount; j++)
-		{
-			
-			if (j == 0)
-			{
-				k = 1;
-				continue;
-			}
-
-			if (j < 0)
-			{
-				DampingWave(centerPoints[i], j, TIMER->GetRunTime(), 
-					areaPoints[i][-j], areaPoints[i][elem.sliceCount + k]);
-				k++;
-				continue;
-			}
-			else
-			{
-				DampingWave(centerPoints[i], j, TIMER->GetRunTime(), 
-					areaPoints[i][elem.sliceCount * 4 - k], areaPoints[i][elem.sliceCount * 2 + k]);
-				k++;
-			}
-		}
+		rotSecRight.assign(count, 0.0);
+		rotSecLeft.assign(count, 0.0);
+		uniform_real_distribution<double> dist(MIN_DISTB, MAX_DISTB);
+		randRotPerRight.emplace_back(dist(mt));
+		randRotPerLeft.emplace_back(dist(mt));
 	}
 
-	for (int i = 0; i < count; i++)
-	{
-		for (int j = 0; j < elem.sliceCount * 4; j++)
-		{
-			surfaceArea[i][j]->x = areaPoints[i][j].x;
-			surfaceArea[i][j]->y = areaPoints[i][j].y;
-		}
-	}
-
-	
 }
 
 void Water::Update()
 {
-	SurfaceUpdate();
+	SurfaceRot();
 
-	surface[0]->SetNewVertices(areaPoints[0]);
+	RectDamp();
 
+	for (int i = 0; i < right.size(); i++)
+	{
+		right[i]->Update();
+	}
+
+	for (int i = 0; i < left.size(); i++)
+	{
+		left[i]->Update();
+	}
 }
 
 void Water::Render(HDC hdc)
 {
 	//memDC
 	BitBlt(memDC, 0, 0, rect->size.x, rect->size.y + HEIGHT,
-		hdc, rect->LeftTopV().x, rect->LeftTopV().y - 10,
+		hdc, rect->LeftTopV().x, rect->LeftTopV().y - HEIGHT,
 		SRCCOPY);
 
 	//rectDC
 	SelectObject(rectDC, color);
 	SelectObject(rectDC, edge);
 
-	rect->Render(rectDC, rect->center, rect->size);
+	BitBlt(rectDC, 0, 0, rect->size.x, rect->size.y,
+		hdc, rect->LeftTopV().x, rect->LeftTopV().y ,SRCCOPY);
 
+	//****************************************************
+	//까먹은게 있는데 renderRect 표면 오르락내리락 만들고 나서 wave들 위치도 맞춰서 바꿔야됨.
+	//기준점 중심으로 위아래 오르락내리락 하게 만들어서 wave.move함수랑 같이 사용해야할듯.
+	//*****************************************************
+	renderRect->Render(rectDC);
 	//transparentDC
 	PatBlt(transparentDC, 0, 0, rect->size.x, 2 * HEIGHT, WHITENESS);
 
 	SelectObject(transparentDC, surfaceColor);
 	SelectObject(transparentDC, surfaceEdge);
 
-	for (Polygon2* pol : surface)
-		pol->Render(transparentDC);
+	for (int i = 0; i < right.size(); i++)
+	{
+		right[i]->Render(transparentDC);
+	}
+	
+	for (int i = 0; i < left.size(); i++)
+	{
+		left[i]->Render(transparentDC);
+	}
 
 	//==========post process============
 	//transparentDC는 WHITENESS로 patblt 안하면 원하는데로 출력이 안나옴.
@@ -230,7 +207,7 @@ void Water::Render(HDC hdc)
 	GdiAlphaBlend(memDC, 0, HEIGHT, rect->size.x, rect->size.y, rectDC, 0, 0, rect->size.x,rect->size.y,blendFunc);
 
 	blendFunc.SourceConstantAlpha = ALPHA_SURFACE;
-	GdiTransparentBlt(memDC, 0, 0, rect->size.x, 2 * HEIGHT, surfaceDC, 0, 0, rect->size.x, 2 * HEIGHT, WHITE);
+	GdiTransparentBlt(memDC, 0, renderRect->Top() , rect->size.x, 2 * HEIGHT, surfaceDC, 0, 0, rect->size.x, 2 * HEIGHT, WHITE);
 	BitBlt(hdc, rect->LeftTopV().x, rect->LeftTopV().y - HEIGHT, rect->size.x, rect->size.y + HEIGHT,memDC, 0, 0, SRCCOPY);
 	
 
@@ -247,113 +224,64 @@ Rect* Water::GetRenderRect()
 	return nullptr;
 }
 
-void Water::DampingWave(POINT center,int x, double time, POINT& upper, POINT& lower)
+void Water::SurfaceRot()
 {
-	int posX, posY;
-	posX = center.x + (x * elem.delta);
-	upper.x = posX;
-	lower.x = posX;
-	
-	{//upper
-		double dampConst = x > 0 ? -elem.damp : elem.damp;
-		double h = elem.height;
-		double sine = sin(elem.h_Angular * time);
-		double expo = exp(dampConst * posX);
-		h = elem.height * sine * expo;
-		double cosine = cos(elem.k * posX - elem.angular * time);
-		posY = h * cosine;
-		upper.y = posY;
+	for (int i = 0; i < rotSecRight.size(); i++)
+	{
+		rotSecRight[i] += TIMER->GetElapsedTime();
+
+		if (rotSecRight[i] >= randRotPerRight[i])
+		{
+			mt19937_64 gen(rd());
+			uniform_real_distribution<double> dist(MIN_DISTB, MAX_DISTB);
+
+			for (int j = 0; j < right.size(); j++)
+			{
+				if (right[j]->GetActive() == false)
+				{
+					right[j]->SetActive(true);
+					right[j]->SetCenter(centerPoints[i]);
+					break;
+				}
+			}
+
+			rotSecRight[i] = 0;
+			randRotPerRight[i] = dist(gen);
+		}
 	}
 
-	{//lower
-		double dampConst = x > 0 ? -elem.damp : elem.damp;
-		double h = -elem.height;
-		double sine = sin(elem.h_Angular * time);
-		double expo = exp(dampConst * posX);
-		h = elem.height * sine * expo;
-		double cosine = cos(elem.k * posX - elem.angular * time);
-		posY = h * cosine;
-		lower.y = posY;
+	for (int i = 0; i < rotSecLeft.size(); i++)
+	{
+		rotSecLeft[i] += TIMER->GetElapsedTime();
+
+		if (rotSecLeft[i] >= randRotPerLeft[i])
+		{
+			mt19937_64 gen(rd());
+			uniform_real_distribution<double> dist(MIN_DISTB, MAX_DISTB);
+
+			for (int j = 0; j < left.size(); j++)
+			{
+				if (left[j]->GetActive() == false)
+				{
+					left[j]->SetActive(true);
+					left[j]->SetCenter(centerPoints[i]);
+					break;
+				}
+			}
+
+			rotSecLeft[i] = 0;
+			randRotPerLeft[i] = dist(gen);
+		}
 	}
 }
 
+void Water::RectDamp()
+{
+	double runTime = TIMER->GetRunTime();
+	double del = sin(PI * runTime) ;
+	del = 12.0 * del * del;				//파고 = 12.0 ,별 생각없음 그냥 이게 적당해보여서
 
-/*
-
-	int waveCount = rect->size.x / 200;
-	int oddLength = (int)rect->size.x % 200;
-	int oddSlice = oddLength / waveCount;
-	int centerOffset = LENGTH / 2;
-
-	POINT* startPos = new POINT[waveCount];
-
-	for (int i = 0; i < waveCount; i++)
-	{
-		mt19937_64 gen(rd());
-		uniform_int_distribution<int> dist(0, oddSlice);
-
-		int odd = dist(gen);
-		startPos[i].x = (i * LENGTH) + odd + centerOffset;
-		startPos[i].y = HEIGHT;
-	}
-	//============파장은 대충 200정도 잡을거고. 아래 k,antiNode,delta같은거 다 #define으로 위에 빼버릴 예정.
-	//감쇠계수는 아직 안정함.
-
-	//alpha가 커질수록 감쇠율이 줄어듬.
-	int k = 0.1;
-	int pi = 3.15;
-	int antiNode = pi / k;
-	int delta = antiNode / SLICE_COUNT;
-	int alpha = 0.3;
-	int time = 3;
+	renderRect->SetRect(0.0, del, rect->size.x, rect->size.y);
+}
 
 
-
-
-
-
-
-
-
-
-	Vector2 start = { 0,HEIGHT };
-	Vector2 end = { rect->size.x,HEIGHT };
-
-	double height = HEIGHT;	//진폭
-	double length = (double)(end.x - start.x);
-
-	//sin(kx) : x=x좌표,k=파장의 길이상수.   배의 길이 : pi/k
-	//100pixel정도를 정상파의 배 단위로 잡음.
-	double k = 0.1;				//임시값
-	double pi = 3.15;			//3.14는 계산이 애매해서
-	double antiNode = pi / k;	//'배'가 영어로 antiNode임
-	double delta = antiNode / SLICE_COUNT;
-
-	for (int x = 0; x < (int)(length / antiNode); x++)
-	{
-		vector<Vector2> upperAnt;
-		vector<Vector2> lowerAnt;
-
-		upperAnt.assign(SLICE_COUNT * 2, { 0,0 });
-		upperAnt[0] = start;
-		upperAnt[SLICE_COUNT] = { start.x + antiNode , start.y };
-		for (int i = 1; i < SLICE_COUNT; i++)
-		{
-			upperAnt[i] = { start.x + (i * delta),start.y + (height *sin(pi * i / SLICE_COUNT)) };
-			upperAnt[SLICE_COUNT + i] = { start.x + antiNode - (i * delta),start.y - (height * sin(pi * i / SLICE_COUNT)) };
-		}
-
-		if (start.x + antiNode > end.x)
-			break;
-
-		start.x = start.x + antiNode;
-
-		surfaceArea.emplace_back(upperAnt);
-	}
-
-	for (vector<Vector2> area : surfaceArea)
-	{
-		surface.emplace_back(new Polygon2(area));
-	}
-
-	*/

@@ -1,5 +1,10 @@
 #pragma once
 
+class Obstacle;
+class SpikeObstacle;
+class NormalObstacle;
+class Water;
+
 class Character : public T_Object
 {
 protected:
@@ -25,6 +30,8 @@ protected:
 
 	vector<Character*> fused;
 
+	Vector2 spawnPoint;
+
 public:
 	Character();
 	Character(Vector2 pos);
@@ -48,21 +55,24 @@ public:
 
 	void PrintElement(HDC hdc,int x);
 
-	Side Collision(T_Object* obj);
-
 	void Render(HDC hdc);
-
-	virtual void Collision(vector<T_Object*> objects) = 0;
-	virtual void CharacterCollision(T_Object* character) = 0;
-	virtual void ObstacleCollision(T_Object* obstacle) = 0;
-	//virtual void CharacterCollision(T_Object* goal) = 0;
 	
-	virtual void InitAgain() = 0;
+	void InitAgain();
 
-	virtual void Update() = 0;
+	virtual void Update(vector<T_Object*> obj) = 0;
 	virtual void Jump() = 0;
 
+	virtual void Collision(vector<T_Object*> objects);
+	virtual void CharacterCollision(Character* character);
+	virtual void ObstacleCollision(Obstacle* obstacle);
+	
+	virtual void NormalCollision(NormalObstacle* obstacle);
+	virtual void SpikeCollision(SpikeObstacle* obstacle) ;
+	virtual void WaterCollision(Water* obstacle);
 
+	void ReturnSpawnPoint();
+	void SetSpawnPoint(Rect* rect);
+	Vector2 GetSpawnPoint() { return spawnPoint; }
 
 };
 

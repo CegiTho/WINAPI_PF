@@ -29,6 +29,7 @@ void Chris::CreateChris(Vector2 pos)
 	rect = new Rect(pos, CHRIS_SIZE);
 	color = CreateSolidBrush(CHRIS_COLOR);
 	edge = CreatePen(PS_SOLID, 1, CHRIS_COLOR);
+	spawnPoint = rect->center;
 
 	speed = SPEED;
 	thrust = 0;
@@ -66,109 +67,10 @@ void Chris::CreateChris(Vector2 pos)
 
 }
 
-void Chris::Collision(vector<T_Object*> objects)
+void Chris::Update(vector<T_Object*> obj)
 {
-	for (T_Object* object : objects)
-	{
-		if ((Chris*)object == this)
-			continue;
+	Collision(obj);
 
-		switch (object->GetID())
-		{
-		case ID::CHARACTER:
-			CharacterCollision(object);
-			break;
-		case ID::OBSTACLE:
-			ObstacleCollision(object);
-			break;
-		case ID::GOAL:
-			break;
-		}
-	}
-}
-
-void Chris::CharacterCollision(T_Object* character)
-{
-	switch (dynamic_cast<Character*>(this)->Collision(character))
-	{
-	case Side::UP:
-		if (dynamic_cast<Character*>(character)->GetName() == Name::LAURA)
-		{
-			dynamic_cast<Laura*>(character)->LauraJump(this);
-		}
-		else
-			side[UP] = true;
-		break;
-	case Side::DOWN:
-		
-		side[DOWN] = true;
-		break;
-	case Side::LEFT:
-		side[LEFT] = true;
-	case Side::RIGHT:
-		side[RIGHT] = true;
-		break;
-	case Side::NONE:
-		break;
-	}
-}
-
-void Chris::ObstacleCollision(T_Object* obstacle)
-{
-	Type type = dynamic_cast<Obstacle*>(obstacle)->GetType();
-	if (type == Type::NORMAL)
-	{
-		switch (dynamic_cast<Character*>(this)->Collision(obstacle))
-		{
-		case Side::UP:
-			side[UP] = true;
-			break;
-		case Side::DOWN:
-			side[DOWN] = true;
-			break;
-		case Side::LEFT:
-			side[LEFT] = true;
-			break;
-		case Side::RIGHT:
-			side[RIGHT] = true;
-			break;
-		case Side::NONE:
-			break;
-		}
-	}
-	else
-	{
-		if(type == Type::WATER)
-		{ }
-		else
-		{
-			vector<bool> spikeSide = dynamic_cast<SpikeObstacle*>(obstacle)->GetSpikeSide();
-			switch (dynamic_cast<Character*>(this)->Collision(obstacle))
-			{
-			case Side::UP:
-				side[UP] = true;
-				break;
-			case Side::DOWN:
-				side[DOWN] = true;
-				break;
-			case Side::LEFT:
-				side[LEFT] = true;
-				break;
-			case Side::RIGHT:
-				side[RIGHT] = true;
-				break;
-			case Side::NONE:
-				break;
-			}
-		}
-	}
-
-
-
-}
-
-void Chris::Update()
-{
 	Jump();
 	anim->Update();
 	InitAgain();
@@ -183,7 +85,7 @@ void Chris::Update()
 void Chris::Jump()
 {
 	//======Jump===========
-	if (KEYDOWN(VK_UP) && isJump == false && isActive == true)
+	if (KEYDOWN(VK_SPACE) && isJump == false && isActive == true)
 	{
 		thrust = CHRIS_THRUST;
 		isJump = true;
@@ -219,12 +121,5 @@ void Chris::Jump()
 		this->thrust = 0;
 		isFalling = true;
 	}
-}
-
-void Chris::InitAgain()
-{
-	for (int i = 0; i < side.size(); i++)
-		side[i] = false;
-
 }
 

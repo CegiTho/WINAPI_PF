@@ -19,6 +19,7 @@ Character::Character(Vector2 pos)
 	goalColor = CreateSolidBrush(WHITE);
 	goalEdge = CreatePen(PS_SOLID, 1, WHITE);
 
+	spawnPoint = pos;
 	this->rect->center = pos;
 }
 
@@ -33,23 +34,289 @@ void Character::Move()
 	if (isActive == false)
 		return;
 
-	if (KEYPRESS(VK_RIGHT))
+	if (KEYPRESS(VK_RIGHT) && side[LEFT] == false)
 	{
 		rect->center.x += speed * DELTA;
-		
 	}
 
-	if (KEYPRESS(VK_LEFT))
+	if (KEYPRESS(VK_LEFT) && side[RIGHT] == false)
 	{
 		rect->center.x -= speed * DELTA;
-	
+	}
+}
+
+void Character::Render(HDC hdc)
+{
+	HBRUSH tempB;
+	HPEN tempP;
+	if (isGoal == true)
+	{
+		tempB = (HBRUSH)SelectObject(hdc, goalColor);
+		tempP = (HPEN)SelectObject(hdc, goalEdge);
+	}
+	else
+	{
+		tempB = (HBRUSH)SelectObject(hdc, color);
+		tempP = (HPEN)SelectObject(hdc, edge);
 	}
 
+	anim->Render(hdc);
 
+	if (this->isActive == true)
+	{
+		SelectObject(hdc, goalColor);
+		SelectObject(hdc, goalEdge);
+
+		pick->Render(hdc);
+	}
+
+	SelectObject(hdc, tempB);
+	SelectObject(hdc, tempP);
+	switch (name)
+	{
+	case THOMAS:
+		PrintElement(hdc,200);
+		break;
+	case CHRIS:
+		PrintElement(hdc, 400);
+		break;
+	case CLARE:
+		PrintElement(hdc, 600);
+		break;
+	case JAMES:
+		PrintElement(hdc, 800);
+		break;
+	case JOHN:
+		PrintElement(hdc, 1000);
+		break;
+	case LAURA:
+		PrintElement(hdc, 1200);
+		break;
+	case SARAH:
+		PrintElement(hdc, 1400);
+		break;
+	}
 
 }
 
-void Character::PrintElement(HDC hdc,int x)
+void Character::InitAgain()
+{
+	for (int i = 0; i < side.size(); i++)
+		side[i] = false;
+}
+
+void Character::Collision(vector<T_Object*> objects)
+{
+	for (T_Object* obj : objects)    
+	{
+		if (static_cast<T_Object*>(this) == obj)
+			continue;
+
+		if (obj->GetRect()->Collision(this->GetRect()) == true)
+		{
+			switch (obj->GetID())
+			{
+			case ID::CHARACTER:
+				CharacterCollision(static_cast<Character*>(obj));
+				break;
+			case ID::OBSTACLE:
+				ObstacleCollision(static_cast<Obstacle*>(obj));
+				break;
+			}
+		}
+
+	}
+
+}
+
+void Character::CharacterCollision(Character* character)
+{
+	Rect overlap;
+	
+	Rect* other = character->GetRect();
+	if (this->GetRect()->Collision(&overlap, other) == true)
+	{
+		bool isUpDown = overlap.size.x > overlap.size.y;
+		if (isUpDown == true && overlap.center.y > other->center.y)
+		{//down
+			this->side[DOWN] = true;
+			this->GetRect()->center.y += overlap.size.y;
+		}
+		else if (isUpDown == true && overlap.center.y < other->center.y)
+		{//up
+			this->GetRect()->center.y -= overlap.size.y;
+
+			if (character->GetName() == Name::LAURA)
+			{
+				dynamic_cast<Laura*>(character)->LauraJump(this);
+				return;
+			}
+
+			this->side[UP] = true;
+		}
+		else if (isUpDown == false && overlap.center.x > other->center.x)
+		{//right
+			this->GetRect()->center.x += overlap.size.x;
+			this->side[RIGHT] = true;
+		}
+		else if (isUpDown == false && overlap.center.x < other->center.x)
+		{//left
+			this->GetRect()->center.x -= overlap.size.x;
+			this->side[LEFT] = true;
+		}
+	}
+}
+
+void Character::ObstacleCollision(Obstacle* obstacle)
+{
+	switch (obstacle->GetType())
+	{
+	case NORMAL:
+		NormalCollision(static_cast<NormalObstacle*>(obstacle));
+		break;
+	case SPIKE:
+		SpikeCollision(static_cast<SpikeObstacle*>(obstacle));
+		break;
+	case WATER:
+		WaterCollision(static_cast<Water*>(obstacle));
+		break;
+	}
+}
+
+void Character::NormalCollision(NormalObstacle* obstacle)
+{
+	Rect overlap;
+
+	Rect* other = obstacle->GetRect();
+	if (this->GetRect()->Collision(&overlap, other) == true)
+	{
+		bool isUpDown = overlap.size.x > overlap.size.y;
+		if (isUpDown == true && overlap.center.y > other->center.y)
+		{//down
+			this->side[DOWN] = true;
+			this->GetRect()->center.y += overlap.size.y;
+		}
+		else if (isUpDown == true && overlap.center.y < other->center.y)
+		{//up
+			this->GetRect()->center.y -= overlap.size.y;
+			this->side[UP] = true;
+		}
+		else if (isUpDown == false && overlap.center.x > other->center.x)
+		{//right
+			this->GetRect()->center.x += overlap.size.x;
+			this->side[RIGHT] = true;
+		}
+		else if (isUpDown == false && overlap.center.x < other->center.x)
+		{//left
+			this->GetRect()->center.x -= overlap.size.x;
+			this->side[LEFT] = true;
+		}
+	}
+}
+
+void Character::SpikeCollision(SpikeObstacle* obstacle)
+{
+	Rect overlap;
+	vector<bool> side = obstacle->GetSpikeSide();
+
+	Rect* other = obstacle->GetRect();
+	if (this->GetRect()->Collision(&overlap, other) == true)
+	{
+		bool isUpDown = overlap.size.x > overlap.size.y;
+		if (isUpDown == true && overlap.center.y > other->center.y)
+		{//down
+			this->GetRect()->center.y += overlap.size.y;
+			if (side[DOWN] == true)
+			{
+				ReturnSpawnPoint();
+				return;
+			}
+			this->side[DOWN] = true;
+		}
+		else if (isUpDown == true && overlap.center.y < other->center.y)
+		{//up
+			this->GetRect()->center.y -= overlap.size.y;
+			if (side[UP] == true)
+			{
+				ReturnSpawnPoint();
+				return;
+			}
+			this->side[UP] = true;
+		}
+		else if (isUpDown == false && overlap.center.x > other->center.x)
+		{//right
+			this->GetRect()->center.x += overlap.size.x;
+			if (side[RIGHT] == true)
+			{
+				ReturnSpawnPoint();
+				return;
+			}
+			this->side[RIGHT] = true;
+		}
+		else if (isUpDown == false && overlap.center.x < other->center.x)
+		{//left
+			this->GetRect()->center.x -= overlap.size.x;
+			if (side[LEFT] == true)
+			{
+				ReturnSpawnPoint();
+				return;
+			}
+			this->side[LEFT] = true;
+		}
+	}
+
+}
+
+void Character::WaterCollision(Water* obstacle)
+{
+	if (this->name == LAURA)
+	{
+		;
+	}
+	else
+		ReturnSpawnPoint();
+}
+
+void Character::ReturnSpawnPoint()
+{
+	this->rect->center = spawnPoint;
+	this->thrust = 0;
+
+}
+
+void Character::SetSpawnPoint(Rect* rect)
+{
+	this->spawnPoint = rect->Center();
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+void Character::PrintElement(HDC hdc, int x)
 {
 	wstring s_Height;
 	switch (this->name)
@@ -107,99 +374,7 @@ void Character::PrintElement(HDC hdc,int x)
 	y += 15;
 
 	falling = L"======================";
-	
 
 
-} 
-
-Side Character::Collision(T_Object* obj)
-{
-	Rect overlap;
-	
-	//해당 객체가 obj의 사면중 어느 부분이랑 접촉했는지
-	if (this->GetRect()->Collision(&overlap, obj->GetRect()) == true)
-	{
-		if (overlap.size.x > overlap.size.y)	//상하충돌
-		{
-			if (this->GetRect()->center.y > obj->GetRect()->center.y)
-			{
-
-				this->GetRect()->center.y += overlap.size.y;
-				return Side::DOWN;
-			}
-			else
-			{
-				this->GetRect()->center.y -= overlap.size.y;
-				return Side::UP;
-			}
-		}
-		else
-		{
-			if (this->GetRect()->center.x > obj->GetRect()->center.x)
-			{
-				this->GetRect()->center.x += overlap.size.x;
-				return Side::RIGHT;
-			}
-			else
-			{
-				this->GetRect()->center.x -= overlap.size.x;
-				return Side::LEFT;
-			}
-		}
-	}
-	return Side::NONE;
-}
-
-void Character::Render(HDC hdc)
-{
-	HBRUSH tempB;
-	HPEN tempP;
-	if (isGoal == true)
-	{
-		tempB = (HBRUSH)SelectObject(hdc, goalColor);
-		tempP = (HPEN)SelectObject(hdc, goalEdge);
-	}
-	else
-	{
-		tempB = (HBRUSH)SelectObject(hdc, color);
-		tempP = (HPEN)SelectObject(hdc, edge);
-	}
-
-	anim->Render(hdc);
-
-	if (this->isActive == true)
-	{
-		SelectObject(hdc, goalColor);
-		SelectObject(hdc, goalEdge);
-
-		pick->Render(hdc);
-	}
-
-	SelectObject(hdc, tempB);
-	SelectObject(hdc, tempP);
-	switch (name)
-	{
-	case THOMAS:
-		PrintElement(hdc,200);
-		break;
-	case CHRIS:
-		PrintElement(hdc, 400);
-		break;
-	case CLARE:
-		PrintElement(hdc, 600);
-		break;
-	case JAMES:
-		PrintElement(hdc, 800);
-		break;
-	case JOHN:
-		PrintElement(hdc, 1000);
-		break;
-	case LAURA:
-		PrintElement(hdc, 1200);
-		break;
-	case SARAH:
-		PrintElement(hdc, 1400);
-		break;
-	}
 
 }

@@ -32,11 +32,16 @@ void Rect::Render(HDC hdc)
 	);
 }
 
-void Rect::Render(HDC hdc, Vector2 center, Vector2 size)
+void Rect::Render(HDC hdc, Vector2 size)
 {
 	Rectangle(hdc,
 		(int)0,(int)0,(int)size.x,(int)size.y
 	);
+}
+
+void Rect::Render(HDC hdc, int left, int right, int top, int bottom)
+{
+	Rectangle(hdc, left, top, right, bottom);
 }
 
 bool Rect::Collision(Vector2 pos)
@@ -51,6 +56,12 @@ void Rect::Set(Vector2 center, double radius)
 {
 	this->center = center;
 	this->size = { radius,radius };
+}
+
+void Rect::Move(double deltaX, double deltaY)
+{
+	this->center.x += deltaX;
+	this->center.y += deltaY;
 }
 
 void Rect::SetRect(double left, double top, double right, double bottom)
@@ -130,11 +141,4 @@ bool Rect::Collision(OUT Rect* overlap, IN Rect* rect)
 	}
 
 	return false;
-}
-
-void Rect::TestMethod()
-{
-	
-
-
 }

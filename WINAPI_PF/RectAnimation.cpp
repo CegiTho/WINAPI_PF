@@ -82,6 +82,4 @@ void RectAnimation::SetAnim(State state, vector<Vector2> anim,double frameUpdate
 		ratio[state][i] = originSize * anim[i];
 	}
 	this->frameUpdateSec[state] = frameUpdateSec;
-
-
 }

@@ -157,6 +157,7 @@
     <ClInclude Include="Chris.h" />
     <ClInclude Include="Circle.h" />
     <ClInclude Include="Clare.h" />
+    <ClInclude Include="Cross.h" />
     <ClInclude Include="Enum.h" />
     <ClInclude Include="Framework.h" />
     <ClInclude Include="GameStreamManager.h" />
@@ -167,9 +168,11 @@
     <ClInclude Include="Keyboard.h" />
     <ClInclude Include="Laura.h" />
     <ClInclude Include="Line.h" />
+    <ClInclude Include="MainMenuScene.h" />
     <ClInclude Include="MapReader.h" />
     <ClInclude Include="MasterCamera.h" />
     <ClInclude Include="Math.h" />
+    <ClInclude Include="MenuScene.h" />
     <ClInclude Include="NormalObstacle.h" />
     <ClInclude Include="Object.h" />
     <ClInclude Include="ObjManager.h" />
@@ -184,6 +187,7 @@
     <ClInclude Include="RectAnimation.h" />
     <ClInclude Include="Resource.h" />
     <ClInclude Include="Sarah.h" />
+    <ClInclude Include="SavePoint.h" />
     <ClInclude Include="Scene.h" />
     <ClInclude Include="SceneManager.h" />
     <ClInclude Include="Shade.h" />
@@ -193,11 +197,14 @@
     <ClInclude Include="SyncKeyboard.h" />
     <ClInclude Include="targetver.h" />
     <ClInclude Include="TestScene.h" />
+    <ClInclude Include="TextCell.h" />
+    <ClInclude Include="TextCellSelect.h" />
     <ClInclude Include="Texture.h" />
     <ClInclude Include="TextureManager.h" />
     <ClInclude Include="TextureRect.h" />
     <ClInclude Include="Thomas.h" />
     <ClInclude Include="Timer.h" />
+    <ClInclude Include="Triangle.h" />
     <ClInclude Include="T_Object.h" />
     <ClInclude Include="Vector2.h" />
     <ClInclude Include="Water.h" />
@@ -214,12 +221,14 @@
     <ClCompile Include="Chris.cpp" />
     <ClCompile Include="Circle.cpp" />
     <ClCompile Include="Clare.cpp" />
+    <ClCompile Include="Cross.cpp" />
     <ClCompile Include="Framework.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Create</PrecompiledHeader>
     </ClCompile>
+    <ClCompile Include="GameStreamManager.cpp" />
     <ClCompile Include="Goal.cpp" />
     <ClCompile Include="GoalManager.cpp" />
     <ClCompile Include="James.cpp" />
@@ -227,8 +236,10 @@
     <ClCompile Include="Keyboard.cpp" />
     <ClCompile Include="Laura.cpp" />
     <ClCompile Include="Line.cpp" />
+    <ClCompile Include="MainMenuScene.cpp" />
     <ClCompile Include="MasterCamera.cpp" />
     <ClCompile Include="Math.cpp" />
+    <ClCompile Include="MenuScene.cpp" />
     <ClCompile Include="NormalObstacle.cpp" />
     <ClCompile Include="Object.cpp" />
     <ClCompile Include="ObjManager.cpp" />
@@ -240,6 +251,7 @@
     <ClCompile Include="Rect.cpp" />
     <ClCompile Include="RectAnimation.cpp" />
     <ClCompile Include="Sarah.cpp" />
+    <ClCompile Include="SavePoint.cpp" />
     <ClCompile Include="SceneManager.cpp" />
     <ClCompile Include="Shade.cpp" />
     <ClCompile Include="ShadeManager.cpp" />
@@ -247,11 +259,14 @@
     <ClCompile Include="SpikeObstacle.cpp" />
     <ClCompile Include="SyncKeyboard.cpp" />
     <ClCompile Include="TestScene.cpp" />
+    <ClCompile Include="TextCell.cpp" />
+    <ClCompile Include="TextCellSelect.cpp" />
     <ClCompile Include="Texture.cpp" />
     <ClCompile Include="TextureManager.cpp" />
     <ClCompile Include="TextureRect.cpp" />
     <ClCompile Include="Thomas.cpp" />
     <ClCompile Include="Timer.cpp" />
+    <ClCompile Include="Triangle.cpp" />
     <ClCompile Include="T_Object.cpp" />
     <ClCompile Include="Vector2.cpp" />
     <ClCompile Include="Water.cpp" />

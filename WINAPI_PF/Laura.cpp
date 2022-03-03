@@ -27,6 +27,7 @@ void Laura::CreateLaura(Vector2 pos)
 	rect = new Rect(pos, LAURA_SIZE);
 	color = CreateSolidBrush(LAURA_COLOR);
 	edge = CreatePen(PS_SOLID, 1, LAURA_COLOR);
+	spawnPoint = rect->center;
 
 	speed = SPEED;
 	thrust = 0;
@@ -107,84 +108,19 @@ void Laura::LauraJump(Character* character)
 		thrust = SARAH_THRUST + LAURA_ADD_THRUST;
 		character->SetThrust(thrust);
 		character->SetJump(true);
+		static_cast<Sarah*>(character)->SetDoubleJump(false);
 		character->SetSide(UP, false);
 		character->SetAnim(State::JUMP);
 		break;
 	default:
 		break;
 	}
-	
-	
 }
 
-void Laura::Collision(vector<T_Object*> objects)
+void Laura::Update(vector<T_Object*> obj)
 {
-	for (T_Object* object : objects)
-	{
-		if ((Laura*)object == this)
-			continue;
+ 	Collision(obj);
 
-		switch (object->GetID())
-		{
-		case ID::CHARACTER:
-			CharacterCollision(object);
-			break;
-		case ID::OBSTACLE:
-			ObstacleCollision(object);
-			break;
-		case ID::GOAL:
-			break;
-		}
-	}
-
-
-}
-
-void Laura::CharacterCollision(T_Object* character)
-{
-	switch (dynamic_cast<Character*>(this)->Collision(character))
-	{
-	case Side::UP:
-		side[UP] = true;
-		break;
-	case Side::DOWN:
-		
-		side[DOWN] = true;
-		break;
-	case Side::LEFT:
-		side[LEFT] = true;
-	case Side::RIGHT:
-		side[RIGHT] = true;
-		break;
-	case Side::NONE:
-		break;
-	}
-}
-
-void Laura::ObstacleCollision(T_Object* obstacle)
-{
-	switch (dynamic_cast<Character*>(this)->Collision(obstacle))
-	{
-	case Side::UP:
-		side[UP] = true;
-		break;
-	case Side::DOWN:
-		side[DOWN] = true;
-		break;
-	case Side::LEFT:
-		side[LEFT] = true;
-		break;
-	case Side::RIGHT:
-		side[RIGHT] = true;
-		break;
-	case Side::NONE:
-		break;
-	}
-
-}
-
-void Laura::Update()
-{
 	Jump();
 	anim->Update();
 	InitAgain();
@@ -197,7 +133,7 @@ void Laura::Update()
 
 void Laura::Jump()
 {//======Jump===========
-	if (KEYDOWN(VK_UP) && isJump == false && isActive == true)
+	if (KEYDOWN(VK_SPACE) && isJump == false && isActive == true)
 	{
 		thrust = LAURA_THRUST;
 		isJump = true;
@@ -237,9 +173,3 @@ void Laura::Jump()
 
 }
 
-void Laura::InitAgain()
-{
-	for (int i = 0; i < side.size(); i++)
-		side[i] = false;
-	
-}

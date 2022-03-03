@@ -52,6 +52,9 @@
     <Filter Include="Framework\GameObject\Origin">
       <UniqueIdentifier>{a0751f74-76c4-4ca9-a36e-461c55ba5689}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Framework\GameObject\Scene\MenuScene">
+      <UniqueIdentifier>{b32359ee-3d72-45fe-ac46-ca38417e8d32}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Framework.h">
@@ -219,6 +222,27 @@
     <ClInclude Include="Wave.h">
       <Filter>Framework\BasicObject</Filter>
     </ClInclude>
+    <ClInclude Include="SavePoint.h">
+      <Filter>Framework\GameObject\Goal</Filter>
+    </ClInclude>
+    <ClInclude Include="Cross.h">
+      <Filter>Framework\BasicObject</Filter>
+    </ClInclude>
+    <ClInclude Include="Triangle.h">
+      <Filter>Framework\BasicObject</Filter>
+    </ClInclude>
+    <ClInclude Include="MenuScene.h">
+      <Filter>Framework\GameObject\Scene\MenuScene</Filter>
+    </ClInclude>
+    <ClInclude Include="TextCell.h">
+      <Filter>Framework\BasicObject</Filter>
+    </ClInclude>
+    <ClInclude Include="TextCellSelect.h">
+      <Filter>Framework\BasicObject</Filter>
+    </ClInclude>
+    <ClInclude Include="MainMenuScene.h">
+      <Filter>Framework\GameObject\Scene\MenuScene</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="WINAPI_PF.cpp">
@@ -361,6 +385,30 @@
     </ClCompile>
     <ClCompile Include="Wave.cpp">
       <Filter>Framework\BasicObject</Filter>
+    </ClCompile>
+    <ClCompile Include="SavePoint.cpp">
+      <Filter>Framework\GameObject\Goal</Filter>
+    </ClCompile>
+    <ClCompile Include="Cross.cpp">
+      <Filter>Framework\BasicObject</Filter>
+    </ClCompile>
+    <ClCompile Include="GameStreamManager.cpp">
+      <Filter>Framework\GameObject\Manager</Filter>
+    </ClCompile>
+    <ClCompile Include="Triangle.cpp">
+      <Filter>Framework\BasicObject</Filter>
+    </ClCompile>
+    <ClCompile Include="MenuScene.cpp">
+      <Filter>Framework\GameObject\Scene\MenuScene</Filter>
+    </ClCompile>
+    <ClCompile Include="TextCell.cpp">
+      <Filter>Framework\BasicObject</Filter>
+    </ClCompile>
+    <ClCompile Include="TextCellSelect.cpp">
+      <Filter>Framework\BasicObject</Filter>
+    </ClCompile>
+    <ClCompile Include="MainMenuScene.cpp">
+      <Filter>Framework\GameObject\Scene\MenuScene</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

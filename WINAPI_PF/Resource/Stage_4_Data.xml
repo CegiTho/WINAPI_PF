@@ -2,22 +2,22 @@
 <StageElement>
   <Character>
     <Thomas consist="1" name ="0">
-      <position posX="300" posY="300"/>
+      <position posX="500" posY="300"/>
     </Thomas>
     <Chris consist="1" name ="1">
-      <position posX ="500" posY="300"/>
-    </Chris>  
+      <position posX ="900" posY="300"/>
+    </Chris>
     <Clare consist="1" name ="2">
-      <position posX ="700" posY="300"/>
+      <position posX ="300" posY="300"/>
     </Clare>
     <James consist="1" name ="3">
-      <position posX ="900" posY="400"/>
+      <position posX ="500" posY="400"/>
     </James>
     <John consist="1" name ="4">
-      <position posX ="1100" posY="300"/>
+      <position posX ="1100" posY="800"/>
     </John>
     <Laura consist="1" name ="5">
-      <position posX ="1300" posY="300"/>
+      <position posX ="1300" posY="800"/>
     </Laura>
     <Sarah consist="1" name ="6">
       <position posX ="1500" posY="300"/>
@@ -46,6 +46,12 @@
       <position posX ="1700" posY="500"/>
     </Sarah>
   </Goal>
+  <SavePoint>
+    <SavePoint_1>
+      <position posX ="700" posY ="500"/>
+      <size sizeX ="200" sizeY ="800"/>
+    </SavePoint_1>
+  </SavePoint>
   <Obstacle>
     <!--type 0 = normal , type 1 = spike , type 2 = water-->
     <obs1>

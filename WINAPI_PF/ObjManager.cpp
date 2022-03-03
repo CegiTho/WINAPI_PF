@@ -38,6 +38,7 @@ void ObjManager::LoadStage(STAGE_NUM num)
 
 	XmlElement* stageElement	=	document->FirstChildElement("StageElement");
 	XmlElement* character		=	stageElement->FirstChildElement("Character");
+	XmlElement* savePoint		=	stageElement->FirstChildElement("SavePoint");
 	XmlElement* goal			=	stageElement->FirstChildElement("Goal");
 	XmlElement* obstacle		=	stageElement->FirstChildElement("Obstacle");
 
@@ -46,6 +47,7 @@ void ObjManager::LoadStage(STAGE_NUM num)
 	Vector2 pos;
 	Vector2 size;
 
+	//==========CHARACTER=======================
 	character = character->FirstChildElement("Thomas");
 	for (; character != nullptr; character = character->NextSiblingElement())
 	{
@@ -61,6 +63,7 @@ void ObjManager::LoadStage(STAGE_NUM num)
 		this->PlusCharacter((Name)name, pos);
 	}
 
+	//==========GOAL=======================
 	index = 0;
 	goal = goal->FirstChildElement("Thomas");
 	for (; goal != nullptr; goal = goal->NextSiblingElement())
@@ -81,6 +84,26 @@ void ObjManager::LoadStage(STAGE_NUM num)
 		index++;
 	}
 
+	//============SAVE_POINT=====================
+	if (savePoint != nullptr)
+	{
+		//XmlElement* savePointInfo = savePoint->FirstChildElement();
+		savePoint = savePoint->FirstChildElement();
+		for (; savePoint != nullptr; savePoint = savePoint->NextSiblingElement())
+		{
+			XmlElement* savePointInfo = savePoint->FirstChildElement();
+			pos.x = savePointInfo->IntAttribute("posX");
+			pos.y = savePointInfo->IntAttribute("posY");
+			
+			savePointInfo = savePointInfo->NextSiblingElement();
+			size.x = savePointInfo->IntAttribute("sizeX");
+			size.y = savePointInfo->IntAttribute("sizeY");
+
+			this->GetGM()->PlusSavePoint(this->GetCM()->GetObj(), pos, size);
+		}
+	}
+
+	//==========OBSTACLE=======================
 	name = 0;
 	obstacle = obstacle->FirstChildElement();
 	for (; obstacle != nullptr; obstacle = obstacle->NextSiblingElement())
@@ -125,13 +148,9 @@ void ObjManager::LoadStage(STAGE_NUM num)
 
 void ObjManager::Update()
 {
-	Collision();
-
 	m_Obstacle->Update();
-	m_Character->Update();
+	m_Character->Update(objects);
 	m_Goal->Update();
-
-
 }
 
 void ObjManager::Render(HDC hdc)
@@ -139,16 +158,6 @@ void ObjManager::Render(HDC hdc)
 	m_Obstacle->Render(hdc);
 	m_Character->Render(hdc);
 	m_Goal->Render(hdc);
-}
-
-void ObjManager::Collision()
-{
-	for (Character* character : m_Character->GetObj())
-	{
-		if(character != nullptr)
-			character->Collision(objects);
-	}
-
 }
 
 void ObjManager::PlusCharacter(Name name,Vector2 pos)

@@ -26,6 +26,7 @@ void Goal::CreateElement(Character* character, Vector2 pos)
 	isGoal = false;
 
 	edge = CreatePen(PS_SOLID, 1, WHITE);
+	goalEdge = CreatePen(PS_SOLID, 2, WHITE);
 
 	lines.emplace_back(new Line(this->rect->LeftTopV(), this->rect->RightTopV()));
 	lines.emplace_back(new Line(this->rect->RightTopV(), this->rect->RightBottomV()));
@@ -33,15 +34,13 @@ void Goal::CreateElement(Character* character, Vector2 pos)
 	lines.emplace_back(new Line(this->rect->LeftBottomV(), this->rect->LeftTopV()));
 }
 
-void Goal::Update()
-{
-	this->Collision();
-
-}
-
 void Goal::Render(HDC hdc)
 {
-	HPEN temp = (HPEN)SelectObject(hdc, edge);
+	HPEN temp;
+	isGoal == true ? temp = (HPEN)SelectObject(hdc, goalEdge) : temp = (HPEN)SelectObject(hdc, edge);
+
+	isGoal = false;
+
 	for (Line* line : lines)
 		line->Render(hdc);
 
@@ -72,4 +71,3 @@ void Goal::Collision()
 	isGoal = false;
 	character->SetGoal(false);
 }
-

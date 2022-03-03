@@ -16,7 +16,8 @@ public:
 	~Rect();
 
 	virtual void Render(HDC hdc) override;
-	void Render(HDC hdc,Vector2 center,Vector2 size);
+	void Render(HDC hdc,Vector2 size);
+	void Render(HDC hdc, int left,int right,int top,int bottom);
 
 	//======object collision======
 	virtual bool Collision(Vector2 pos) override;
@@ -27,6 +28,8 @@ public:
 	//======object collision======
 
 	virtual void Set(Vector2 center, double radius) override;
+
+	void Move(double deltaX = 0.0, double deltaY = 0.0);
 	void SetRect(double left, double top, double right, double bottom);
 	void SetRect(Vector2 center, Vector2 size);
 
@@ -72,7 +75,6 @@ public:
 		return result;
 	}
 
-	void TestMethod();
 
 	double Area() { return (size.x * size.y); }
 

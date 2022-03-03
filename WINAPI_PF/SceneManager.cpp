@@ -35,6 +35,7 @@ Scene* SceneManager::Add(string key, Scene* scene)
         return scenes[key];
 
     scenes[key] = scene;
+
     return scene;
 }
 
@@ -46,6 +47,12 @@ void SceneManager::ChangeScene(string key)
     if (scenes[key] == curScene)
         return;
 
-    curScene = scenes[key];
-    curScene->Start();
+    if (curScene == nullptr)
+        curScene = scenes[key];
+
+    if (curScene->End() == true)
+    {
+        curScene = scenes[key];
+        curScene->Start();
+    }
 }

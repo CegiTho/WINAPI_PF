@@ -29,6 +29,7 @@ void James::CreateJames(Vector2 pos)
 	rect = new Rect(pos, JAMES_SIZE);
 	color = CreateSolidBrush(JAMES_COLOR);
 	edge = CreatePen(PS_SOLID, 1, JAMES_COLOR);
+	spawnPoint = rect->center;
 
 	speed = SPEED;
 	thrust = 0;
@@ -65,73 +66,10 @@ void James::CreateJames(Vector2 pos)
 	}
 }
 
-void James::Collision(vector<T_Object*> objects)
+void James::Update(vector<T_Object*> obj)
 {
-	for (T_Object* object : objects)
-	{
-		if ((James*)object == this)
-			continue;
+	Collision(obj);
 
-		switch (object->GetID())
-		{
-		case ID::CHARACTER:
-			CharacterCollision(object);
-			break;
-		case ID::OBSTACLE:
-			ObstacleCollision(object);
-			break;
-		case ID::GOAL:
-			break;
-		}
-	}
-}
-
-void James::CharacterCollision(T_Object* character)
-{
-	switch (dynamic_cast<Character*>(this)->Collision(character))
-	{
-	//Laura충돌에서 제외
-	case Side::UP:
-		side[UP] = true;
-		break;
-	case Side::DOWN:
-		
-		side[DOWN] = true;
-		break;
-	case Side::LEFT:
-		side[LEFT] = true;
-	case Side::RIGHT:
-		side[RIGHT] = true;
-		break;
-	case Side::NONE:
-		break;
-	}
-}
-
-void James::ObstacleCollision(T_Object* obstacle)
-{
-	switch (dynamic_cast<Character*>(this)->Collision(obstacle))
-	{
-	case Side::UP:
-		side[UP] = true;
-		break;
-	case Side::DOWN:
-		side[DOWN] = true;
-		break;
-	case Side::LEFT:
-		side[LEFT] = true;
-		break;
-	case Side::RIGHT:
-		side[RIGHT] = true;
-		break;
-	case Side::NONE:
-		break;
-	}
-
-}
-
-void James::Update()
-{
 	Jump();
 	anim->Update();
 	InitAgain();
@@ -145,7 +83,7 @@ void James::Update()
 void James::Jump()
 {
 	//======Jump===========
-	if (KEYDOWN(VK_UP) && isJump == false && isActive == true)
+	if (KEYDOWN(VK_SPACE) && isJump == false && isActive == true)
 	{
 		thrust = JAMES_THRUST;
 		isJump = true;
@@ -182,11 +120,4 @@ void James::Jump()
 		this->thrust = 0;
 		isFalling = true;
 	}
-}
-
-void James::InitAgain()
-{
-	for (int i = 0; i < side.size(); i++)
-		side[i] = false; 
-	
 }

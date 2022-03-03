@@ -18,10 +18,10 @@ public:
 	void Update();
 	void Render(HDC hdc);
 
-	void Collision();
 
-	CharacterManager* GetCM() { return m_Character; }
-	ObstacleManager* GetOM() { return m_Obstacle; }
+	CharacterManager*	GetCM()		{ return m_Character; }
+	ObstacleManager*	GetOM()		{ return m_Obstacle; }
+	GoalManager*		GetGM()		{ return m_Goal; }
 
 	void PlusCharacter(Name name,Vector2 pos);
 

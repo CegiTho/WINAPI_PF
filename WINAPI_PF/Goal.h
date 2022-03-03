@@ -9,6 +9,7 @@ private:
 	//Render할때 사용
 	vector<Line*> lines;
 
+	HPEN goalEdge;
 	Name name;
 
 public:
@@ -17,7 +18,6 @@ public:
 
 	void CreateElement(Character* character, Vector2 pos);
 
-	void Update();
 	void Render(HDC hdc);
 
 	void Collision();

@@ -2,13 +2,15 @@
 #include "Program.h"
 
 #include "TestScene.h"
+#include "MainMenuScene.h"
 
 Program::Program(HWND hWindow)
 {
 	srand((unsigned)time(nullptr));
 	hWnd = hWindow;
 
-	SCENE->Add("Test", new TestScene());
+	SCENE->Add("Test", new MainMenuScene());
+	//SCENE->Add("Test", new TestScene());
 	SCENE->ChangeScene("Test");
 
 }

@@ -28,6 +28,7 @@ void Clare::CreateClare(Vector2 pos)
 	rect = new Rect(pos, CLARE_SIZE);
 	color = CreateSolidBrush(CLARE_COLOR);
 	edge = CreatePen(PS_SOLID, 1, CLARE_COLOR);
+	spawnPoint = rect->center;
 
 	speed = SPEED;
 	thrust = 0;
@@ -64,77 +65,10 @@ void Clare::CreateClare(Vector2 pos)
 	}
 }
 
-void Clare::Collision(vector<T_Object*> objects)
+void Clare::Update(vector<T_Object*> obj)
 {
-	for (T_Object* object : objects)
-	{
-		if ((Clare*)object == this)
-			continue;
+	Collision(obj);
 
-		switch (object->GetID())
-		{
-		case ID::CHARACTER:
-			CharacterCollision(object);
-			break;
-		case ID::OBSTACLE:
-			ObstacleCollision(object);
-			break;
-		case ID::GOAL:
-			break;
-		}
-	}
-}
-
-void Clare::CharacterCollision(T_Object* character)
-{
-	switch (dynamic_cast<Character*>(this)->Collision(character))
-	{
-	case Side::UP:
-		if (dynamic_cast<Character*>(character)->GetName() == Name::LAURA)
-		{
-			dynamic_cast<Laura*>(character)->LauraJump(this);
-		}
-		else
-			side[UP] = true;
-		break;
-	case Side::DOWN:
-		
-		side[DOWN] = true;
-		break;
-	case Side::LEFT:
-		side[LEFT] = true;
-	case Side::RIGHT:
-		side[RIGHT] = true;
-		break;
-	case Side::NONE:
-		break;
-	}
-}
-
-void Clare::ObstacleCollision(T_Object* obstacle)
-{
-	switch (dynamic_cast<Character*>(this)->Collision(obstacle))
-	{
-	case Side::UP:
-		side[UP] = true;
-		break;
-	case Side::DOWN:
-		side[DOWN] = true;
-		break;
-	case Side::LEFT:
-		side[LEFT] = true;
-		break;
-	case Side::RIGHT:
-		side[RIGHT] = true;
-		break;
-	case Side::NONE:
-		break;
-	}
-
-}
-
-void Clare::Update()
-{
 	Jump();
 	anim->Update();
 	InitAgain();
@@ -146,8 +80,9 @@ void Clare::Update()
 }
 
 void Clare::Jump()
-{//======Jump===========
-	if (KEYDOWN(VK_UP) && isJump == false && isActive == true)
+{
+	//======Jump===========
+	if (KEYDOWN(VK_SPACE) && isJump == false && isActive == true)
 	{
 		thrust = CLARE_THRUST;
 		isJump = true;
@@ -183,11 +118,4 @@ void Clare::Jump()
 		this->thrust = 0;
 		isFalling = true;
 	}
-}
-
-void Clare::InitAgain()
-{
-	for (int i = 0; i < side.size(); i++)
-		side[i] = false;
-
 }

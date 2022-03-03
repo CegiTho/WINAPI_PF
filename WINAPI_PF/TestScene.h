@@ -7,6 +7,7 @@ private:
 	
 	ShadeManager* m_Shade;
 
+
 public:
 	TestScene();
 	~TestScene();

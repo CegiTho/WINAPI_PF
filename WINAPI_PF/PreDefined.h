@@ -66,19 +66,32 @@
 #define BG_COLOR_4 RGB(60,60,35)
 #define BG_COLOR_5 RGB(34,42,45)
 
+#define SYMBOL_INTERVAL 70
+#define SYMBOL_SIZE 12
+
+#define EPSILON 0.0001
+//menuCellSize 는 고정, x값 위치도 고정임. y값은 menuCell갯수에 따라 다르게,
+//boxSize는 (menuCell위치,여백,화면 오른쪽 끝까지 닿도록) x값 정한거고 y값도 위아래 여백 고려한거임.
+#define MENUCELL_SIZE_X 900
+#define MENUCELL_SIZE_Y 35
+
+#define MENUCELL_POS_X 1300
+
+#define SELECTED_BOX_SIZE {700,70}
 
 struct WaveElem
 {
 	int time;		
 
-	int lifespan;				//수명. 진폭 0 에서 height까지 sine형으로 증가했다가 다시 0으로 sine형으로 감소
-	int	height;				
-	int length;
-	int sliceCount;
-	double pi;
-	double delta;		//x방향 미소변위
-	double damp;		//감쇠상수
-	double k;			//파장관련 상수
-	double angular;		//각속도
-	double h_Angular;	//진폭 시간상수
+	int	height;				//5
+	int length;				//60 정도
+	int sliceCount;			//length / sliceDelta		
+	double pixelPerSec;		//1초에 몇 픽셀씩 이동하는지
+	double lifespan;		//3초정도	//수명. 진폭 0 에서 height까지 sine형으로 증가했다가 다시 0으로 sine형으로 감소
+	double pi;				//3.1 or 3.14
+	double delta;			//1~3 사이 적절한 값	x방향 미소변위
+	double damp;			//	감쇠상수
+	double k;				//pi/length		파장관련 상수
+	double angular;			//		각속도
+	double h_Angular;		//pi / time		진폭 시간상수
 };

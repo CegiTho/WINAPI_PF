@@ -3,13 +3,25 @@
 class GameStreamManager
 {
 private:
+	map<string, Scene*> scenes;
 
 
 
 
-public:
 	GameStreamManager();
 	~GameStreamManager();
+public:
+	static GameStreamManager* Get()
+	{
+		static GameStreamManager instance;
+		return &instance;
+	}
+
+	void Update();
+	void Render(HDC hdc);
+
+
+
 
 
 };

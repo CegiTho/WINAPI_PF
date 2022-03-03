@@ -17,7 +17,7 @@ public:
 	CharacterManager();
 	~CharacterManager();
 
-	void Update();
+	void Update(vector<T_Object*> obj);
 	void Render(HDC hdc);
 
 	T_Object* PlusCharacter(Name name,Vector2 pos);
@@ -29,8 +29,11 @@ public:
 
 	void SetCharacterActive(Name character, bool isActive);
 
+	void Collision(vector<T_Object*> obj);
 
 };
+
+
 
 
 

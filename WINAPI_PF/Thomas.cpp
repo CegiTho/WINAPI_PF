@@ -28,6 +28,7 @@ void Thomas::CreateThomas(Vector2 pos)
 	rect = new Rect(pos, THOMAS_SIZE);
 	color = CreateSolidBrush(THOMAS_COLOR);
 	edge = CreatePen(PS_SOLID, 1, THOMAS_COLOR);
+	spawnPoint = rect->center;
 
 	speed = SPEED;
 	thrust = 0;
@@ -64,8 +65,9 @@ void Thomas::CreateThomas(Vector2 pos)
 	}
 }
 
-void Thomas::Update()
+void Thomas::Update(vector<T_Object*> obj)
 {
+	Collision(obj);
 	Jump();
 	anim->Update();
 	InitAgain();
@@ -79,7 +81,7 @@ void Thomas::Update()
 void Thomas::Jump()
 {
 	//======Jump===========
-	if (KEYDOWN(VK_UP) && isJump == false && isActive == true)
+	if (KEYDOWN(VK_SPACE) && isJump == false && isActive == true)
 	{
 		thrust = THOMAS_THRUST;
 		isJump = true;
@@ -118,81 +120,3 @@ void Thomas::Jump()
 	}
 
 }
-
-void Thomas::InitAgain()
-{
-	for (int i = 0 ; i < side.size() ; i++)
-		side[i] = false;
-	
-}
-
-void Thomas::Collision(vector<T_Object*> objects)
-{
-	for (T_Object* object : objects)
-	{
-		if ((Thomas*)object == this)
-			continue;
-
-		switch (object->GetID())
-		{
-		case ID::CHARACTER:
-			CharacterCollision(object);
-			break;
-		case ID::OBSTACLE:
-			ObstacleCollision(object);
-			break;
-		case ID::GOAL:
-			break;
-		}
-	}
-
-	
-}
-
-void Thomas::CharacterCollision(T_Object* character)
-{
-	switch (dynamic_cast<Character*>(this)->Collision(character))
-	{
-	case Side::UP:
-		if (dynamic_cast<Character*>(character)->GetName() == Name::LAURA)
-		{
-			dynamic_cast<Laura*>(character)->LauraJump(this);
-		}
-		else
-			side[UP] = true;
-		break;
-	case Side::DOWN:
-		side[DOWN] = true;
-		break;
-	case Side::LEFT:
-		side[LEFT] = true;
-	case Side::RIGHT:
-		side[RIGHT] = true;
-		break;
-	case Side::NONE:
-		break;
-	}
-}
-
-void Thomas::ObstacleCollision(T_Object* obstacle)
-{
-	switch (dynamic_cast<Character*>(this)->Collision(obstacle))
-	{
-	case Side::UP:
-		side[UP] = true;
-		break;
-	case Side::DOWN:
-		side[DOWN] = true;
-		break;
-	case Side::LEFT:
-		side[LEFT] = true;
-		break;
-	case Side::RIGHT:
-		side[RIGHT] = true;
-		break;
-	case Side::NONE:
-		break;
-	}
-
-}
-

@@ -28,6 +28,7 @@ void Sarah::CreateSarah(Vector2 pos)
 	rect = new Rect(pos, SARAH_SIZE);
 	color = CreateSolidBrush(SARAH_COLOR);
 	edge = CreatePen(PS_SOLID, 1, SARAH_COLOR);
+	spawnPoint = rect->center;
 
 	speed = SPEED;
 	thrust = 0;
@@ -64,8 +65,10 @@ void Sarah::CreateSarah(Vector2 pos)
 	}
 }
 
-void Sarah::Update()
+void Sarah::Update(vector<T_Object*> obj)
 {
+	Collision(obj);
+
 	Jump();
 	anim->Update();
 	InitAgain();
@@ -78,15 +81,16 @@ void Sarah::Update()
 
 void Sarah::Jump()
 {//======Jump===========
-	if (KEYDOWN(VK_UP) && isJump == true && isDoubleJump == false && isActive == true)
+	if (KEYDOWN(VK_SPACE) && isJump == true && isDoubleJump == false && isActive == true)
 	{
+		thrust = 0;
 		thrust += SARAH_THRUST;
 		isDoubleJump = true;
 		side[UP] = false;
 		anim->SetState(State::JUMP);
 	}
 
-	if (KEYDOWN(VK_UP) && isJump == false && isActive == true)
+	if (KEYDOWN(VK_SPACE) && isJump == false && isActive == true)
 	{
 		thrust = SARAH_THRUST;
 		isJump = true;
@@ -125,80 +129,4 @@ void Sarah::Jump()
 		isFalling = true;
 	}
 
-}
-
-void Sarah::InitAgain()
-{
-	for (int i = 0; i < side.size(); i++)
-		side[i] = false;
-
-}
-
-void Sarah::Collision(vector<T_Object*> objects)
-{
-	for (T_Object* object : objects)
-	{
-		if ((Sarah*)object == this)
-			continue;
-
-		switch (object->GetID())
-		{
-		case ID::CHARACTER:
-			CharacterCollision(object);
-			break;
-		case ID::OBSTACLE:
-			ObstacleCollision(object);
-			break;
-		case ID::GOAL:
-			break;
-		}
-	}
-}
-
-void Sarah::CharacterCollision(T_Object* character)
-{
-	switch (dynamic_cast<Character*>(this)->Collision(character))
-	{
-	case Side::UP:
-		if (dynamic_cast<Character*>(character)->GetName() == Name::LAURA)
-		{
-			dynamic_cast<Laura*>(character)->LauraJump(this);
-			this->isDoubleJump = false;
-		}
-		else
-			side[UP] = true;
-		break;
-	case Side::DOWN:
-		
-		side[DOWN] = true;
-		break;
-	case Side::LEFT:
-		side[LEFT] = true;
-	case Side::RIGHT:
-		side[RIGHT] = true;
-		break;
-	case Side::NONE:
-		break;
-	}
-}
-
-void Sarah::ObstacleCollision(T_Object* obstacle)
-{
-	switch (dynamic_cast<Character*>(this)->Collision(obstacle))
-	{
-	case Side::UP:
-		side[UP] = true;
-		break;
-	case Side::DOWN:
-		side[DOWN] = true;
-		break;
-	case Side::LEFT:
-		side[LEFT] = true;
-		break;
-	case Side::RIGHT:
-		side[RIGHT] = true;
-		break;
-	case Side::NONE:
-		break;
-	}
 }

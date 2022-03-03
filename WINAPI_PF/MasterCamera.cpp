@@ -29,14 +29,7 @@ MasterCamera::~MasterCamera()
 
 void MasterCamera::Update()
 {
-	if (isMoving == true)
-	{
-		screen->center = LERP(screen->center, target->GetRect()->center, 0.05);
-		if (screen->center == target->GetRect()->center)
-			isMoving = false;
-	}
-	else
-		screen->center = LERP(screen->center, target->GetRect()->center, 0.01);
+	screen->center = LERP(screen->center, target->GetRect()->center, 0.03);
 
 	{
 		if (screen->Left() < 0)
