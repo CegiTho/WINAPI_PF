@@ -36,6 +36,7 @@ void Clare::CreateClare(Vector2 pos)
 	isJump = false;
 	isDoubleJump = false;
 	isFalling = true;
+	isEscape = false;
 	gravity = GRAVITY;
 
 	anim = new RectAnimation(this);
@@ -68,6 +69,7 @@ void Clare::CreateClare(Vector2 pos)
 void Clare::Update(vector<T_Object*> obj)
 {
 	Collision(obj);
+	ReturnSpawnPoint();
 
 	Jump();
 	anim->Update();
@@ -81,14 +83,31 @@ void Clare::Update(vector<T_Object*> obj)
 
 void Clare::Jump()
 {
-	//======Jump===========
-	if (KEYDOWN(VK_SPACE) && isJump == false && isActive == true)
+	if (isFloat == false)
 	{
+		floatingTime = 0.0;
+		if (isEscape == true)
+			isEscape = false;
+	}
+
+	//======Jump===========
+	if (KEYDOWN(KEYBOARD->GetJumpKey()) && isJump == false && isActive == true && isFloat == false)
+	{
+		SOUND->Play("Clare_Jump_Sound_FX");
 		thrust = CLARE_THRUST;
 		isJump = true;
 		side[UP] = false;
 		anim->SetState(State::JUMP);
 	}
+
+	//=========On Water=================
+	if (KEYDOWN(KEYBOARD->GetJumpKey()) == true && isActive == true && isFloat == true && isEscape == false)
+	{
+		isEscape = true;
+		isJump = true;
+		this->thrust += CLARE_THRUST * 2;
+	}
+	isFloat = false;
 
 	//======Falling===========
 	if (isFalling == true || isJump == true || side[UP] == true)
@@ -116,6 +135,49 @@ void Clare::Jump()
 	if (side[DOWN] == true)
 	{
 		this->thrust = 0;
-		isFalling = true;
+		//isFalling = true;
 	}
+	
+}
+
+void Clare::ReturnSpawnPoint()
+{
+	if (isPenetrated == true)
+		respawnDelay += DELTA;
+
+	if (respawnDelay >= 0.2)
+	{
+		this->rect->center = spawnPoint;
+		this->thrust = 0;
+		respawnDelay = 0.0;
+		isPenetrated = false;
+	}
+}
+
+void Clare::OnWater(Water* obs)
+{
+	if (floatingTime == 0.0)
+	{
+		this->thrust = 0;
+		isJump = false;
+		isFalling = false;
+		isEscape = false;
+	}
+	
+	if (isEscape == true)
+		return;
+	isJump = false;
+
+	this->thrust += gravity * DELTA;
+	floatingTime += DELTA;
+
+	double surfaceLevel = obs->GetRect()->Top();
+	double height = 30.0;		//의미없음 
+	double angular = 2 * PI * 2;	//수면에서 위치의 감쇠진동주기(1/angular sec)
+	double dampTime = 0.3;		//감쇠계수(시간에 따르므로 약 dampTime sec 마다 1/exp만큼 감쇠)
+	double damp = -height * exp(-floatingTime * 0.3) * sin(angular * floatingTime);
+	
+	this->rect->center.y = surfaceLevel + damp;
+
+	
 }

@@ -8,6 +8,7 @@ private:
 
 	bool isClear;
 
+	STAGE_NUM nowStage;
 
 public:
 	GoalManager();
@@ -18,10 +19,12 @@ public:
 	void Collision();
 
 	Goal* PlusGoal(Character* character, Vector2 pos);
+	Goal* PlusGoal(Character* character, Vector2 startPos,Vector2 endPos,bool isMove,bool loop,double times);
 	void PlusSavePoint(vector<Character*> characters,Vector2 pos,Vector2 size);
 	bool Check();
 
-
+	vector<Goal*> GetGoals() { return goals; }
+	void SetNowStage(STAGE_NUM value) { nowStage = value; }
 };
 
 

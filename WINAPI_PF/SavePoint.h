@@ -11,6 +11,10 @@ private:
 	bool isAnim;
 	bool isReturn;
 	int index;
+
+	vector<Line*> test;
+	HPEN testP;
+
 public:
 	SavePoint(vector<Character*> characters,Vector2 pos,Vector2 size);
 	~SavePoint();

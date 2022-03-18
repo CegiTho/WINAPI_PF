@@ -18,7 +18,12 @@ protected:
 	bool isDoubleJump;
 	bool isFalling;
 	bool isGoal;
-	
+
+	bool isFloat;
+	bool isPenetrated;
+
+	double respawnDelay;
+
 	vector<bool> side;
 
 	RectAnimation* anim;
@@ -27,8 +32,6 @@ protected:
 	HPEN goalEdge;
 
 	Polygon2* pick;
-
-	vector<Character*> fused;
 
 	Vector2 spawnPoint;
 
@@ -70,9 +73,11 @@ public:
 	virtual void SpikeCollision(SpikeObstacle* obstacle) ;
 	virtual void WaterCollision(Water* obstacle);
 
-	void ReturnSpawnPoint();
+	virtual void ReturnSpawnPoint();
 	void SetSpawnPoint(Rect* rect);
 	Vector2 GetSpawnPoint() { return spawnPoint; }
+
+	string GetNameString();
 
 };
 

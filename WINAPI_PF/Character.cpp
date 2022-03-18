@@ -5,11 +5,13 @@ Character::Character()
 	:isGoal(false)
 {
 	side.assign(5, false);
-	fused.assign(3, nullptr);
 
 	goalColor = CreateSolidBrush(WHITE);
 	goalEdge = CreatePen(PS_SOLID, 1, WHITE);
 
+	isPenetrated = false;
+	isFloat = false;
+	respawnDelay = 0.0;
 }
 
 Character::Character(Vector2 pos)
@@ -21,6 +23,10 @@ Character::Character(Vector2 pos)
 
 	spawnPoint = pos;
 	this->rect->center = pos;
+
+	isPenetrated = false;
+	isFloat = false;
+	respawnDelay = 0.0;
 }
 
 Character::~Character()
@@ -112,7 +118,7 @@ void Character::Collision(vector<T_Object*> objects)
 		if (static_cast<T_Object*>(this) == obj)
 			continue;
 
-		if (obj->GetRect()->Collision(this->GetRect()) == true)
+		if (obj->GetRect()->Collision(this->GetRect()) == true )
 		{
 			switch (obj->GetID())
 			{
@@ -148,10 +154,13 @@ void Character::CharacterCollision(Character* character)
 
 			if (character->GetName() == Name::LAURA)
 			{
+				string tag = this->GetNameString() + "_Jump_Sound_FX";
+				SOUND->Play(tag);
 				dynamic_cast<Laura*>(character)->LauraJump(this);
 				return;
 			}
-
+			if(this->isFalling == true)
+				SOUND->Play("All_Land_Sound_FX");
 			this->side[UP] = true;
 		}
 		else if (isUpDown == false && overlap.center.x > other->center.x)
@@ -180,6 +189,9 @@ void Character::ObstacleCollision(Obstacle* obstacle)
 	case WATER:
 		WaterCollision(static_cast<Water*>(obstacle));
 		break;
+	case TRIGGER:
+		if (static_cast<Trigger*>(obstacle)->GetActive() == true)
+			NormalCollision(static_cast<NormalObstacle*>(obstacle));
 	}
 }
 
@@ -193,11 +205,17 @@ void Character::NormalCollision(NormalObstacle* obstacle)
 		bool isUpDown = overlap.size.x > overlap.size.y;
 		if (isUpDown == true && overlap.center.y > other->center.y)
 		{//down
+			if (this->name == JAMES && this->isFalling == true)
+				SOUND->Play("All_Land_Sound_FX");
+				
 			this->side[DOWN] = true;
 			this->GetRect()->center.y += overlap.size.y;
 		}
 		else if (isUpDown == true && overlap.center.y < other->center.y)
 		{//up
+			if (this->isFalling == true)
+				SOUND->Play("All_Land_Sound_FX");
+
 			this->GetRect()->center.y -= overlap.size.y;
 			this->side[UP] = true;
 		}
@@ -228,7 +246,7 @@ void Character::SpikeCollision(SpikeObstacle* obstacle)
 			this->GetRect()->center.y += overlap.size.y;
 			if (side[DOWN] == true)
 			{
-				ReturnSpawnPoint();
+				isPenetrated = true;
 				return;
 			}
 			this->side[DOWN] = true;
@@ -238,7 +256,7 @@ void Character::SpikeCollision(SpikeObstacle* obstacle)
 			this->GetRect()->center.y -= overlap.size.y;
 			if (side[UP] == true)
 			{
-				ReturnSpawnPoint();
+				isPenetrated = true;
 				return;
 			}
 			this->side[UP] = true;
@@ -248,7 +266,7 @@ void Character::SpikeCollision(SpikeObstacle* obstacle)
 			this->GetRect()->center.x += overlap.size.x;
 			if (side[RIGHT] == true)
 			{
-				ReturnSpawnPoint();
+				isPenetrated = true;
 				return;
 			}
 			this->side[RIGHT] = true;
@@ -258,7 +276,7 @@ void Character::SpikeCollision(SpikeObstacle* obstacle)
 			this->GetRect()->center.x -= overlap.size.x;
 			if (side[LEFT] == true)
 			{
-				ReturnSpawnPoint();
+				isPenetrated = true;
 				return;
 			}
 			this->side[LEFT] = true;
@@ -269,19 +287,29 @@ void Character::SpikeCollision(SpikeObstacle* obstacle)
 
 void Character::WaterCollision(Water* obstacle)
 {
-	if (this->name == LAURA)
-	{
-		;
-	}
-	else
-		ReturnSpawnPoint();
+	if(this->rect->Collision(obstacle->GetRect()) == true)
+		isFloat = true;
+
+	if (this->name == CLARE)
+		static_cast<Clare*>(this)->OnWater(obstacle);
 }
 
 void Character::ReturnSpawnPoint()
 {
-	this->rect->center = spawnPoint;
-	this->thrust = 0;
-
+	if (isFloat == true || isPenetrated == true)
+	{
+		isActive = false;
+		respawnDelay += DELTA;
+	}
+	if (respawnDelay >= 0.2)
+	{
+		this->rect->center = spawnPoint;
+		this->thrust = 0;
+		respawnDelay = 0.0;
+		isFloat = false;
+		isPenetrated = false;
+		isActive = true;
+	}
 }
 
 void Character::SetSpawnPoint(Rect* rect)
@@ -289,29 +317,33 @@ void Character::SetSpawnPoint(Rect* rect)
 	this->spawnPoint = rect->Center();
 }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+string  Character::GetNameString()
+{
+	switch (this->name)
+	{
+	case THOMAS:
+		return "Thomas";
+		break;
+	case CHRIS:
+		return "Chris";
+		break;
+	case CLARE:
+		return "Clare";
+		break;
+	case JAMES:
+		return "James";
+		break;
+	case JOHN:
+		return "John";
+		break;
+	case LAURA:
+		return "Laura";
+		break;
+	case SARAH:
+		return "Sarah";
+		break;
+	}
+}
 
 
 

@@ -65,6 +65,7 @@ void SoundManager::Play(string key, float volume, bool bgm)
 
 	if (bgm == true)
 	{
+		Stop(true);
 		soundSystem->playSound(sounds[key], nullptr, false, &bgChannel);
 		bgChannel->setVolume(volume);
 	}
@@ -82,6 +83,7 @@ void SoundManager::Play(string key, float volume, float frequencyRate, bool bgm)
 
 	if (bgm == true)
 	{
+		Stop(true);
 		soundSystem->playSound(sounds[key], nullptr, false, &bgChannel);
 		bgChannel->setVolume(volume);
 		float frequency;
@@ -132,4 +134,12 @@ void SoundManager::SetBGMVolume(float volume)
 void SoundManager::SetFXVolume(float volume)
 {
 	fxChannel->setVolume(volume);
+}
+
+void SoundManager::SetVolume(string tag, float volume)
+{
+	if (tag.find("FX") != string::npos)
+		fxChannel->setVolume(volume);
+	else if (tag.find("Music Volume") != string::npos)
+		bgChannel->setVolume(volume);
 }

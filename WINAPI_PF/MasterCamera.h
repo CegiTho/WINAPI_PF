@@ -13,6 +13,7 @@ private:
 	Vector2 offset;
 
 	bool isMoving;
+	bool isHold;
 
 	MasterCamera();
 	~MasterCamera();
@@ -33,7 +34,8 @@ public:
 
 	void TargetChange(Character* character);
 	void SetPos(Vector2 pos) { this->screen->center = pos;}
-	void SetMapSize(Vector2 size);
+	void SetMapSize(Vector2 size,bool isHold);
+	
 
 	HDC GetBackBuffer() { return this->backBuffer; }
 

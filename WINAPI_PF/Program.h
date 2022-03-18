@@ -13,6 +13,7 @@ public:
 	void Update();
 	void Render(HDC hdc);
 
+	void LoadSound();
 
 
 };

@@ -15,13 +15,21 @@ GoalManager::~GoalManager()
 
 void GoalManager::Update()
 {
-	
 	Collision();
-	if (Check() == true)
-		;//여기에 싱글톤으로 구현된 게임매니저에서 next stage함수 호출
+	for (Goal* goal : goals)
+		goal->Update();
 
 	for (SavePoint* sp : savePoints)
 		sp->Update();
+
+	if (Check() == true)
+	{
+		SOUND->Stop(false);
+		SOUND->Play("Stage_Clear_Sound_FX");
+		//
+		SCENE->ChangeScene("Main Menu");
+		;//여기에 싱글톤으로 구현된 게임매니저에서 next stage함수 호출
+	}
 }
 
 void GoalManager::Render(HDC hdc)
@@ -53,6 +61,16 @@ void GoalManager::Collision()
 Goal* GoalManager::PlusGoal(Character* character, Vector2 pos)
 {
 	Goal* goal = new Goal(character, pos);
+
+	int index = (int)character->GetName();
+	this->goals[index] = goal;
+
+	return goal;
+}
+
+Goal* GoalManager::PlusGoal(Character* character, Vector2 startPos, Vector2 endPos, bool isMove, bool loop, double times)
+{
+	Goal* goal = new Goal(character, startPos,endPos,times,isMove,loop);
 
 	int index = (int)character->GetName();
 	this->goals[index] = goal;

@@ -72,7 +72,7 @@ T_Object* CharacterManager::PlusCharacter(Name name,Vector2 pos)
 
 void CharacterManager::CharacterRotation()
 {
-	if (KEYDOWN('E') == true)
+	if (KEYDOWN(KEYBOARD->GetNextCharKey()) == true)
 	{
 		if (nowActive == CHARACTER_COUNT)
 		{
@@ -101,7 +101,7 @@ void CharacterManager::CharacterRotation()
 		M_CAM->TargetChange(characters[nowActive]);
 	}
 
-	if (KEYDOWN('Q') == true)
+	if (KEYDOWN(KEYBOARD->GetPrevCharKey()) == true)
 	{
 		if (nowActive == CHARACTER_COUNT)
 		{

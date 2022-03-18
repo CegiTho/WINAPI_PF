@@ -68,6 +68,7 @@ void Sarah::CreateSarah(Vector2 pos)
 void Sarah::Update(vector<T_Object*> obj)
 {
 	Collision(obj);
+	ReturnSpawnPoint();
 
 	Jump();
 	anim->Update();
@@ -81,8 +82,9 @@ void Sarah::Update(vector<T_Object*> obj)
 
 void Sarah::Jump()
 {//======Jump===========
-	if (KEYDOWN(VK_SPACE) && isJump == true && isDoubleJump == false && isActive == true)
+	if (KEYDOWN(KEYBOARD->GetJumpKey()) && isJump == true && isDoubleJump == false && isActive == true)
 	{
+		SOUND->Play("Sarah_Jump_Sound_FX");
 		thrust = 0;
 		thrust += SARAH_THRUST;
 		isDoubleJump = true;
@@ -90,8 +92,9 @@ void Sarah::Jump()
 		anim->SetState(State::JUMP);
 	}
 
-	if (KEYDOWN(VK_SPACE) && isJump == false && isActive == true)
+	if (KEYDOWN(KEYBOARD->GetJumpKey()) && isJump == false && isActive == true)
 	{
+		SOUND->Play("Sarah_Jump_Sound_FX");
 		thrust = SARAH_THRUST;
 		isJump = true;
 		side[UP] = false;
@@ -126,7 +129,7 @@ void Sarah::Jump()
 	if (side[DOWN] == true)
 	{
 		this->thrust = 0;
-		isFalling = true;
+		//isFalling = true;
 	}
 
 }

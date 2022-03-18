@@ -2,47 +2,55 @@
 
 MainMenuScene::MainMenuScene()
 {
+    isEnd = false;
+
+    vector<string> menuList,tags;
     menuList.emplace_back("New Game");
     menuList.emplace_back("Scenario Select");
     menuList.emplace_back("Setting");
     menuList.emplace_back("Exit");
+    tags = menuList;
+    tags[0] = "Test";
 
-    menu = new TextCell(menuList);
+    menu = new TextCell(menuList,tags);
+
     selectBar = new TextCellSelect(menu);
+    selectBar->SetActive(true);
 
-    target = new Thomas({ WIN_WIDTH / 2 , WIN_HEIGHT / 2 });
-    M_CAM->TargetChange(target);
-
+    tag = "Main Menu";
 }
 
 MainMenuScene::~MainMenuScene()
 {
     delete menu;
     delete selectBar;
-    delete target;
 }
 
 void MainMenuScene::Update()
 {
+   
     menu->Update();
     selectBar->Update();
-
+    
+    if (isEnd == true && menu->GetActive() == false)
+        SCENE->DequeueScene();
 }
 
 void MainMenuScene::Render(HDC hdc)
 {
-    menu->Render(hdc);
     selectBar->Render(hdc);
+    menu->Render(hdc);
 
 }
 
-bool MainMenuScene::Start()
+void MainMenuScene::Start()
 {
     menu->SetMove(true);
-    return true;
+    M_CAM->SetMapSize({ WIN_WIDTH, WIN_HEIGHT },true);
 }
 
-bool MainMenuScene::End()
+void MainMenuScene::End()
 {
-    return true;
+    isEnd = true;
+    menu->SetMove(true);
 }

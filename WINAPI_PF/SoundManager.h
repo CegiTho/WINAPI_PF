@@ -47,7 +47,7 @@ public:
 
 	void SetBGMVolume(float volume);
 	void SetFXVolume(float volume);
-
+	void SetVolume(string tag, float volume);
 };
 
 

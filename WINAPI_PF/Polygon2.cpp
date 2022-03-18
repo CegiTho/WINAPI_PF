@@ -49,6 +49,8 @@ Polygon2::Polygon2(Rect* rect)
 Polygon2::~Polygon2()
 {
 	delete[] points;
+
+	
 }
 
 void Polygon2::Render(HDC hdc)
@@ -111,9 +113,6 @@ void Polygon2::InitArr()
 void Polygon2::SetNewVertices(POINT* newVertices)
 {
 	points = newVertices;
-
-
-
 }
 
 bool Polygon2::Collision(Line* line)
@@ -142,5 +141,18 @@ bool Polygon2::Collision(Circle* circle)
 bool Polygon2::Collision(Rect* rect)
 {
 	return false;
+}
+
+void Polygon2::Shift(vector<Vector2> vertices)
+{
+	if (vertices.size() != this->vertices.size())
+		return;
+
+	for (int i = 0; i < vertices.size(); i++)
+	{
+		points[i].x = vertices[i].x;
+		points[i].y = vertices[i].y;
+	}
+		
 }
 

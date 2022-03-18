@@ -55,6 +55,12 @@
     <Filter Include="Framework\GameObject\Scene\MenuScene">
       <UniqueIdentifier>{b32359ee-3d72-45fe-ac46-ca38417e8d32}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Framework\GameObject\MenuObject">
+      <UniqueIdentifier>{9f4b8bac-eb68-4485-a593-d9cf90b79c49}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Framework\GameObject\Trigger">
+      <UniqueIdentifier>{22c31d7f-16e5-4482-b72f-fd78e45e2656}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Framework.h">
@@ -234,14 +240,32 @@
     <ClInclude Include="MenuScene.h">
       <Filter>Framework\GameObject\Scene\MenuScene</Filter>
     </ClInclude>
-    <ClInclude Include="TextCell.h">
-      <Filter>Framework\BasicObject</Filter>
-    </ClInclude>
-    <ClInclude Include="TextCellSelect.h">
-      <Filter>Framework\BasicObject</Filter>
-    </ClInclude>
     <ClInclude Include="MainMenuScene.h">
       <Filter>Framework\GameObject\Scene\MenuScene</Filter>
+    </ClInclude>
+    <ClInclude Include="SettingMenuScene.h">
+      <Filter>Framework\GameObject\Scene\MenuScene</Filter>
+    </ClInclude>
+    <ClInclude Include="TextCell.h">
+      <Filter>Framework\GameObject\MenuObject</Filter>
+    </ClInclude>
+    <ClInclude Include="TextCellSelect.h">
+      <Filter>Framework\GameObject\MenuObject</Filter>
+    </ClInclude>
+    <ClInclude Include="PercentType.h">
+      <Filter>Framework\GameObject\MenuObject</Filter>
+    </ClInclude>
+    <ClInclude Include="TextType.h">
+      <Filter>Framework\GameObject\MenuObject</Filter>
+    </ClInclude>
+    <ClInclude Include="RectListType.h">
+      <Filter>Framework\GameObject\MenuObject</Filter>
+    </ClInclude>
+    <ClInclude Include="ScenarioSelectMenuScene.h">
+      <Filter>Framework\GameObject\Scene\MenuScene</Filter>
+    </ClInclude>
+    <ClInclude Include="Trigger.h">
+      <Filter>Framework\GameObject\Trigger</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -401,14 +425,32 @@
     <ClCompile Include="MenuScene.cpp">
       <Filter>Framework\GameObject\Scene\MenuScene</Filter>
     </ClCompile>
-    <ClCompile Include="TextCell.cpp">
-      <Filter>Framework\BasicObject</Filter>
-    </ClCompile>
-    <ClCompile Include="TextCellSelect.cpp">
-      <Filter>Framework\BasicObject</Filter>
-    </ClCompile>
     <ClCompile Include="MainMenuScene.cpp">
       <Filter>Framework\GameObject\Scene\MenuScene</Filter>
+    </ClCompile>
+    <ClCompile Include="SettingMenuScene.cpp">
+      <Filter>Framework\GameObject\Scene\MenuScene</Filter>
+    </ClCompile>
+    <ClCompile Include="TextCell.cpp">
+      <Filter>Framework\GameObject\MenuObject</Filter>
+    </ClCompile>
+    <ClCompile Include="TextCellSelect.cpp">
+      <Filter>Framework\GameObject\MenuObject</Filter>
+    </ClCompile>
+    <ClCompile Include="PercentType.cpp">
+      <Filter>Framework\GameObject\MenuObject</Filter>
+    </ClCompile>
+    <ClCompile Include="TextType.cpp">
+      <Filter>Framework\GameObject\MenuObject</Filter>
+    </ClCompile>
+    <ClCompile Include="RectListType.cpp">
+      <Filter>Framework\GameObject\MenuObject</Filter>
+    </ClCompile>
+    <ClCompile Include="ScenarioSelectMenuScene.cpp">
+      <Filter>Framework\GameObject\Scene\MenuScene</Filter>
+    </ClCompile>
+    <ClCompile Include="Trigger.cpp">
+      <Filter>Framework\GameObject\Trigger</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

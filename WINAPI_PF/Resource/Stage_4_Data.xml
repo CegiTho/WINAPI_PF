@@ -14,73 +14,118 @@
       <position posX ="500" posY="400"/>
     </James>
     <John consist="1" name ="4">
-      <position posX ="1100" posY="800"/>
+      <position posX ="1500" posY="800"/>
     </John>
     <Laura consist="1" name ="5">
-      <position posX ="1300" posY="800"/>
+      <position posX ="1600" posY="800"/>
     </Laura>
     <Sarah consist="1" name ="6">
       <position posX ="1500" posY="300"/>
     </Sarah>
   </Character>
+  <Trigger> <!--NULL -1  Thomas 0  Chris 1 Clare 2 James 3  John 4  Laura 5 Sarah 6-->
+    <trigger1>
+      <Owner owner ="1" />
+      <position posX ="600" posY="800"/>
+     </trigger1>
+  </Trigger>
   <Goal>
-    <Thomas consist="1">
+    <Thomas consist="0">
       <position posX="400" posY="500"/>
     </Thomas>
     <Chris consist="1">
-      <position posX ="600" posY="500"/>
+      <position posX ="600" posY="860"/>
     </Chris>  
     <Clare consist="1">
-      <position posX ="800" posY="500"/>
+      <position posX ="800" posY="850"/>
     </Clare>
     <James consist="1">
-      <position posX ="1000" posY="500"/>
+      <position posX ="1000" posY="250"/>
     </James>
     <John consist="1">
-      <position posX ="1200" posY="500"/>
+      <position posX ="1200" posY="850"/>
     </John>
     <Laura consist="1">
-      <position posX ="1400" posY="500"/>
+      <position posX ="1400" posY="870"/>
     </Laura>
      <Sarah consist="1">
-      <position posX ="1700" posY="500"/>
+      <position posX ="1700" posY="860"/>
     </Sarah>
   </Goal>
+  <MoveGoal>  <!--NULL -1  Thomas 0  Chris 1 Clare 2 James 3  John 4  Laura 5 Sarah 6-->
+    <Thomas consist="1" ismove ="0" loop ="1" times ="3.0" triggerowner ="1">
+      <startPosition posX="400" posY="860"/>
+      <endPosition posX="800" posY="860"/>
+    </Thomas>
+    <Chris consist="0">
+      <position posX ="600" posY="500"/>
+    </Chris>
+    <Clare consist="0">
+      <position posX ="800" posY="500"/>
+    </Clare>
+    <James consist="0">
+      <position posX ="1000" posY="500"/>
+    </James>
+    <John consist="0">
+      <position posX ="1200" posY="500"/>
+    </John>
+    <Laura consist="0">
+      <position posX ="1400" posY="500"/>
+    </Laura>
+    <Sarah consist="0">
+      <position posX ="1700" posY="500"/>
+    </Sarah>
+  </MoveGoal>
+  <Obstacle>
+    <!--type 0 = normal , type 1 = spike , type 2 = water-->
+    <obs1>
+      <type type ="0" shade ="0"/>
+      <position posX ="1100" posY ="900" />
+      <size sizeX="2200" sizeY ="50"/>
+    </obs1>
+    <obs2>
+      <type type ="0" shade ="0"/>
+      <position posX ="1100" posY ="200"/>
+      <size sizeX="2200" sizeY ="50"/>
+    </obs2>
+    <obs3>
+      <type type ="0" shade ="1"/>
+      <position posX ="200" posY ="900"/>
+      <size sizeX="400" sizeY ="50"/>
+    </obs3>
+    <obs4>  <!-- spike Obstacle-->
+      <type type ="1" shade ="1"/>
+      <position posX ="600" posY ="500"/>
+      <size sizeX="20" sizeY ="5"/>
+      <side left ="1" top ="0" right ="0" bottom="1"/>
+    </obs4>
+      <obs5>
+      <type type ="2" shade ="0"/>
+      <position posX ="400" posY ="800"/>
+      <size sizeX="400" sizeY ="150"/>
+    </obs5>
+  </Obstacle>
+  <MoveObstacle>  <!--Thomas 0  Chris 1 Clare 2 James 3  John 4  Laura 5 Sarah 6-->
+    <obs1>
+      <type type = "0" loop ="1" times ="6.0" shade ="1" ismove="0" triggerowner ="0"/>
+      <startPosition posX ="100" posY="600"/>
+      <endPosition posX ="400" posY="600"/>
+      <size sizeX ="100" sizeY="100"/>
+    </obs1>
+    <obs2>
+      <type type = "1" loop ="1" times ="6.0" shade ="1" ismove ="0" triggerowner ="0"/>
+      <startPosition posX ="100" posY="300"/>
+      <endPosition posX ="1200" posY="600"/>
+      <size sizeX ="3" sizeY="3"/>
+      <side left ="1" top ="1" right ="1" bottom="1"/>
+    </obs2>
+  </MoveObstacle>
   <SavePoint>
     <SavePoint_1>
       <position posX ="700" posY ="500"/>
       <size sizeX ="200" sizeY ="800"/>
     </SavePoint_1>
   </SavePoint>
-  <Obstacle>
-    <!--type 0 = normal , type 1 = spike , type 2 = water-->
-    <obs1>
-      <type type ="0"/>
-      <position posX ="1100" posY ="900"/>
-      <size sizeX="2200" sizeY ="50"/>
-    </obs1>
-    <obs2>
-      <type type ="0"/>
-      <position posX ="1100" posY ="200"/>
-      <size sizeX="2200" sizeY ="50"/>
-    </obs2>
-    <obs3>
-      <type type ="0"/>
-      <position posX ="200" posY ="900"/>
-      <size sizeX="400" sizeY ="50"/>
-    </obs3>
-    <obs4>
-      <type type ="1"/>
-      <position posX ="600" posY ="500"/>
-      <size sizeX="20" sizeY ="5"/>
-      <side left ="1" top ="0" right ="0" bottom="1"/>
-    </obs4>
-    <obs5>
-      <type type ="2"/>
-      <position posX ="1200" posY ="500"/>
-      <size sizeX="400" sizeY ="150"/>
-    </obs5>
-  </Obstacle>
   <StageSize>
     <size sizeX ="3200" sizeY ="2000"/>
   </StageSize>

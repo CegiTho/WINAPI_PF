@@ -68,6 +68,8 @@ void Thomas::CreateThomas(Vector2 pos)
 void Thomas::Update(vector<T_Object*> obj)
 {
 	Collision(obj);
+	ReturnSpawnPoint();
+
 	Jump();
 	anim->Update();
 	InitAgain();
@@ -81,8 +83,9 @@ void Thomas::Update(vector<T_Object*> obj)
 void Thomas::Jump()
 {
 	//======Jump===========
-	if (KEYDOWN(VK_SPACE) && isJump == false && isActive == true)
+	if (KEYDOWN(KEYBOARD->GetJumpKey()) && isJump == false && isActive == true)
 	{
+		SOUND->Play("Thomas_Jump_Sound_James_Also_FX");
 		thrust = THOMAS_THRUST;
 		isJump = true;
 		side[UP] = false;

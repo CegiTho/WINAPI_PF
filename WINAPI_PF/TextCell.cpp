@@ -1,51 +1,41 @@
 #include "Framework.h"
 
 
-TextCell::TextCell(vector<string> menu)
-	:menu(menu), isMove(false), isHided(true), isActive(false), fontHeight(40), ascent(30), decent(30), menuIndex(0)
+TextCell::TextCell(vector<string> renderMenu, vector<string> tags)
+	:renderMenu(renderMenu), isMove(false), isActive(false), fontHeight(40), ascent(13), decent(13), menuIndex(0),isEnd(false),
+	tags(tags)
 {
-	font = CreateFont(fontHeight, 0, 0, 0, 10, false, false, false, HANGUL_CHARSET, 100, 0, 0, 0, L"¾ÖÇÃ»êµ¹°íµñ³×¿À ±½°Ô TTF");
-	test = CreatePen(PS_SOLID, 1, GREEN);
+	font = CreateFont(fontHeight, 0, 0, 0, 10, false, false, 
+		false, HANGUL_CHARSET, 100, 0, 0, 0,
+		L"¾ÖÇÃ»êµ¹°íµñ³×¿À ±½°Ô TTF");
 
 	Vector2 menuStart, menuSize;
 	menuStart.x = WIN_WIDTH - MENUCELL_SIZE_X;
-	menuStart.y = WIN_HEIGHT - (menu.size() * fontHeight) - (menu.size() * ascent) - (menu.size() * decent);
+	menuStart.y = WIN_HEIGHT *0.8- (renderMenu.size() * fontHeight) - (renderMenu.size() * ascent) - (renderMenu.size() * decent);
 
 	menuSize.x = MENUCELL_SIZE_X;
-	menuSize.y = menu.size() * (fontHeight + ascent + decent);
+	menuSize.y = renderMenu.size() * (fontHeight + ascent + decent);
 
 	
 	activePos = { menuStart.x + menuSize.x * 0.5,menuStart.y + menuSize.y * 0.5 };
-	hidedPos.x = activePos.x + menuSize.x;
+	hidedPos.x = activePos.x + menuSize.x  + 100;
 	hidedPos.y = activePos.y;
 	targetPos = activePos;
 
-	rect = new Rect(activePos, menuSize);
+	rect = new Rect(hidedPos, menuSize);
 
-	for (int i = 0; i < menu.size(); i++)
+	for (int i = 0; i < renderMenu.size(); i++)
 	{
-		yLevel.emplace_back(menuStart.y + (fontHeight * 0.5) + ascent * (i + 1) + decent * i);
+		yLevel.emplace_back(menuStart.y + (fontHeight * 0.5) + ascent * (i + 1) + decent * i + (fontHeight * i));
 	}
 
-	{//for test
-		for (int i = 0; i < menu.size(); i++)
-		{
-			testLine.emplace_back(new Line({ rect->Left(),yLevel[i] }, { rect->Right(), yLevel[i] }));
-		}
-		testLine.emplace_back(new Line(rect->LeftTopV(), rect->RightTopV()));
-		testLine.emplace_back(new Line(rect->LeftTopV(), rect->LeftBottomV()));
-		testLine.emplace_back(new Line(rect->RightTopV(), rect->RightBottomV()));
-		testLine.emplace_back(new Line(rect->LeftBottomV(), rect->RightBottomV()));
-	}
+	
 }
 
 TextCell::~TextCell()
 {
 	delete rect;
 	DeleteObject(font);
-	DeleteObject(test);
-	for (Line* line : testLine)
-		delete line;
 }
 
 void TextCell::Update()
@@ -64,21 +54,23 @@ void TextCell::Render(HDC hdc)
 {
 	HFONT oldFont = (HFONT)SelectObject(hdc, font);
 	COLORREF oldColor = SetTextColor(hdc, THOMAS_COLOR);
-	HPEN oldPen = (HPEN)SelectObject(hdc, test);
 	
-	for (int i = 0; i < menu.size(); i++)
+	for (int i = 0; i < renderMenu.size(); i++)
 	{
 		SetTextAlign(hdc, TA_TOP);
 		SetTextAlign(hdc, TA_LEFT);
 
-		TextOutA(hdc, rect->Left(), yLevel[i] - fontHeight * 0.5,menu[i].c_str(),menu[i].size());
+		if(menuIndex != i)
+			TextOutA(hdc, rect->Left(), yLevel[i] - fontHeight * 0.5, renderMenu[i].c_str(), renderMenu[i].size());
+		else
+		{
+			SetTextColor(hdc, WHITE);
+			TextOutA(hdc, rect->Left(), yLevel[i] - fontHeight * 0.5, renderMenu[i].c_str(), renderMenu[i].size());
+			SetTextColor(hdc, THOMAS_COLOR);
+		}
 	}
 
-	for (Line* line : testLine)
-		line->Render(hdc);
-
-	SelectObject(hdc, oldPen);
-	SelectObject(hdc, oldPen);
+	SelectObject(hdc, oldFont);
 	SetTextColor(hdc, oldColor);
 }
 
@@ -94,44 +86,84 @@ void TextCell::VertMove()
 {
 	if (KEYDOWN(VK_UP))
 	{
-		menuIndex = menuIndex == 0 ? 0 : ++menuIndex;
-		targetPos.y += fontHeight;
+		menuIndex--;
 		isVerticalMove = true;
+		if (menuIndex < 0)
+		{
+			menuIndex = 0;
+			return;
+		}
+		menuIndex = menuIndex < 0 ? 0 : menuIndex;
+
+		targetPos.y += fontHeight;
+		//activePos.y += fontHeight;
+		//hidedPos.y += fontHeight;
 	}
 	if (KEYDOWN(VK_DOWN))
 	{
-		menuIndex = menuIndex == menu.size() - 1 ? menu.size() - 1 : --menuIndex;
-		targetPos.y -= fontHeight;
+		menuIndex++;
 		isVerticalMove = true;
+		if (menuIndex == renderMenu.size())
+		{
+			menuIndex = renderMenu.size() - 1;
+			return;
+		}
+		menuIndex = menuIndex > renderMenu.size() - 1 ? renderMenu.size() - 1 : menuIndex;
+		targetPos.y -= fontHeight;
+		//activePos.y -= fontHeight;
+		//hidedPos.y -= fontHeight;
 	}
-
-	LERP(rect->center, targetPos, DELTA);
-	for (int i = 0; i < yLevel.size(); i++)
+	
 	{
-		LERP(yLevel[i], targetPos.y, DELTA);
+		double dist = targetPos.y - rect->center.y;
+		rect->center = LERP(rect->center, targetPos, DELTA * 10);
+		activePos.y = LERP(activePos.y, targetPos.y, DELTA * 10);
+		hidedPos.y = LERP(hidedPos.y, targetPos.y, DELTA * 10);
+		for (int i = 0; i < yLevel.size(); i++)
+		{
+			yLevel[i] = LERP(yLevel[i], yLevel[i] + dist, DELTA * 10);
+		}
 	}
 }
 
 void TextCell::Hide()
 {
-	LERP(rect->center, hidedPos, DELTA);
+	rect->center.x = LERP(rect->center.x, hidedPos.x, DELTA * 6);
 	Vector2 diff = hidedPos - rect->center;
-	if (diff.Length() < EPSILON)
+	if (diff.Length() <= EPSILON)
 	{
-		isActive = false;
-		isHided = true;
-		isMove = false;
+		Init();
 	}
 }
 
 void TextCell::Out()
 {
-	LERP(rect->center, activePos, 0.4);
+	rect->center.x = LERP(rect->center.x, activePos.x, DELTA * 6);
 	Vector2 diff = activePos - rect->center;
-	if (diff.Length() < EPSILON)
+	if (diff.Length() <= EPSILON)
 	{
 		isActive = true;
-		isHided = false;
 		isMove = false;
+		isEnd = false;
 	}
+}
+
+void TextCell::Init()
+{
+	for (int i = 0; i < menuIndex; i++)
+	{
+		activePos.y -= fontHeight;
+		hidedPos.y -= fontHeight;
+		
+		for (double d : yLevel)
+		{
+			d -= fontHeight;
+		}
+	}
+	targetPos = activePos;
+	isActive = false;
+	isMove = false;
+	isEnd = false;
+	menuIndex = 0;
+	rect->center = hidedPos;
 }

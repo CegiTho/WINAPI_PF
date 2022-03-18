@@ -69,6 +69,7 @@ void James::CreateJames(Vector2 pos)
 void James::Update(vector<T_Object*> obj)
 {
 	Collision(obj);
+	ReturnSpawnPoint();
 
 	Jump();
 	anim->Update();
@@ -83,8 +84,9 @@ void James::Update(vector<T_Object*> obj)
 void James::Jump()
 {
 	//======Jump===========
-	if (KEYDOWN(VK_SPACE) && isJump == false && isActive == true)
+	if (KEYDOWN(KEYBOARD->GetJumpKey()) && isJump == false && isActive == true)
 	{
+		SOUND->Play("Thomas_Jump_Sound_James_Also_FX");
 		thrust = JAMES_THRUST;
 		isJump = true;
 		side[DOWN] = false;
@@ -118,6 +120,6 @@ void James::Jump()
 	if (side[UP] == true)
 	{
 		this->thrust = 0;
-		isFalling = true;
+		//isFalling = true;
 	}
 }

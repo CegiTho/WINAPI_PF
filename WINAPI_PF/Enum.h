@@ -27,7 +27,8 @@ enum Type
 {
 	NORMAL,
 	SPIKE,
-	WATER
+	WATER,
+	TRIGGER
 };
 
 enum Name

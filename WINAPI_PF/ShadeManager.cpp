@@ -56,7 +56,7 @@ void ShadeManager::LoadDCSize(STAGE_NUM num)
 	mapSize.x = stageSize->IntAttribute("sizeX");
 	mapSize.y = stageSize->IntAttribute("sizeY");
 	
-	M_CAM->SetMapSize(mapSize);
+	M_CAM->SetMapSize(mapSize,false);
 }
 
 void ShadeManager::Update()

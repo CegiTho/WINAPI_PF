@@ -36,5 +36,7 @@ public:
 	virtual bool Collision(Circle* circle) override;
 	virtual bool Collision(Rect* rect) override;
 
+	void Shift(vector<Vector2> vertices);
+
 };
 

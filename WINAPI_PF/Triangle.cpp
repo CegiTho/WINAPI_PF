@@ -19,10 +19,12 @@ Triangle::Triangle(Vector2 xPoint, int yValue,COLORREF color)
 	vertices[2].x = xPoint.x + delta;
 	vertices[2].y = yValue;
 
+	isRender = true;
 }
 
 Triangle::Triangle(Vector2 p1, Vector2 p2, Vector2 p3, COLORREF color)
 {
+	isRender = true;
 	this->color = CreateSolidBrush(color);
 	edge = CreatePen(PS_SOLID, 1, color);
 
@@ -54,11 +56,11 @@ void Triangle::Render(HDC hdc)
 	Polygon(hdc, vertices, 3);
 }
 
-void Triangle::Move(Vector2 delta)
+void Triangle::Move(int deltaX, int deltaY)
 {
 	for (int i = 0; i < 3; i++)
 	{
-		vertices[i].x += delta.x;
-		vertices[i].y += delta.y;
+		vertices[i].x += deltaX;
+		vertices[i].y += deltaY;
 	}
 }

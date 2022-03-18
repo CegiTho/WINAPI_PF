@@ -120,6 +120,7 @@ void Laura::LauraJump(Character* character)
 void Laura::Update(vector<T_Object*> obj)
 {
  	Collision(obj);
+	ReturnSpawnPoint();
 
 	Jump();
 	anim->Update();
@@ -133,8 +134,9 @@ void Laura::Update(vector<T_Object*> obj)
 
 void Laura::Jump()
 {//======Jump===========
-	if (KEYDOWN(VK_SPACE) && isJump == false && isActive == true)
+	if (KEYDOWN(KEYBOARD->GetJumpKey()) && isJump == false && isActive == true)
 	{
+		SOUND->Play("Laura_Jump_Sound_FX");
 		thrust = LAURA_THRUST;
 		isJump = true;
 		side[UP] = false;
@@ -168,7 +170,7 @@ void Laura::Jump()
 	if (side[DOWN] == true)
 	{
 		this->thrust = 0;
-		isFalling = true;
+		//isFalling = true;
 	}
 
 }

@@ -4,9 +4,13 @@ class Obstacle : public T_Object
 {
 protected:
 	Type type;
+
+	Vector2 startPos;
+	Vector2 endPos;
+	bool isGoback;
 	bool isMove;
-	Line* path;
-	double speed;
+	bool isLoop;
+	double times;
 
 
 public:
@@ -19,7 +23,8 @@ public:
 	
 	void SetIsMove(bool value) { isMove = value; }
 	Type GetType() { return type; }
-	void Move();
+	
+	virtual void Move();
 
 };
 

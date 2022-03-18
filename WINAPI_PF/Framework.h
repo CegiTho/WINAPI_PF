@@ -49,6 +49,7 @@
 
 using namespace std;
 
+
 #define WIN_START_X 100
 #define WIN_START_Y 100
 
@@ -59,8 +60,6 @@ using namespace std;
 #define CENTER_Y WIN_HEIGHT * 0.5
 
 #define PI 3.1
-
-
 
 #define RADIAN 180/PI
 
@@ -75,6 +74,7 @@ using namespace std;
 #define GRAY RGB(128,128,128)
 
 #define LERP(s,e,t) s + (e - s) * t
+#define CONST_LERP(s,e,t) s+(e-s)/t
 
 #define KEYBOARD Keyboard::Get()
 //#define KEYBOARD SyncKeyboard::Get()
@@ -167,9 +167,14 @@ SCAM이 실질적인 카메라이고 내가 원하는데로 동작하는 객체�
 #include "NormalObstacle.h"
 #include "SpikeObstacle.h"
 #include "Water.h"
+#include "Trigger.h"
+
 
 #include "TextCell.h"
 #include "TextCellSelect.h"
+#include "PercentType.h"
+#include "TextType.h"
+#include "RectListType.h"
 
 #include "CharacterManager.h"
 #include "ObstacleManager.h"

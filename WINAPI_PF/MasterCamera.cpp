@@ -8,6 +8,7 @@ MasterCamera::MasterCamera()
 	target = nullptr;
 	screen = new Rect({ 0,0 }, { WIN_WIDTH,WIN_HEIGHT });
 	isMoving = true;
+	isHold = false;
 	offset = { CENTER_X,CENTER_Y };
 	mapSize = { 0,0 };
 
@@ -29,6 +30,9 @@ MasterCamera::~MasterCamera()
 
 void MasterCamera::Update()
 {
+	if (isHold == true)
+		return;
+
 	screen->center = LERP(screen->center, target->GetRect()->center, 0.03);
 
 	{
@@ -50,11 +54,12 @@ void MasterCamera::TargetChange(Character* character)
 	isMoving = true;
 }
 
-void MasterCamera::SetMapSize(Vector2 size)
+void MasterCamera::SetMapSize(Vector2 size, bool isHold)
 { 
 	mapSize = size; 
 	screen->center.x = mapSize.x / 2;
 	screen->center.y = mapSize.y / 2;
+	this->isHold = isHold;
 
 	//MasterCamera::backBuffer가 CompatibleDC이지 hWnd랑 직접 관련있는 DC는 아니여서 그런가 아래 bitmap생성할 때 backBuffer넣으면 
 	//색이 안나옴.

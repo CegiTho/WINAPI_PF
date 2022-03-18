@@ -69,10 +69,10 @@
 #define SYMBOL_INTERVAL 70
 #define SYMBOL_SIZE 12
 
-#define EPSILON 0.0001
+#define EPSILON 1
 //menuCellSize 는 고정, x값 위치도 고정임. y값은 menuCell갯수에 따라 다르게,
 //boxSize는 (menuCell위치,여백,화면 오른쪽 끝까지 닿도록) x값 정한거고 y값도 위아래 여백 고려한거임.
-#define MENUCELL_SIZE_X 900
+#define MENUCELL_SIZE_X 700
 #define MENUCELL_SIZE_Y 35
 
 #define MENUCELL_POS_X 1300

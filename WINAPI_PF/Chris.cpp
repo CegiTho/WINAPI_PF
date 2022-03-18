@@ -71,6 +71,7 @@ void Chris::Update(vector<T_Object*> obj)
 {
 	Collision(obj);
 
+	ReturnSpawnPoint();
 	Jump();
 	anim->Update();
 	InitAgain();
@@ -85,8 +86,9 @@ void Chris::Update(vector<T_Object*> obj)
 void Chris::Jump()
 {
 	//======Jump===========
-	if (KEYDOWN(VK_SPACE) && isJump == false && isActive == true)
+	if (KEYDOWN(KEYBOARD->GetJumpKey()) && isJump == false && isActive == true)
 	{
+		SOUND->Play("Chris_Jump_Sound_FX");
 		thrust = CHRIS_THRUST;
 		isJump = true;
 		side[UP] = false;
@@ -119,7 +121,7 @@ void Chris::Jump()
 	if (side[DOWN] == true)
 	{
 		this->thrust = 0;
-		isFalling = true;
+		//isFalling = true;
 	}
 }
 

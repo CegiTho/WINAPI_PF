@@ -183,6 +183,13 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
         mousePos.x = (double)LOWORD(lParam);
         mousePos.y = (double)HIWORD(lParam);
         break;
+    case WM_KEYDOWN:
+    {   
+        wParam;
+        KEYBOARD->SetKey(wParam);
+        KEYBOARD->SetConfirm(true);
+    }
+        break;
     case WM_DESTROY:
         SceneManager::Delete();
         TextureManager::Delete();

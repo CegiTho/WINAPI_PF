@@ -2,10 +2,12 @@
 
 class TextCellSelect
 {
-private:
+protected:
 	TextCell* menu;
 
 	Rect* visualBar;
+	vector<Triangle*> deco;
+	Vector2 offset;
 
 	HBRUSH color;
 	HPEN edge;
@@ -13,15 +15,21 @@ private:
 	int menuIndex;
 	bool selected;
 
+	bool isActive;
 
 public:
+	TextCellSelect() {};
 	TextCellSelect(TextCell* menu);
 	~TextCellSelect();
 
 	void Update();
 	void Render(HDC hdc);
 
-	void Select();
-	void Move();
+	virtual void Select();
+	virtual void Move();
+	virtual void Init();
+
+	void SetActive(bool value) { isActive = value; }
+
 
 };

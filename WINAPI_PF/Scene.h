@@ -2,7 +2,8 @@
 
 class Scene
 {
-
+private:
+	bool isEnd;
 
 public:
 	virtual	~Scene() {}
@@ -10,8 +11,8 @@ public:
 	virtual void Update() = 0;
 	virtual void Render(HDC hdc) = 0;
 
-	virtual bool Start() { return true; }
-	virtual bool End() { return true; }
+	virtual void Start() {  }
+	virtual void End() { }
 
-
+	bool GetEnd() { return isEnd; }
 }; 

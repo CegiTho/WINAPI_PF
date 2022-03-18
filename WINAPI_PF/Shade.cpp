@@ -103,8 +103,6 @@ void Shade::CreateCurtainShade()
 		points[3][3] = rect->LeftTop();
 		points[3][2] = Direction(points[3][3], constant, ShadeLength);
 	}
-
-
 }
 
 void Shade::CreateSpotShade()
@@ -141,8 +139,6 @@ void Shade::CreateSpotShade()
 		points[3][3] = rect->LeftTop();
 		points[3][2] = Direction(points[3][3], leftTop, ShadeLength);
 	}
-
-
 }
 
 void Shade::Update()
@@ -195,9 +191,6 @@ void Shade::CurtainUpdate()
 		points[3][3] = rect->LeftTop();
 		points[3][2] = Direction(points[3][3], constant, ShadeLength);
 	}
-	
-	
-
 }
 
 void Shade::SpotUpdate()

@@ -46,3 +46,9 @@ void Keyboard::Update()
 	}
 
 }
+
+void Keyboard::SetKey(int wParam)
+{
+	key = (char)wParam;
+	needConfirm = true;
+}

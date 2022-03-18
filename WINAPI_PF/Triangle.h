@@ -15,9 +15,10 @@ public:
 	~Triangle();
 
 	void Render(HDC hdc);
-	void Move(Vector2 delta);
+	void Move(int deltaX = 0, int deltaY = 0);
 
 	bool GetRender() { return isRender; }
 	void SetRender(bool value) { isRender = value; }
 
+	POINT* GetVertices() { return vertices; }
 };

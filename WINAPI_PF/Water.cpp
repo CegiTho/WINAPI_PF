@@ -221,7 +221,7 @@ void Water::Render(HDC hdc)
 
 Rect* Water::GetRenderRect()
 {
-	return nullptr;
+	return this->renderRect;
 }
 
 void Water::SurfaceRot()
