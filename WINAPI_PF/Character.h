@@ -69,9 +69,10 @@ public:
 	virtual void CharacterCollision(Character* character);
 	virtual void ObstacleCollision(Obstacle* obstacle);
 	
-	virtual void NormalCollision(NormalObstacle* obstacle);
-	virtual void SpikeCollision(SpikeObstacle* obstacle) ;
-	virtual void WaterCollision(Water* obstacle);
+	void NormalCollision(NormalObstacle* obstacle);
+	void SpikeCollision(SpikeObstacle* obstacle) ;
+	void WaterCollision(Water* obstacle);
+	void TriggerCollision(class Trigger* trigger);
 
 	virtual void ReturnSpawnPoint();
 	void SetSpawnPoint(Rect* rect);

@@ -191,7 +191,7 @@ void Character::ObstacleCollision(Obstacle* obstacle)
 		break;
 	case TRIGGER:
 		if (static_cast<Trigger*>(obstacle)->GetActive() == true)
-			NormalCollision(static_cast<NormalObstacle*>(obstacle));
+			TriggerCollision(static_cast<Trigger*>(obstacle));
 	}
 }
 
@@ -292,6 +292,37 @@ void Character::WaterCollision(Water* obstacle)
 
 	if (this->name == CLARE)
 		static_cast<Clare*>(this)->OnWater(obstacle);
+}
+
+void Character::TriggerCollision(Trigger* trigger)
+{
+	Rect overlap;
+
+	Rect* other = trigger->GetRect();
+	if (this->GetRect()->Collision(&overlap, other) == true)
+	{
+		bool isUpDown = overlap.size.x > overlap.size.y;
+		if (isUpDown == true && overlap.center.y > other->center.y)
+		{//down
+			this->side[DOWN] = true;
+			this->GetRect()->center.y += overlap.size.y;
+		}
+		else if (isUpDown == true && overlap.center.y < other->center.y)
+		{//up
+			this->GetRect()->center.y -= overlap.size.y;
+			this->side[UP] = true;
+		}
+		else if (isUpDown == false && overlap.center.x > other->center.x)
+		{//right
+			this->GetRect()->center.x += overlap.size.x;
+			this->side[RIGHT] = true;
+		}
+		else if (isUpDown == false && overlap.center.x < other->center.x)
+		{//left
+			this->GetRect()->center.x -= overlap.size.x;
+			this->side[LEFT] = true;
+		}
+	}
 }
 
 void Character::ReturnSpawnPoint()

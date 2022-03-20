@@ -74,6 +74,9 @@ void CharacterManager::CharacterRotation()
 {
 	if (KEYDOWN(KEYBOARD->GetNextCharKey()) == true)
 	{
+		if (characters[nowActive]->GetActive() == false)
+			return;
+
 		if (nowActive == CHARACTER_COUNT)
 		{
 			index = 0;
