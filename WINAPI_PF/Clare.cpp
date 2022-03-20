@@ -105,7 +105,7 @@ void Clare::Jump()
 	{
 		isEscape = true;
 		isJump = true;
-		this->thrust += CLARE_THRUST * 2;
+		this->thrust += CLARE_THRUST * 1.4;
 	}
 	isFloat = false;
 
@@ -175,9 +175,8 @@ void Clare::OnWater(Water* obs)
 	double height = 30.0;		//의미없음 
 	double angular = 2 * PI * 2;	//수면에서 위치의 감쇠진동주기(1/angular sec)
 	double dampTime = 0.3;		//감쇠계수(시간에 따르므로 약 dampTime sec 마다 1/exp만큼 감쇠)
-	double damp = -height * exp(-floatingTime * 0.3) * sin(angular * floatingTime);
+	double damp = -height * exp(-floatingTime * 0.3) * cos(angular * floatingTime);
 	
 	this->rect->center.y = surfaceLevel + damp;
-
 	
 }

@@ -6,6 +6,7 @@ private:
 	bool isEscape;
 	double floatingTime;
 
+
 public:
 	Clare();
 	Clare(Vector2 pos);
