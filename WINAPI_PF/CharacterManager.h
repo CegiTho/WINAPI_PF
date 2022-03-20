@@ -7,6 +7,8 @@ private:
 	vector<Name> indices;
 
 	Name nowActive;
+	Name prevActive;
+
 	int index;
 
 	Polygon2* pick;

@@ -329,7 +329,7 @@ void Character::ReturnSpawnPoint()
 {
 	if (isFloat == true || isPenetrated == true)
 	{
-		isActive = false;
+		//isActive = false;
 		respawnDelay += DELTA;
 	}
 	if (respawnDelay >= 0.2)
@@ -339,7 +339,7 @@ void Character::ReturnSpawnPoint()
 		respawnDelay = 0.0;
 		isFloat = false;
 		isPenetrated = false;
-		isActive = true;
+		isActive == true ? true : false;
 	}
 }
 
