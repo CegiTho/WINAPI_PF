@@ -5,12 +5,21 @@ typedef Name OwnerName;
 class ObjManager
 {
 private:
+	struct TriggerSet
+	{
+		OwnerName name;
+		vector<int> objIndices;
+	};
+
 	vector<T_Object*> objects;
 	
 	vector<int> shadeIndex;
 
+	map<int, vector<int>> triggerAndObstacle;
+	map<int, Goal*> triggerAndGoal;
+	
 	map<OwnerName, vector<int>> triggerIndex;
-	map<OwnerName, Goal*> triggerGoal;
+	map<OwnerName, vector<Goal*>> triggerGoal;
 
 	CharacterManager*	m_Character;
 	ObstacleManager*	m_Obstacle;
@@ -21,6 +30,9 @@ public:
 	~ObjManager();
 
 	void LoadStage(STAGE_NUM num);
+	void LoadCharacter(XmlElement* stageData);
+	void LoadObstacle(XmlElement* stageData);
+	void LoadGoal(XmlElement* stageData);
 
 	void Update();
 	void Render(HDC hdc);

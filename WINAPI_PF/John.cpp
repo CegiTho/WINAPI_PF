@@ -66,17 +66,20 @@ void John::CreateJohn(Vector2 pos)
 
 void John::Update(vector<T_Object*> obj)
 {
+	Move();
+
 	Collision(obj);
 	ReturnSpawnPoint();
 
 	Jump();
 	anim->Update();
+	
+
 	InitAgain();
 	pick->Update();
 
 	if (isActive == false)
 		return;
-	Move();
 }
 
 void John::Jump()

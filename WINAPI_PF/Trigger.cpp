@@ -102,7 +102,7 @@ void Trigger::Render(HDC hdc)
 void Trigger::Collision()
 {
 	if (this->rect->Collision(owner->GetRect()) == true)
-	{
+	{ 
 		isActive = false;
 		SOUND->Play("Trigger_Active_Sound_FX");
 		Active();

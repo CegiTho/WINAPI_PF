@@ -24,7 +24,6 @@ void GoalManager::Update()
 
 	if (Check() == true)
 	{
-		SOUND->Stop(false);
 		SOUND->Play("Stage_Clear_Sound_FX");
 		//
 		SCENE->ChangeScene("Main Menu");

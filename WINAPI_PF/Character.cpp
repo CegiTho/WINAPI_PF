@@ -42,12 +42,12 @@ void Character::Move()
 
 	if (KEYPRESS(VK_RIGHT) && side[LEFT] == false)
 	{
-		rect->center.x += speed * DELTA;
+		this->rect->center.x += speed * DELTA;
 	}
 
 	if (KEYPRESS(VK_LEFT) && side[RIGHT] == false)
 	{
-		rect->center.x -= speed * DELTA;
+		this->rect->center.x -= speed * DELTA;
 	}
 }
 
@@ -78,31 +78,6 @@ void Character::Render(HDC hdc)
 
 	SelectObject(hdc, tempB);
 	SelectObject(hdc, tempP);
-	switch (name)
-	{
-	case THOMAS:
-		PrintElement(hdc,200);
-		break;
-	case CHRIS:
-		PrintElement(hdc, 400);
-		break;
-	case CLARE:
-		PrintElement(hdc, 600);
-		break;
-	case JAMES:
-		PrintElement(hdc, 800);
-		break;
-	case JOHN:
-		PrintElement(hdc, 1000);
-		break;
-	case LAURA:
-		PrintElement(hdc, 1200);
-		break;
-	case SARAH:
-		PrintElement(hdc, 1400);
-		break;
-	}
-
 }
 
 void Character::InitAgain()
@@ -329,7 +304,6 @@ void Character::ReturnSpawnPoint()
 {
 	if (isFloat == true || isPenetrated == true)
 	{
-		//isActive = false;
 		respawnDelay += DELTA;
 	}
 	if (respawnDelay >= 0.2)
@@ -339,7 +313,6 @@ void Character::ReturnSpawnPoint()
 		respawnDelay = 0.0;
 		isFloat = false;
 		isPenetrated = false;
-		isActive == true ? true : false;
 	}
 }
 
@@ -381,6 +354,32 @@ string  Character::GetNameString()
 
 void Character::PrintElement(HDC hdc, int x)
 {
+	switch (name)
+	{
+	case THOMAS:
+		PrintElement(hdc, 200);
+		break;
+	case CHRIS:
+		PrintElement(hdc, 400);
+		break;
+	case CLARE:
+		PrintElement(hdc, 600);
+		break;
+	case JAMES:
+		PrintElement(hdc, 800);
+		break;
+	case JOHN:
+		PrintElement(hdc, 1000);
+		break;
+	case LAURA:
+		PrintElement(hdc, 1200);
+		break;
+	case SARAH:
+		PrintElement(hdc, 1400);
+		break;
+	}
+
+
 	wstring s_Height;
 	switch (this->name)
 	{

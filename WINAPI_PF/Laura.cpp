@@ -119,17 +119,20 @@ void Laura::LauraJump(Character* character)
 
 void Laura::Update(vector<T_Object*> obj)
 {
+	Move();
+
  	Collision(obj);
 	ReturnSpawnPoint();
 
 	Jump();
 	anim->Update();
+
+
 	InitAgain();
 	pick->Update();
 
 	if (isActive == false)
 		return;
-	Move();
 }
 
 void Laura::Jump()

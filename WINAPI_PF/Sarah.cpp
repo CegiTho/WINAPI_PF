@@ -67,17 +67,19 @@ void Sarah::CreateSarah(Vector2 pos)
 
 void Sarah::Update(vector<T_Object*> obj)
 {
+	Move();
+
 	Collision(obj);
 	ReturnSpawnPoint();
 
 	Jump();
 	anim->Update();
+
 	InitAgain();
 	pick->Update();
 
 	if (isActive == false)
 		return;
-	Move();
 }
 
 void Sarah::Jump()

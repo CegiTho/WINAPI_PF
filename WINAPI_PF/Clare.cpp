@@ -68,17 +68,19 @@ void Clare::CreateClare(Vector2 pos)
 
 void Clare::Update(vector<T_Object*> obj)
 {
+	Move();
+
 	Collision(obj);
 	ReturnSpawnPoint();
 
 	Jump();
 	anim->Update();
+
 	InitAgain();
 	pick->Update();
 
 	if (isActive == false)
 		return;
-	Move();
 }
 
 void Clare::Jump()

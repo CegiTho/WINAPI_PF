@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <StageElement>
   <Character>
     <Thomas consist="1" name ="0">
@@ -23,7 +23,8 @@
       <position posX ="1500" posY="300"/>
     </Sarah>
   </Character>
-  <Goal>  <!--NULL -1  Thomas 0  Chris 1 Clare 2 James 3  John 4  Laura 5 Sarah 6-->
+  <Goal>
+    <!--NULL -1  Thomas 0  Chris 1 Clare 2 James 3  John 4  Laura 5 Sarah 6-->
     <Thomas>
       <basic_element consist ="1" isstatic ="0" />
       <move_info ismove ="0" loop ="1" times ="3.0" trigger_index ="1"/>
@@ -34,19 +35,19 @@
       <basic_element consist ="1" isstatic ="0" />
       <move_info ismove ="0" loop ="1" times ="3.0" trigger_index ="1"/>
       <position posX="400" posY="860"/>
-      <end_position posX="800" posY="860"/>    
+      <end_position posX="800" posY="860"/>
     </Chris>
     <Clare>
       <basic_element consist ="1" isstatic ="0" />
       <move_info ismove ="0" loop ="1" times ="3.0" trigger_index ="1"/>
       <position posX="400" posY="860"/>
-      <end_position posX="800" posY="860"/>    
+      <end_position posX="800" posY="860"/>
     </Clare>
     <James>
       <basic_element consist ="1" isstatic ="0"/>
       <move_info  ismove ="0" loop ="1" times ="3.0" trigger_index ="1"/>
       <position posX="400" posY="860"/>
-      <end_position posX="800" posY="860"/>    
+      <end_position posX="800" posY="860"/>
     </James>
     <John>
       <basic_element consist ="1" isstatic ="0" />
@@ -58,16 +59,16 @@
       <basic_element consist ="1" isstatic ="0" />
       <move_info ismove ="0" loop ="1" times ="3.0" trigger_index ="1"/>
       <position posX="400" posY="860"/>
-      <end_position posX="800" posY="860"/> 
+      <end_position posX="800" posY="860"/>
     </Laura>
     <Sarah>
       <basic_element consist ="1" isstatic ="0"/>
       <move_info ismove ="0" loop ="1" times ="3.0" trigger_index ="1"/>
       <position posX="400" posY="860"/>
-      <end_position posX="800" posY="860"/>  
+      <end_position posX="800" posY="860"/>
     </Sarah>
   </Goal>
-  <Obstacle>   
+  <Obstacle>
     <!--isStatic : 움직이는지 아닌지 ,isMove : 움직이는 구조물이 처음부터 움직이는지 아닌지 ,음수 : 무시-->
     <!--type 0 = normal , type 1 = spike , type 2 = water-->
     <obs1>
@@ -131,7 +132,7 @@
     <!--NULL -1  Thomas 0  Chris 1 Clare 2 James 3  John 4  Laura 5 Sarah 6-->
     <trigger1>
       <owner owner ="0" />
-      <position posX ="600" posY="950"/>
+      <position posX ="600" posY="800"/>
     </trigger1>
   </Trigger>
   <SavePoint>

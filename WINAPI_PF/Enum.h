@@ -59,3 +59,11 @@ enum class ID
 	GOAL
 };
 
+enum CHANNEL
+{
+	MAIN_FX_CHANNEL,
+	SUB_FX_CHANNEL,
+	BG_CHANNEL,
+	CHANNEL_COUNT
+	//FMOD soundSystem 초기화할 때 채널갯수 필요함
+};

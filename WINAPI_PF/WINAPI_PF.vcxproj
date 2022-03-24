@@ -296,6 +296,7 @@
   <ItemGroup>
     <Xml Include="Resource\Stage_3_Data.xml" />
     <Xml Include="Resource\Stage_4_Data.xml" />
+    <Xml Include="Stage_1.xml" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

@@ -68,17 +68,20 @@ void James::CreateJames(Vector2 pos)
 
 void James::Update(vector<T_Object*> obj)
 {
+	Move();
+
 	Collision(obj);
 	ReturnSpawnPoint();
 
 	Jump();
 	anim->Update();
+
+
 	InitAgain();
 	pick->Update();
 
 	if (isActive == false)
 		return;
-	Move();
 }
 
 void James::Jump()
