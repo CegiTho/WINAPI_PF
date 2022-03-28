@@ -485,5 +485,8 @@
     <Xml Include="Stage_1_Data.xml">
       <Filter>리소스 파일</Filter>
     </Xml>
+    <Xml Include="Resource\Stage_2_Data.xml">
+      <Filter>리소스 파일</Filter>
+    </Xml>
   </ItemGroup>
 </Project>

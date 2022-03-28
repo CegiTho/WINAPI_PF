@@ -298,6 +298,7 @@
     <Image Include="WINAPI_PF.ico" />
   </ItemGroup>
   <ItemGroup>
+    <Xml Include="Resource\Stage_2_Data.xml" />
     <Xml Include="Resource\Stage_4_Data.xml" />
     <Xml Include="Stage_1_Data.xml" />
   </ItemGroup>

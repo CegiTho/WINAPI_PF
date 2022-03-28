@@ -26,9 +26,8 @@ public:
 	
 	void SetIsMove(bool value);
 	Type GetType() { return type; }
-
-	void AddEndPos(Vector2 endPos) { endPositions.push(endPos); }
 	
+	void AddDestPos(Vector2 newDest) { endPositions.push(newDest); }
 	virtual void Move();
 
 };
