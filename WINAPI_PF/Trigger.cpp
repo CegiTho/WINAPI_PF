@@ -4,22 +4,23 @@ Trigger::Trigger()
 {	
 	//전부 쓸모없는것들
 	startPos = { 0,0 };
-	endPos = { 0,0 };
+	destPos = { 0,0 };
 	isGoback = false;
 	isMove = false;
 	isLoop = false;
 	times = 0.0;
 	//Obstacle 상속으로 땜질한거라 의미없음
 
+	isHori = true;
 	type = Type::TRIGGER;
 }
 
-Trigger::Trigger(Character* owner, Vector2 pos)
-	:owner(owner),isActive(true)
+Trigger::Trigger(Character* owner, Vector2 pos, bool isHori)
+	:owner(owner),isActive(true),isHori(isHori)
 {
 	//전부 쓸모없는것들
 	startPos = { 0,0 };
-	endPos = { 0,0 };
+	destPos = { 0,0 };
 	isGoback = false;
 	isMove = false;
 	isLoop = false;
@@ -72,17 +73,9 @@ void Trigger::Set(Vector2 pos)
 		break;
 	}
 
-	Vector2 size = { 24,8 };
+	Vector2 size = isHori == true ? Vector2(25, 11) : Vector2(11, 25);
 	this->rect = new Rect(pos, size);
 
-}
-
-void Trigger::Update()
-{
-	if (isActive == false)
-		return;
-
-	Collision();
 }
 
 void Trigger::Render(HDC hdc)
@@ -99,15 +92,6 @@ void Trigger::Render(HDC hdc)
 	SelectObject(hdc, oldP);
 }
 
-void Trigger::Collision()
-{
-	if (this->rect->Collision(owner->GetRect()) == true)
-	{ 
-		isActive = false;
-		SOUND->Play("Trigger_Active_Sound_FX");
-		Active();
-	}
-}
 
 void Trigger::Active()
 {

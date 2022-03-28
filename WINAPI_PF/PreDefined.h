@@ -23,16 +23,16 @@
 #define JAMES_THRUST 500
 #define JAMES_START {900,300}
 
-#define JOHN_SIZE {28,100}
+#define JOHN_SIZE {22,100}
 #define JOHN_COLOR RGB(176,158,60)
 #define JOHN_THRUST 700
 #define JOHN_START {1100,300}
 
-#define LAURA_SIZE {100,28}
+#define LAURA_SIZE {100,22}
 #define LAURA_COLOR RGB(165,55,83)
 #define LAURA_THRUST 400
 #define LAURA_START {1300,300}
-#define LAURA_ADD_THRUST 100
+#define LAURA_ADD_THRUST 300
 
 #define SARAH_SIZE {20,30}
 #define SARAH_COLOR RGB(64,33,99)
@@ -40,7 +40,7 @@
 #define SARAH_START {1500,300}
 
 //==========Moving=============
-#define SPEED 200
+#define SPEED 400
 #define GRAVITY 980
 
 //==========Obstacle===========

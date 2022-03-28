@@ -26,6 +26,7 @@ void Clare::CreateClare(Vector2 pos)
 	id = ID::CHARACTER;
 	name = Name::CLARE;
 	rect = new Rect(pos, CLARE_SIZE);
+	renderRect = new Rect(pos, this->rect->size);
 	color = CreateSolidBrush(CLARE_COLOR);
 	edge = CreatePen(PS_SOLID, 1, CLARE_COLOR);
 	spawnPoint = rect->center;
@@ -61,9 +62,6 @@ void Clare::CreateClare(Vector2 pos)
 		anim->SetAnim(State::GOAL, goal, 0.1);
 	} 
 	
-	{
-		pick = new Polygon2(this->GetRect());
-	}
 }
 
 void Clare::Update(vector<T_Object*> obj)
@@ -77,7 +75,6 @@ void Clare::Update(vector<T_Object*> obj)
 	anim->Update();
 
 	InitAgain();
-	pick->Update();
 
 	if (isActive == false)
 		return;
@@ -93,7 +90,8 @@ void Clare::Jump()
 	}
 
 	//======Jump===========
-	if (KEYDOWN(KEYBOARD->GetJumpKey()) && isJump == false && isActive == true && isFloat == false)
+	if (KEYDOWN(KEYBOARD->GetJumpKey()) && isJump == false && isActive == true 
+		&& isFloat == false )		
 	{
 		SOUND->Play("Clare_Jump_Sound_FX");
 		thrust = CLARE_THRUST;
@@ -103,8 +101,9 @@ void Clare::Jump()
 	}
 
 	//=========On Water=================
-	if (KEYDOWN(KEYBOARD->GetJumpKey()) == true && isActive == true && isFloat == true && isEscape == false)
-	{
+	if (KEYDOWN(KEYBOARD->GetJumpKey()) == true && isActive == true && isFloat == true 
+		&& isEscape == false && side[DOWN] == false)
+	{//side[DOWN] == false조건은 떠있는동안 위에 다른 character있을 때 Jump하면 isEscape가 실패하면서 그대로 가라앉아버림.
 		isEscape = true;
 		isJump = true;
 		this->thrust += CLARE_THRUST * 1.4;
@@ -164,6 +163,13 @@ void Clare::OnWater(Water* obs)
 		isJump = false;
 		isFalling = false;
 		isEscape = false;
+		playOnce = false;
+
+		if (playOnce == false)
+		{
+			SOUND->Play("Water_Collision_Sound_FX");
+			playOnce = true;
+		}
 	}
 	
 	if (isEscape == true)
@@ -174,10 +180,16 @@ void Clare::OnWater(Water* obs)
 	floatingTime += DELTA;
 
 	double surfaceLevel = obs->GetRect()->Top();
+	if (floatingTime > 4.0)
+	{
+		this->rect->center.y = surfaceLevel;
+		return;
+	}
+
 	double height = 30.0;		//의미없음 
 	double angular = 2 * PI * 2;	//수면에서 위치의 감쇠진동주기(1/angular sec)
 	double dampTime = 0.3;		//감쇠계수(시간에 따르므로 약 dampTime sec 마다 1/exp만큼 감쇠)
-	double damp = -height * exp(-floatingTime * 0.3) * cos(angular * floatingTime);
+	double damp = -height * exp(-floatingTime * 0.8) * cos(angular * floatingTime);
 	
 	this->rect->center.y = surfaceLevel + damp;
 	

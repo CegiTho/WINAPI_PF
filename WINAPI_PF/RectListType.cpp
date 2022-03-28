@@ -122,7 +122,9 @@ void RectListType::Select()
 
 	if (KEYDOWN(VK_SPACE) && isActive == true)
 	{
-		string scene = "Stage_" + to_string(stage);
+		int chapter = menu->GetMenuIndex();
+		int stg = stage + 1;
+		string scene = "Stage_" + to_string(chapter) + "-"+to_string(stg);
 		SCENE->ChangeScene(scene);
 	}
 }

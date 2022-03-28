@@ -26,6 +26,7 @@ Character::Character(Vector2 pos)
 
 	isPenetrated = false;
 	isFloat = false;
+	playOnce = false;
 	respawnDelay = 0.0;
 }
 
@@ -37,6 +38,8 @@ Character::~Character()
 
 void Character::Move()
 {
+	
+
 	if (isActive == false)
 		return;
 
@@ -49,10 +52,12 @@ void Character::Move()
 	{
 		this->rect->center.x -= speed * DELTA;
 	}
+
 }
 
 void Character::Render(HDC hdc)
 {
+	this->renderRect->center = this->rect->center;
 	HBRUSH tempB;
 	HPEN tempP;
 	if (isGoal == true)
@@ -67,14 +72,6 @@ void Character::Render(HDC hdc)
 	}
 
 	anim->Render(hdc);
-
-	if (this->isActive == true)
-	{
-		SelectObject(hdc, goalColor);
-		SelectObject(hdc, goalEdge);
-
-		pick->Render(hdc);
-	}
 
 	SelectObject(hdc, tempB);
 	SelectObject(hdc, tempP);
@@ -262,9 +259,10 @@ void Character::SpikeCollision(SpikeObstacle* obstacle)
 
 void Character::WaterCollision(Water* obstacle)
 {
-	if(this->rect->Collision(obstacle->GetRect()) == true)
+	if (this->rect->Collision(obstacle->GetRect()) == true)
+	{
 		isFloat = true;
-
+	}
 	if (this->name == CLARE)
 		static_cast<Clare*>(this)->OnWater(obstacle);
 }
@@ -274,6 +272,14 @@ void Character::TriggerCollision(Trigger* trigger)
 	Rect overlap;
 
 	Rect* other = trigger->GetRect();
+	if (trigger->GetOwner() == this)
+	{
+		trigger->SetActive(false);
+		SOUND->Play("Trigger_Active_Sound_FX");
+		trigger->Active();
+		return;
+	}
+
 	if (this->GetRect()->Collision(&overlap, other) == true)
 	{
 		bool isUpDown = overlap.size.x > overlap.size.y;
@@ -305,6 +311,11 @@ void Character::ReturnSpawnPoint()
 	if (isFloat == true || isPenetrated == true)
 	{
 		respawnDelay += DELTA;
+		if (isFloat == true && playOnce == false)
+		{
+			playOnce = true;
+			SOUND->Play("Water_Collision_Sound_FX");
+		}
 	}
 	if (respawnDelay >= 0.2)
 	{
@@ -313,6 +324,7 @@ void Character::ReturnSpawnPoint()
 		respawnDelay = 0.0;
 		isFloat = false;
 		isPenetrated = false;
+		playOnce = false;
 	}
 }
 

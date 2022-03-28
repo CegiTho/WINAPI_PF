@@ -15,28 +15,19 @@ private:
 
 
 public:
+	Polygon2();
 	Polygon2(vector<Vector2*> vertices);
-	Polygon2(vector<Vector2> vertices);
-	Polygon2(POINT* vertices);
-	Polygon2(POINT* vertices,int size);
-	Polygon2(Rect* rect);
 	~Polygon2();
 
 	virtual void Render(HDC hdc) override;
-	void Update();
-
-	void SetArr();
+	
 	void InitArr();
+	void SetArr(class Character* character);
 
 	vector<Vector2*> GetVertices() { return vertices; }
 
-	void SetNewVertices(POINT* newVertices);
-
-	virtual bool Collision(Line* line) override;
-	virtual bool Collision(Circle* circle) override;
-	virtual bool Collision(Rect* rect) override;
-
 	void Shift(vector<Vector2> vertices);
+
 
 };
 

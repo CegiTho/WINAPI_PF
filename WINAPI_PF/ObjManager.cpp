@@ -8,6 +8,26 @@ ObjManager::ObjManager()
 
 }
 
+ObjManager::ObjManager(STAGE_NUM num)
+{
+	m_Obstacle = new ObstacleManager();
+	m_Character = new CharacterManager();
+	m_Goal = new GoalManager();
+
+	LoadStage(num);
+}
+
+ObjManager::ObjManager(Scene* owner, STAGE_NUM num)
+{
+	m_Obstacle = new ObstacleManager();
+	m_Character = new CharacterManager();
+	m_Goal = new GoalManager();
+
+	this->owner = owner;
+
+	LoadStage(num);
+}
+
 ObjManager::~ObjManager()
 {
 	delete m_Obstacle;
@@ -29,12 +49,19 @@ void ObjManager::Render(HDC hdc)
 	m_Goal->Render(hdc);
 }
 
+void ObjManager::StartSet()
+{
+	M_CAM->TargetChange(m_Character->GetObj()[CLARE]);
+	m_Character->SetCharacterActive(CLARE, true);
+}
+
 void ObjManager::LoadStage(STAGE_NUM num)
 {
 	string file;
 	switch (num)
 	{
 	case STAGE_1:
+		file = "Stage_1_Data.xml";
 		break;
 	case STAGE_2:
 		break;
@@ -49,9 +76,15 @@ void ObjManager::LoadStage(STAGE_NUM num)
 	m_Goal->SetNowStage(num);
 
 	XmlDocument* document = new XmlDocument();
-	document->LoadFile(file.c_str());
+	XmlError err;
+	err = document->LoadFile(file.c_str());
+	if (err != XmlError::XML_SUCCESS)
+		assert(0);
 
 	XmlElement* stageElement = document->FirstChildElement("StageElement");
+	bool success = stageElement->IntAttribute("success");
+	if (success != true)
+		assert(0);
 
 	LoadCharacter(stageElement);
 	LoadObstacle(stageElement);
@@ -65,30 +98,39 @@ void ObjManager::ConnectToTrigger()
 	for (int i = 0; i < m_Obstacle->GetTriggers().size(); i++)
 	{
 		vector<Trigger*> triggers = m_Obstacle->GetTriggers();
-		for (int temp : triggerAndObstacle[i])
-			triggers[i]->AddConnect(this->m_Obstacle->GetObj()[temp]);
-
-		triggers[i]->AddConnect(triggerAndGoal[i]);
+		vector<int> obstacleIndices = triggerAndObstacle[i];
+		for (int index : obstacleIndices)
+			triggers[i]->AddConnect(m_Obstacle->GetObj()[index]);
+	
+		for (auto goal : triggerAndGoal[i])
+			triggers[i]->AddConnect(goal);
 	}
+
+	triggerAndGoal.clear();
+	triggerAndObstacle.clear();
 }
 
 void ObjManager::LoadCharacter(XmlElement* stageData)
 {
 	XmlElement* character = stageData->FirstChildElement("Character");
-	int index = 0;
-	int name = 0;
+	int consist = 100;
+	int errCheck = 100;
+	int name = 100;
 	Vector2 pos;
 
+	//consist = character->IntAttribute("errc");
 	//==========CHARACTER=======================
-	character = character->FirstChildElement("Thomas");
-	for (; character != nullptr; character = character->NextSiblingElement())
+	XmlElement* characterData;
+	characterData = character->FirstChildElement("Thomas");
+	for (; characterData != nullptr; characterData = characterData->NextSiblingElement())
 	{
-		index = character->IntAttribute("consist");
-		name = character->IntAttribute("name");
-		if (index != 1)
+		XmlElement* data = characterData->FirstChildElement("basic_element");
+		consist = data->IntAttribute("consist");
+		name = data->IntAttribute("name");
+		if (consist != 1)
 			continue;
 
-		XmlElement* character_Pos = character->FirstChildElement();
+		XmlElement* character_Pos = data->NextSiblingElement();
 		pos.x = character_Pos->IntAttribute("posX");
 		pos.y = character_Pos->IntAttribute("posY");
 
@@ -149,6 +191,10 @@ void ObjManager::LoadObstacle(XmlElement* stageData)
 
 		if (isShade == true)
 			shadeIndex.emplace_back(this->m_Obstacle->GetObj().size());
+
+		if (isStatic == false && isMove == false && triggerIndex < 0)
+			assert(0);
+
 		if (isStatic == false && triggerIndex >= 0)
 			triggerAndObstacle[triggerIndex].emplace_back(this->m_Obstacle->GetObj().size());
 
@@ -178,18 +224,20 @@ void ObjManager::LoadObstacle(XmlElement* stageData)
 
 	trigger = trigger->FirstChildElement("trigger1");
 	Name owner;
+	bool isHori;
 	Vector2 pos;
 	for (; trigger != nullptr; trigger = trigger->NextSiblingElement())
 	{
 
 		XmlElement* data = trigger->FirstChildElement("owner");
 		owner = (Name)data->IntAttribute("owner");
-		
+		isHori = data->IntAttribute("ishori");
+
 		data = data->NextSiblingElement();
 		pos.x = data->IntAttribute("posX");
 		pos.y = data->IntAttribute("posY");
 
-		this->PlusTrigger(m_Character->GetObj()[owner], pos);
+		this->PlusTrigger(m_Character->GetObj()[owner], pos,isHori);
 	}
 }
 
@@ -220,7 +268,7 @@ void ObjManager::LoadGoal(XmlElement* stageData)
 		if (isStatic == false)
 		{
 			isMove = data->IntAttribute("ismove");
-			isLoop = data->IntAttribute("isloop");
+			isLoop = data->IntAttribute("loop");
 			times = data->DoubleAttribute("times");
 			triggerIndex = data->IntAttribute("trigger_index");
 		}
@@ -238,8 +286,11 @@ void ObjManager::LoadGoal(XmlElement* stageData)
 		else
 			this->PlusGoal(m_Character->GetObj()[charIndex], startPos, endPos, isMove, isLoop, times);
 
+		if (isMove == false && isStatic == false && triggerIndex < 0)
+			assert(0);
+
 		if (triggerIndex >= 0 && isStatic == false)
-			triggerAndGoal[triggerIndex] = m_Goal->GetGoals()[charIndex];
+			triggerAndGoal[triggerIndex].emplace_back(m_Goal->GetGoals()[charIndex]);
 
 		charIndex++;
 	}
@@ -271,9 +322,9 @@ void ObjManager::PlusCharacter(Name name, Vector2 pos)
 	this->objects.emplace_back(this->m_Character->PlusCharacter(name, pos));
 }
 
-void ObjManager::PlusTrigger(Character* owner, Vector2 center)
+void ObjManager::PlusTrigger(Character* owner, Vector2 center,bool isHori)
 {
-	this->objects.emplace_back(this->m_Obstacle->PlusTrigger(owner, center));
+	this->objects.emplace_back(this->m_Obstacle->PlusTrigger(owner, center,isHori));
 }
 
 void ObjManager::PlusObstacle(Type type, Vector2 center, Vector2 size)

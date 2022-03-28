@@ -14,6 +14,7 @@ MasterCamera::MasterCamera()
 
 	HDC hdc = GetDC(hWnd);
 	MasterCamera::backBuffer = CreateCompatibleDC(hdc);
+	bleachDC = CreateCompatibleDC(hdc);
 	hBitmap = nullptr;
 
 	ReleaseDC(hWnd, hdc);
@@ -23,6 +24,9 @@ MasterCamera::MasterCamera()
 MasterCamera::~MasterCamera()
 {
 	delete screen;
+
+	DeleteObject(bleachDC);
+	DeleteObject(screenBleach);
 
 	DeleteObject(MasterCamera::backBuffer);
 	DeleteObject(hBitmap);
@@ -65,13 +69,20 @@ void MasterCamera::SetMapSize(Vector2 size, bool isHold)
 	//»öÀÌ ¾È³ª¿È.
 	HDC hdc = GetDC(hWnd);
 	if (hBitmap == nullptr)
+	{
 		hBitmap = CreateCompatibleBitmap(hdc, mapSize.x, mapSize.y);
+		screenBleach = CreateCompatibleBitmap(hdc, mapSize.x, mapSize.y);
+	}
 	else 
 	{
 		DeleteObject(hBitmap);
 		hBitmap = CreateCompatibleBitmap(hdc, mapSize.x, mapSize.y);
+		DeleteObject(screenBleach);
+		screenBleach = CreateCompatibleBitmap(hdc, mapSize.x, mapSize.y);
 	}
 	ReleaseDC(hWnd,hdc);
 
 	SelectObject(MasterCamera::backBuffer, (HGDIOBJ)hBitmap);
+	SelectObject(bleachDC, (HGDIOBJ)screenBleach);
 }
+

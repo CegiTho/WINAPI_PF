@@ -28,9 +28,9 @@ void ObstacleManager::Render(HDC hdc)
 
 }
 
-T_Object* ObstacleManager::PlusTrigger(Character* owner, Vector2 center)
+T_Object* ObstacleManager::PlusTrigger(Character* owner, Vector2 center,bool isHori)
 {
-	Trigger* temp = new Trigger(owner, center);
+	Trigger* temp = new Trigger(owner, center,isHori);
 	obstacles.emplace_back(temp);
 	triggers.emplace_back(temp);
 	return temp;

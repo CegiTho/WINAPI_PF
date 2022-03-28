@@ -5,6 +5,8 @@
 #include "MainMenuScene.h"
 #include "SettingMenuScene.h"
 #include "ScenarioSelectMenuScene.h"
+#include "Stage_1_1_Scene.h"
+
 
 Program::Program(HWND hWindow)
 {
@@ -13,13 +15,13 @@ Program::Program(HWND hWindow)
 
 	LoadSound();
 	
-	SCENE->Add("Main Menu", new MainMenuScene());
-	SCENE->Add("Setting", new SettingMenuScene());
-	SCENE->Add("Scenario Select", new ScenarioSelectMenuScene());
-	SCENE->Add("Test", new TestScene());
+	SCENE->Add("Main Menu", new MainMenuScene("Main Menu"));
+	SCENE->Add("Setting", new SettingMenuScene("Setting"));
+	SCENE->Add("Scenario Select", new ScenarioSelectMenuScene("Scenario Select"));
+	SCENE->Add("Stage_1-1", new Stage_1_1_Scene("Stage_1-1"));
 	//SCENE->Add("Test", new TestScene());
-	SCENE->SetScene("Main Menu");
 
+	SCENE->SetScene("Main Menu");
 }
 
 Program::~Program()
@@ -75,5 +77,4 @@ void Program::LoadSound()
 	SOUND->Add("Laura_Jump_Sound_FX", "Resource/Sounds/Laura_Jump_Sound_FX.mp3", MAIN_FX_CHANNEL, 0.0f);
 	SOUND->Add("Sarah_Jump_Sound_FX", "Resource/Sounds/Sarah_Jump_Sound_FX.mp3", MAIN_FX_CHANNEL, 0.0f);
 
-	SOUND->Play("BGM", 0.1f);
 }

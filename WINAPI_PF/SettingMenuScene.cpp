@@ -28,6 +28,33 @@ SettingMenuScene::SettingMenuScene()
 	keyControl = new TextType(menu);
 }
 
+SettingMenuScene::SettingMenuScene(string tag)
+{
+	this->tag = tag;
+	isEnd = false;
+
+	vector<string> tags;
+	tags.emplace_back("Main Menu");
+	tags.emplace_back("FX Volume");
+	tags.emplace_back("Music Volume");
+	tags.emplace_back("Jump");
+	tags.emplace_back("Next Character");
+	tags.emplace_back("Prev Character");
+
+	vector<string> menuList;
+	menuList.emplace_back("Return To Main Menu");
+	menuList.emplace_back("FX Volume");
+	menuList.emplace_back("Music Volume");
+	menuList.emplace_back("Jump");
+	menuList.emplace_back("Next Character");
+	menuList.emplace_back("Prev Character");
+
+	menu = new TextCell(menuList, tags);
+	selectBar = new TextCellSelect(menu);
+	volumeControl = new PercentType(menu);
+	keyControl = new TextType(menu);
+}
+
 SettingMenuScene::~SettingMenuScene()
 {
 	delete selectBar;

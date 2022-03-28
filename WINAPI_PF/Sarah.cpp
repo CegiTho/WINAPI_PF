@@ -26,6 +26,8 @@ void Sarah::CreateSarah(Vector2 pos)
 	id = ID::CHARACTER;
 	name = Name::SARAH;
 	rect = new Rect(pos, SARAH_SIZE);
+	renderRect = new Rect(pos, this->rect->size);
+
 	color = CreateSolidBrush(SARAH_COLOR);
 	edge = CreatePen(PS_SOLID, 1, SARAH_COLOR);
 	spawnPoint = rect->center;
@@ -59,10 +61,6 @@ void Sarah::CreateSarah(Vector2 pos)
 		goal.emplace_back(Vector2(0, 0));
 		anim->SetAnim(State::GOAL, goal, 0.1);
 	}
-
-	{
-		pick = new Polygon2(this->GetRect());
-	}
 }
 
 void Sarah::Update(vector<T_Object*> obj)
@@ -76,7 +74,6 @@ void Sarah::Update(vector<T_Object*> obj)
 	anim->Update();
 
 	InitAgain();
-	pick->Update();
 
 	if (isActive == false)
 		return;

@@ -26,6 +26,8 @@ void Thomas::CreateThomas(Vector2 pos)
 	id = ID::CHARACTER;
 	name = Name::THOMAS;
 	rect = new Rect(pos, THOMAS_SIZE);
+	renderRect = new Rect(pos, this->rect->size);
+
 	color = CreateSolidBrush(THOMAS_COLOR);
 	edge = CreatePen(PS_SOLID, 1, THOMAS_COLOR);
 	spawnPoint = rect->center;
@@ -59,10 +61,6 @@ void Thomas::CreateThomas(Vector2 pos)
 		goal.emplace_back(Vector2(0, 0));
 		anim->SetAnim(State::GOAL, goal, 0.1);
 	}
-
-	{
-		pick = new Polygon2(this->GetRect());
-	}
 }
 
 void Thomas::Update(vector<T_Object*> obj)
@@ -76,7 +74,6 @@ void Thomas::Update(vector<T_Object*> obj)
 	anim->Update();
 
 	InitAgain();
-	pick->Update();
 
 	if (isActive == false)
 		return;

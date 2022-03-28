@@ -6,10 +6,9 @@ TestScene::TestScene()
 	isEnd = false;
 	Vector2 lSource = { 300,200 };
 
-	m_Shade = new ShadeManager(STAGE_4, lSource);		//여기서 masterCamera의 DC랑 연결된 bitmap사이즈가 결정됨.
+	m_Obj = new ObjManager(STAGE_4);
+	m_Shade = new ShadeManager(this,STAGE_4, lSource);		//여기서 masterCamera의 DC랑 연결된 bitmap사이즈가 결정됨.
 
-	m_Obj = new ObjManager();
-	m_Obj->LoadStage(STAGE_4);
 
 	for (Character* character : m_Obj->GetCM()->GetObj())
 	{

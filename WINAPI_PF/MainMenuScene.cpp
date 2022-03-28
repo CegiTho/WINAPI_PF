@@ -10,7 +10,7 @@ MainMenuScene::MainMenuScene()
     menuList.emplace_back("Setting");
     menuList.emplace_back("Exit");
     tags = menuList;
-    tags[0] = "Test";
+    tags[0] = "Stage_1-1";
 
     menu = new TextCell(menuList,tags);
 
@@ -18,6 +18,27 @@ MainMenuScene::MainMenuScene()
     selectBar->SetActive(true);
 
     tag = "Main Menu";
+}
+
+MainMenuScene::MainMenuScene(string tag)
+{
+    isEnd = false;
+    this->tag = tag;
+
+    vector<string> menuList, tags;
+    menuList.emplace_back("New Game");
+    menuList.emplace_back("Scenario Select");
+    menuList.emplace_back("Setting");
+    menuList.emplace_back("Exit");
+    tags = menuList;
+    tags[0] = "Stage_1_1";
+
+    menu = new TextCell(menuList, tags);
+
+    selectBar = new TextCellSelect(menu);
+    selectBar->SetActive(true);
+
+    
 }
 
 MainMenuScene::~MainMenuScene()

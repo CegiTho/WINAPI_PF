@@ -12,6 +12,7 @@ private:
 
 public:
 	SettingMenuScene();
+	SettingMenuScene(string tag);
 	~SettingMenuScene();
 
 	virtual void Update() override;

@@ -6,14 +6,19 @@ private:
 	Character* target;
 	Rect* screen;
 
-	
 	HBITMAP hBitmap;
+
+	HDC bleachDC;
+	HBITMAP screenBleach;
 
 	Vector2 mapSize;
 	Vector2 offset;
 
 	bool isMoving;
 	bool isHold;
+	bool stageOut;
+
+	int alpha;
 
 	MasterCamera();
 	~MasterCamera();
@@ -35,7 +40,7 @@ public:
 	void TargetChange(Character* character);
 	void SetPos(Vector2 pos) { this->screen->center = pos;}
 	void SetMapSize(Vector2 size,bool isHold);
-	
+	void SetHold(bool value) { isHold = value; }
 
 	HDC GetBackBuffer() { return this->backBuffer; }
 

@@ -1,32 +1,26 @@
 #pragma once
 
-typedef Name OwnerName;
+typedef int TriggerIndex;
 
 class ObjManager
 {
 private:
-	struct TriggerSet
-	{
-		OwnerName name;
-		vector<int> objIndices;
-	};
-
 	vector<T_Object*> objects;
 	
 	vector<int> shadeIndex;
 
-	map<int, vector<int>> triggerAndObstacle;
-	map<int, Goal*> triggerAndGoal;
-	
-	map<OwnerName, vector<int>> triggerIndex;
-	map<OwnerName, vector<Goal*>> triggerGoal;
+	map<TriggerIndex, vector<int>> triggerAndObstacle;
+	map<TriggerIndex, vector<Goal*>> triggerAndGoal;
 
 	CharacterManager*	m_Character;
 	ObstacleManager*	m_Obstacle;
 	GoalManager*		m_Goal;
 
+	Scene* owner;
 public:
 	ObjManager();
+	ObjManager(STAGE_NUM num);
+	ObjManager(Scene* owner,STAGE_NUM num);
 	~ObjManager();
 
 	void LoadStage(STAGE_NUM num);
@@ -37,6 +31,8 @@ public:
 	void Update();
 	void Render(HDC hdc);
 
+	void StartSet();
+
 	void ConnectToTrigger();
 
 	CharacterManager*	GetCM()		{ return m_Character; }
@@ -45,7 +41,7 @@ public:
 
 	void PlusCharacter(Name name,Vector2 pos);
 
-	void PlusTrigger(Character* owner,Vector2 center);
+	void PlusTrigger(Character* owner,Vector2 center, bool isHori);
 	void PlusObstacle(Type type, Vector2 center, Vector2 size);
 	void PlusObstacle(Type type, Vector2 startPos,Vector2 endPos, Vector2 size,bool isMove,bool isLoop,double times);
 	void PlusObstacle(Vector2 center, Vector2 size,bool left,bool up , bool right,bool down);

@@ -10,14 +10,11 @@
 #define ALPHA_SURFACE 150
 
 #define HEIGHT 4
-#define WAVENUMBER 0.1
 #define PI 3.1
-#define ANTINODE PI/WAVENUMBER			//31
-#define WAVE_LENGTH ANTINODE			
 #define SLICE_DELTA 5
 
-#define MAX_DISTB 3.3
-#define MIN_DISTB 1.4
+#define MAX_DISTB 3.6
+#define MIN_DISTB 2.2
 
 
 Water::Water( Vector2 pos, Vector2 size)
@@ -94,14 +91,14 @@ void Water::SurfaceEffect()
 	elem.time = 2;
 	elem.height = HEIGHT;
 	elem.pi = PI;
-	elem.length = 50;
-	elem.delta = SLICE_DELTA;				//x방향 미소변위
+	elem.length = 60;
+	elem.delta = SLICE_DELTA;						//x방향 미소변위
 	elem.sliceCount = (elem.length) / SLICE_DELTA;
-	elem.damp = 0.005;						//감쇠상수
-	elem.k = elem.pi / elem.length;			//파장관련 상수
-	elem.angular = 0.2;						//각속도
-	elem.lifespan = 1.4;					//파동의 수명
-	elem.h_Angular = PI / elem.lifespan;;	//진폭 시간상수
+	elem.damp = 0.005;								//감쇠상수
+	elem.k = elem.pi / elem.length;					//파장관련 상수
+	elem.angular = 0.2;								//각속도
+	elem.lifespan = 1.4;							//파동의 수명
+	elem.h_Angular = PI / elem.lifespan;;			//진폭 시간상수
 	elem.pixelPerSec = 30;
 
 	int count = this->rect->size.x / elem.length;

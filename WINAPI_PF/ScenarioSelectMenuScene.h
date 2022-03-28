@@ -10,6 +10,7 @@ private:
 
 public:
 	ScenarioSelectMenuScene();
+	ScenarioSelectMenuScene(string tag);
 	~ScenarioSelectMenuScene();
 
 	virtual void Update() override;

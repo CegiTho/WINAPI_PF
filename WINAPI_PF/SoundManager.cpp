@@ -124,13 +124,13 @@ void SoundManager::Play(string key, float volume)
 		break;
 	case SUB_FX_CHANNEL:
 		soundSystem->playSound(sounds[key], nullptr, true, &subFXChannel);
-		channelVolume[MAIN_FX_CHANNEL] = volume;
+		channelVolume[SUB_FX_CHANNEL] = volume;
 		mainFXChannel->setVolume(channelVolume[SUB_FX_CHANNEL]);
 		mainFXChannel->setPaused(false);
 		break;
 	case BG_CHANNEL:
 		soundSystem->playSound(sounds[key], nullptr, true, &bgChannel);
-		channelVolume[MAIN_FX_CHANNEL] = volume;
+		channelVolume[BG_CHANNEL] = volume;
 		bgChannel->setVolume(channelVolume[BG_CHANNEL]);
 		bgChannel->setPaused(false);
 		break;

@@ -1,70 +1,77 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<StageElement>
+<StageElement success ="1">
   <Character>
-    <Thomas consist="1" name ="0">
+    <Thomas>
+      <basic_element consist="1" name ="0"/>
       <position posX="500" posY="300"/>
     </Thomas>
-    <Chris consist="1" name ="1">
+    <Chris>
+      <basic_element consist="1" name ="1"/>
       <position posX ="900" posY="300"/>
     </Chris>
-    <Clare consist="1" name ="2">
-      <position posX ="300" posY="300"/>
+    <Clare>
+      <basic_element consist="1" name ="2"/>
+      <position posX ="500" posY="300"/>
     </Clare>
-    <James consist="1" name ="3">
+    <James>
+      <basic_element consist="1" name ="3"/>
       <position posX ="500" posY="400"/>
     </James>
-    <John consist="1" name ="4">
+    <John>
+      <basic_element consist="1" name ="4"/>
       <position posX ="1500" posY="800"/>
     </John>
-    <Laura consist="1" name ="5">
+    <Laura>
+      <basic_element consist="1" name ="5"/>
       <position posX ="1600" posY="800"/>
     </Laura>
-    <Sarah consist="1" name ="6">
+    <Sarah>
+      <basic_element consist="1" name ="6"/>
       <position posX ="1500" posY="300"/>
     </Sarah>
   </Character>
   <Goal>  <!--NULL -1  Thomas 0  Chris 1 Clare 2 James 3  John 4  Laura 5 Sarah 6-->
     <Thomas>
       <basic_element consist ="1" isstatic ="0" />
-      <move_info ismove ="0" loop ="1" times ="3.0" trigger_index ="1"/>
+      <move_info ismove ="0" loop ="1" times ="3.0" trigger_index ="0"/>
       <position posX="400" posY="1050"/>
       <end_position posX="800" posY="860"/>
     </Thomas>
     <Chris >
       <basic_element consist ="1" isstatic ="0" />
-      <move_info ismove ="0" loop ="1" times ="3.0" trigger_index ="1"/>
-      <position posX="400" posY="860"/>
-      <end_position posX="800" posY="860"/>    
-    </Chris>
-    <Clare>
-      <basic_element consist ="1" isstatic ="0" />
-      <move_info ismove ="0" loop ="1" times ="3.0" trigger_index ="1"/>
-      <position posX="400" posY="860"/>
-      <end_position posX="800" posY="860"/>    
-    </Clare>
-    <James>
-      <basic_element consist ="1" isstatic ="0"/>
-      <move_info  ismove ="0" loop ="1" times ="3.0" trigger_index ="1"/>
-      <position posX="400" posY="860"/>
-      <end_position posX="800" posY="860"/>    
-    </James>
-    <John>
-      <basic_element consist ="1" isstatic ="0" />
-      <move_info ismove ="0" loop ="1" times ="3.0" trigger_index ="1"/>
+      <move_info ismove ="0" loop ="1" times ="3.0" trigger_index ="0"/>
       <position posX="400" posY="860"/>
       <end_position posX="800" posY="860"/>
+    </Chris>
+    <Clare>
+      <basic_element consist ="1" isstatic ="1" />
+      <move_info ismove ="0" loop ="-1" times ="3.0" trigger_index ="-1"/>
+      <position posX="400" posY="860"/>
+      <end_position posX="-1" posY="-1"/>    
+    </Clare>
+    <James>
+      <basic_element consist ="1" isstatic ="1"/>
+      <move_info  ismove ="0" loop ="-1" times ="3.0" trigger_index ="-1"/>
+      <position posX="400" posY="860"/>
+      <end_position posX="-1" posY="-1"/>    
+    </James>
+    <John>
+      <basic_element consist ="1" isstatic ="1" />
+      <move_info ismove ="0" loop ="-1" times ="3.0" trigger_index ="-1"/>
+      <position posX="400" posY="860"/>
+      <end_position posX="-1" posY="-1"/>
     </John>
     <Laura>
-      <basic_element consist ="1" isstatic ="0" />
-      <move_info ismove ="0" loop ="1" times ="3.0" trigger_index ="1"/>
+      <basic_element consist ="1" isstatic ="1" />
+      <move_info ismove ="0" loop ="-1" times ="3.0" trigger_index ="-1"/>
       <position posX="400" posY="860"/>
-      <end_position posX="800" posY="860"/> 
+      <end_position posX="-1" posY="-1"/> 
     </Laura>
     <Sarah>
-      <basic_element consist ="1" isstatic ="0"/>
-      <move_info ismove ="0" loop ="1" times ="3.0" trigger_index ="1"/>
+      <basic_element consist ="1" isstatic ="1"/>
+      <move_info ismove ="0" loop ="-1" times ="3.0" trigger_index ="-1"/>
       <position posX="400" posY="860"/>
-      <end_position posX="800" posY="860"/>  
+      <end_position posX="-1" posY="-1"/>  
     </Sarah>
   </Goal>
   <Obstacle>   
@@ -121,7 +128,7 @@
     <obs7>
       <basic_element type ="2" isstatic ="1"  shade ="0"/>
       <move_info ismove ="0" isloop ="0" trigger_index ="-1" times="6.0"/>
-      <position posX ="1400" posY ="600"/>
+      <position posX ="700" posY ="1000"/>
       <end_position posX ="-1" posY ="-1"/>
       <size sizeX ="300" sizeY ="200"/>
       <side left ="-100" top ="-100" right ="-100" bottom ="-100"/>

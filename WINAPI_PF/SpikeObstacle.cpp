@@ -11,7 +11,7 @@ SpikeObstacle::SpikeObstacle(Vector2 center, Vector2 size, bool left, bool up, b
 	this->isLoop = false;
 	this->times = 0;
 	this->startPos = center;
-	this->endPos = center;
+	this->destPos = center;
 
 	SetObs(center, size, left, up, right, down);
 
@@ -28,7 +28,7 @@ SpikeObstacle::SpikeObstacle(Vector2 center, Vector2 size, Vector2 pathEnd,
 	this->isLoop = isLoop;
 	this->times = times;
 	this->startPos = center;
-	this->endPos = pathEnd;
+	this->destPos = pathEnd;
 	this->isMove = isMove;
 
 	SetObs(center, size, left, up, right, down);
@@ -79,12 +79,12 @@ void SpikeObstacle::Move()
 	if (isGoback == false)	//start -> end
 	{
 		Vector2 prevPos = this->rect->center;
-		this->rect->center = LERP(this->rect->center, endPos, DELTA * times);
-		this->renderRect->center = LERP(this->renderRect->center, endPos, DELTA * times);
+		this->rect->center = LERP(this->rect->center, destPos, DELTA * times);
+		this->renderRect->center = LERP(this->renderRect->center, destPos, DELTA * times);
 		
 		ShiftPoint();
 
-		double diff = (endPos - this->rect->center).Length();
+		double diff = (destPos - this->rect->center).Length();
 
 		if (diff < EPSILON && isLoop == true)
 			isGoback = true;

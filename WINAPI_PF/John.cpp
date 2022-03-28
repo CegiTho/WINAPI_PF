@@ -25,6 +25,8 @@ void John::CreateJohn(Vector2 pos)
 	id = ID::CHARACTER;
 	name = Name::JOHN;
 	rect = new Rect(pos, JOHN_SIZE);
+	renderRect = new Rect(pos, this->rect->size);
+
 	color = CreateSolidBrush(JOHN_COLOR);
 	edge = CreatePen(PS_SOLID, 1, JOHN_COLOR);
 	spawnPoint = rect->center;
@@ -59,9 +61,6 @@ void John::CreateJohn(Vector2 pos)
 		anim->SetAnim(State::GOAL, goal, 0.1);
 	}
 
-	{
-		pick = new Polygon2(this->GetRect());
-	}
 }
 
 void John::Update(vector<T_Object*> obj)
@@ -76,7 +75,6 @@ void John::Update(vector<T_Object*> obj)
 	
 
 	InitAgain();
-	pick->Update();
 
 	if (isActive == false)
 		return;

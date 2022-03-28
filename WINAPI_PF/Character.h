@@ -19,6 +19,7 @@ protected:
 	bool isFalling;
 	bool isGoal;
 
+	bool playOnce;
 	bool isFloat;
 	bool isPenetrated;
 
@@ -27,11 +28,10 @@ protected:
 	vector<bool> side;
 
 	RectAnimation* anim;
+	Rect* renderRect;
 	
 	HBRUSH goalColor;
 	HPEN goalEdge;
-
-	Polygon2* pick;
 
 	Vector2 spawnPoint;
 
@@ -47,6 +47,7 @@ public:
 	bool GetJump()			{ return isJump; }
 	bool GetDoubleJump()	{ return isDoubleJump; }
 	Name GetName()			{ return name; }
+	Rect* GetRenderRect()	{ return renderRect; }
 
 	void SetActive(bool active) { this->isActive = active; }
 	void SetAnim(State value) { anim->SetState(value); }

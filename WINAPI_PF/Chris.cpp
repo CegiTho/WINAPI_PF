@@ -14,7 +14,6 @@ Chris::Chris(Vector2 pos)
 Chris::~Chris()
 {
 	delete rect;
-	delete pick;
 
 	DeleteObject(color);
 	DeleteObject(edge);
@@ -27,6 +26,7 @@ void Chris::CreateChris(Vector2 pos)
 	id = ID::CHARACTER;
 	name = Name::CHRIS;
 	rect = new Rect(pos, CHRIS_SIZE);
+	renderRect = new Rect(pos, CHRIS_SIZE);
 	color = CreateSolidBrush(CHRIS_COLOR);
 	edge = CreatePen(PS_SOLID, 1, CHRIS_COLOR);
 	spawnPoint = rect->center;
@@ -61,10 +61,6 @@ void Chris::CreateChris(Vector2 pos)
 		anim->SetAnim(State::GOAL, goal, 0.1);
 	}
 
-	{
-		pick = new Polygon2(this->GetRect());
-	}
-
 }
 
 void Chris::Update(vector<T_Object*> obj)
@@ -77,7 +73,6 @@ void Chris::Update(vector<T_Object*> obj)
 	anim->Update();
 
 	InitAgain();
-	pick->Update();
 
 	if (isActive == false)
 		return;

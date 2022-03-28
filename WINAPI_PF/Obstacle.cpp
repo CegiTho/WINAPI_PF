@@ -10,12 +10,22 @@ Obstacle::~Obstacle()
 {
 }
 
+void Obstacle::SetIsMove(bool value)
+{
+	if (endPositions.empty() == true)
+		return;
+
+  	this->isMove = value;
+	destPos = endPositions.front();
+	endPositions.pop();
+}
+
 void Obstacle::Move()
 {
 	if (isGoback == false)	//start -> end
 	{
-		this->rect->center = LERP(this->rect->center, endPos, DELTA * times);
-		double diff = (endPos - this->rect->center).Length();
+		this->rect->center = LERP(this->rect->center, destPos, DELTA * times);
+		double diff = (destPos - this->rect->center).Length();
 		
 		if (diff < EPSILON && isLoop == true)
 			isGoback = true;
@@ -23,7 +33,9 @@ void Obstacle::Move()
 		{
 			isGoback = false;
 			isMove = false;
+			destPos = FAR_AWAY;
 		}
+
 	}
 	else					//end -> start
 	{

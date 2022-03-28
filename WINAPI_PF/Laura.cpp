@@ -25,6 +25,8 @@ void Laura::CreateLaura(Vector2 pos)
 	id = ID::CHARACTER;
 	name = Name::LAURA;
 	rect = new Rect(pos, LAURA_SIZE);
+	renderRect = new Rect(pos, this->rect->size);
+
 	color = CreateSolidBrush(LAURA_COLOR);
 	edge = CreatePen(PS_SOLID, 1, LAURA_COLOR);
 	spawnPoint = rect->center;
@@ -57,10 +59,6 @@ void Laura::CreateLaura(Vector2 pos)
 		goal.emplace_back(Vector2(0.3, 0.3));
 		goal.emplace_back(Vector2(0, 0));
 		anim->SetAnim(State::GOAL, goal, 0.1);
-	}
-
-	{
-		pick = new Polygon2(this->GetRect());
 	}
 }
 
@@ -127,9 +125,7 @@ void Laura::Update(vector<T_Object*> obj)
 	Jump();
 	anim->Update();
 
-
 	InitAgain();
-	pick->Update();
 
 	if (isActive == false)
 		return;

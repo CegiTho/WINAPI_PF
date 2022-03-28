@@ -7,11 +7,6 @@ SavePoint::SavePoint(vector<Character*> characters, Vector2 pos, Vector2 size)
 {
 	Set(pos, size);
 
-	test.emplace_back(new Line(this->rect->LeftTopV(), this->rect->RightTopV()));
-	test.emplace_back(new Line(this->rect->RightTopV(), this->rect->RightBottomV()));
-	test.emplace_back(new Line(this->rect->RightBottomV(), this->rect->LeftBottomV()));
-	test.emplace_back(new Line(this->rect->LeftBottomV(), this->rect->LeftTopV()));
-	testP = CreatePen(PS_SOLID, 1, GREEN);
 }
 
 SavePoint::~SavePoint()
@@ -21,10 +16,6 @@ SavePoint::~SavePoint()
 		for (Cross* c : symbol[i])
 			delete c;
 	}
-
-	for (Line* l : test)
-		delete l;
-	DeleteObject(testP);
 }
 
 void SavePoint::Set(Vector2 pos, Vector2 size)
@@ -81,11 +72,6 @@ void SavePoint::Render(HDC hdc)
 {
 	for (Cross* symb : symbol[index])
 		symb->Render(hdc);
-
-	HPEN old = (HPEN)SelectObject(hdc, testP);
-	for (Line* l : test)
-		l->Render(hdc);
-	SelectObject(hdc, old);
 }
 
 void SavePoint::Collision()

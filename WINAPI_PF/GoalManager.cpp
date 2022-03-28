@@ -17,8 +17,10 @@ void GoalManager::Update()
 {
 	Collision();
 	for (Goal* goal : goals)
-		goal->Update();
-
+	{
+		if(goal != nullptr)
+			goal->Update();
+	}
 	for (SavePoint* sp : savePoints)
 		sp->Update();
 

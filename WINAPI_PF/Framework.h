@@ -34,6 +34,7 @@
 #include <queue>
 #include <list>
 #include <deque>
+#include <cassert>
 
 #include <Ole2.h>
 #include <gdiplus.h>
@@ -186,6 +187,7 @@ SCAM이 실질적인 카메라이고 내가 원하는데로 동작하는 객체�
 #include "Scene.h"
 #include "Program.h"
 
+#include "StageScene.h"
 #include "MenuScene.h"
 #include "MainMenuScene.h"
 

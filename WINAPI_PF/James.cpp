@@ -26,7 +26,9 @@ void James::CreateJames(Vector2 pos)
 {
 	id = ID::CHARACTER;
 	name = Name::JAMES;
-	rect = new Rect(pos, JAMES_SIZE);
+	rect = new Rect(pos, JAMES_SIZE);	
+	renderRect = new Rect(pos, this->rect->size);
+
 	color = CreateSolidBrush(JAMES_COLOR);
 	edge = CreatePen(PS_SOLID, 1, JAMES_COLOR);
 	spawnPoint = rect->center;
@@ -60,10 +62,6 @@ void James::CreateJames(Vector2 pos)
 		goal.emplace_back(Vector2(0, 0));
 		anim->SetAnim(State::GOAL, goal, 0.1);
 	}
-
-	{
-		pick = new Polygon2(this->GetRect());
-	}
 }
 
 void James::Update(vector<T_Object*> obj)
@@ -78,7 +76,6 @@ void James::Update(vector<T_Object*> obj)
 
 
 	InitAgain();
-	pick->Update();
 
 	if (isActive == false)
 		return;

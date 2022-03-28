@@ -5,7 +5,9 @@ CharacterManager::CharacterManager()
 {
 	characters.assign(CHARACTER_COUNT, nullptr);
 	nowActive = CHARACTER_COUNT;
-
+	pick = new Polygon2();
+	pickColor = CreateSolidBrush(WHITE);
+	pickEdge = CreatePen(PS_SOLID, 1, WHITE);
 }
 
 CharacterManager::~CharacterManager()
@@ -22,6 +24,7 @@ void CharacterManager::Update(vector<T_Object*> obj)
 		if (character != nullptr)
 			character->Update(obj);
 	}
+	pick->SetArr(characters[nowActive]);
 }
 
 void CharacterManager::Render(HDC hdc)
@@ -31,6 +34,13 @@ void CharacterManager::Render(HDC hdc)
 		if(obj != nullptr && obj->GetRect()->Collision(M_CAM->GetScreen()) == true)
 			obj->Render(hdc);
 	}
+
+	HBRUSH oldB = (HBRUSH)SelectObject(hdc, pickColor);
+	HPEN oldP = (HPEN)SelectObject(hdc, pickEdge);
+	pick->Render(hdc);
+
+	SelectObject(hdc, oldB);
+	SelectObject(hdc, oldP);
 }
 
 T_Object* CharacterManager::PlusCharacter(Name name,Vector2 pos)
