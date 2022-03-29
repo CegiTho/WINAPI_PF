@@ -82,7 +82,6 @@ void MasterCamera::SetMapSize(Vector2 size, bool isHold)
 	}
 	ReleaseDC(hWnd,hdc);
 
-	SelectObject(MasterCamera::backBuffer, (HGDIOBJ)hBitmap);
-	SelectObject(bleachDC, (HGDIOBJ)screenBleach);
+	
 }
 
