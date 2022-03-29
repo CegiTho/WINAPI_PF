@@ -16,6 +16,7 @@ private:
 	vector<Line*> lines;
 	Vector2 startPos;
 	Vector2 endPos;
+	queue<Vector2> destPositions;
 
 	HPEN goalEdge;
 	Name name;
@@ -30,12 +31,13 @@ public:
 	void Update();
 	void Render(HDC hdc);
 
+	void AddDestPos(Vector2 newDest) { destPositions.push(newDest); }
+	void SetIsMove(bool value);
 	void Collision();
 	
 	bool GoalCheck() { return isGoal; }
 	Name GetName() { return name; }
 
-	void SetIsMove(bool value) { isMove =	 value; }
 	void Move();
 
 };

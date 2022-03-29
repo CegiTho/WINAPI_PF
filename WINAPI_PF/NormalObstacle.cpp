@@ -19,9 +19,9 @@ NormalObstacle::NormalObstacle(Vector2 center, Vector2 size, Vector2 pathEnd, bo
 {
 	rect = new Rect(center, size);
 
-	this->isMove = isMove;
 	this->startPos = center;
 	endPositions.push(pathEnd);
+	this->SetIsMove(isMove);
 	this->times = speed;
 	this->isLoop = loop;
 

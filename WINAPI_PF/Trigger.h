@@ -6,17 +6,19 @@ private:
 	bool isActive;
 	bool isHori;
 	
+
 	vector<T_Object*> connectedObj;
 
+	Obstacle* attachedObj;
+	Vector2 offset;
 	Character* owner;
 public:
-	Trigger();
-	Trigger(Character* owner,Vector2 pos,bool isHori);
+	Trigger(Character* owner,Obstacle* attachedObj,bool isHori,Side side,double distance);
 	~Trigger();
 	
-	void Set(Vector2 pos);
+	void Set();
 
-	virtual void Update() override {}
+	virtual void Update() override;
 	virtual void Render(HDC hdc) override;
 	virtual Rect* GetRenderRect() override { return nullptr; }
 

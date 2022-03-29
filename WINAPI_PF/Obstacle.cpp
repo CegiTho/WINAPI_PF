@@ -33,7 +33,6 @@ void Obstacle::Move()
 		{
 			isGoback = false;
 			isMove = false;
-			destPos = FAR_AWAY;
 		}
 	}
 	else					//end -> start

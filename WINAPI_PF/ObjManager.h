@@ -41,7 +41,7 @@ public:
 
 	void PlusCharacter(Name name,Vector2 pos);
 
-	void PlusTrigger(Character* owner,Vector2 center, bool isHori);
+	void PlusTrigger(Character* owner, Obstacle* stachedDest, bool isHori, Side side, double dist);
 	void PlusObstacle(Type type, Vector2 center, Vector2 size);
 	void PlusObstacle(Type type, Vector2 startPos,Vector2 endPos, Vector2 size,bool isMove,bool isLoop,double times);
 	void PlusObstacle(Vector2 center, Vector2 size,bool left,bool up , bool right,bool down);

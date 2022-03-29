@@ -36,7 +36,7 @@
 
 #define SARAH_SIZE {20,30}
 #define SARAH_COLOR RGB(64,33,99)
-#define SARAH_THRUST 550
+#define SARAH_THRUST 490
 #define SARAH_START {1500,300}
 
 //==========Moving=============

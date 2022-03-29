@@ -7,8 +7,9 @@ Goal::Goal(Character* character, Vector2 pos)
 }
 
 Goal::Goal(Character* character, Vector2 pos,Vector2 endPos,double times, bool isMove, bool isLoop)
-	:character(character),startPos(pos),endPos(endPos),isGoback(false),times(times),isLoop(isLoop),isMove(isMove)
+	:character(character),startPos(pos),isGoback(false),times(times),isLoop(isLoop),isMove(isMove)
 {
+	destPositions.push(endPos);
 	CreateElement(character, pos);
 }
 
@@ -57,6 +58,16 @@ void Goal::Render(HDC hdc)
 		line->Render(hdc);
 
 	SelectObject(hdc, temp);
+}
+
+void Goal::SetIsMove(bool value)
+{
+	if (destPositions.empty() == true)
+		return;
+
+	this->isMove = value;
+	endPos = destPositions.front();
+	destPositions.pop();
 }
 
 void Goal::Collision()

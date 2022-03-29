@@ -6,7 +6,7 @@
 #include "SettingMenuScene.h"
 #include "ScenarioSelectMenuScene.h"
 #include "Stage_1_1_Scene.h"
-
+#include "Stage_1_2_Scene.h"
 
 Program::Program(HWND hWindow)
 {
@@ -19,7 +19,8 @@ Program::Program(HWND hWindow)
 	SCENE->Add("Setting", new SettingMenuScene("Setting"));
 	SCENE->Add("Scenario Select", new ScenarioSelectMenuScene("Scenario Select"));
 	SCENE->Add("Stage_1-1", new Stage_1_1_Scene("Stage_1-1"));
-	//SCENE->Add("Test", new TestScene());
+	SCENE->Add("Stage_1-2", new Stage_1_2_Scene("Stage_1-2"));
+
 
 	SCENE->SetScene("Main Menu");
 }

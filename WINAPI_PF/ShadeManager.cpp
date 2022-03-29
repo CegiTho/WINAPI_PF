@@ -43,9 +43,10 @@ void ShadeManager::LoadDCSize(STAGE_NUM num)
 	switch (num)
 	{
 	case STAGE_1:
-		file = "Stage_1_Data.xml";
+		file = "Resource/Stage_1_Data.xml";
 		break;
 	case STAGE_2:
+		file = "Resource/Stage_2_Data.xml";
 		break;
 	case STAGE_3:
 		break;
