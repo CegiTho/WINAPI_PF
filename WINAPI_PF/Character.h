@@ -35,12 +35,14 @@ protected:
 
 	Vector2 spawnPoint;
 
+	vector<Character*> moveWith;
 public:
 	Character();
 	Character(Vector2 pos);
 	virtual ~Character();
 
 	void Move();
+	void AddMoveWith(Character* character) { moveWith.emplace_back(character); }
 	
 	vector<bool> GetSide()	{ return side; }
 	bool GetActive()		{ return isActive; }

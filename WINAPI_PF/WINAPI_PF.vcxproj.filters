@@ -279,6 +279,9 @@
     <ClInclude Include="Stage_1_2_Scene.h">
       <Filter>Framework\GameObject\Scene\StageScene</Filter>
     </ClInclude>
+    <ClInclude Include="Stage_1_3_Scene.h">
+      <Filter>Framework\GameObject\Scene\StageScene</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="WINAPI_PF.cpp">
@@ -470,6 +473,9 @@
     <ClCompile Include="Stage_1_2_Scene.cpp">
       <Filter>Framework\GameObject\Scene\StageScene</Filter>
     </ClCompile>
+    <ClCompile Include="Stage_1_3_Scene.cpp">
+      <Filter>Framework\GameObject\Scene\StageScene</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="WINAPI_PF.rc">
@@ -485,13 +491,16 @@
     </Image>
   </ItemGroup>
   <ItemGroup>
-    <Xml Include="Resource\Stage_4_Data.xml">
+    <Xml Include="Resource\Stage_3_Data.xml">
       <Filter>리소스 파일</Filter>
     </Xml>
     <Xml Include="Resource\Stage_2_Data.xml">
       <Filter>리소스 파일</Filter>
     </Xml>
     <Xml Include="Resource\Stage_1_Data.xml">
+      <Filter>리소스 파일</Filter>
+    </Xml>
+    <Xml Include="Resource\Stage_4_Data.xml">
       <Filter>리소스 파일</Filter>
     </Xml>
   </ItemGroup>

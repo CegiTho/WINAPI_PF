@@ -7,6 +7,7 @@
 #include "ScenarioSelectMenuScene.h"
 #include "Stage_1_1_Scene.h"
 #include "Stage_1_2_Scene.h"
+#include "Stage_1_3_Scene.h"
 
 Program::Program(HWND hWindow)
 {
@@ -20,6 +21,7 @@ Program::Program(HWND hWindow)
 	SCENE->Add("Scenario Select", new ScenarioSelectMenuScene("Scenario Select"));
 	SCENE->Add("Stage_1-1", new Stage_1_1_Scene("Stage_1-1"));
 	SCENE->Add("Stage_1-2", new Stage_1_2_Scene("Stage_1-2"));
+	SCENE->Add("Stage_1-3", new Stage_1_3_Scene("Stage_1-3"));
 
 
 	SCENE->SetScene("Main Menu");
@@ -56,6 +58,8 @@ void Program::Render(HDC hdc)
 		hdc, 0, 0, WIN_WIDTH, WIN_HEIGHT,
 		M_CAM->GetBackBuffer(),M_CAM->GetPos().x, M_CAM->GetPos().y , SRCCOPY
 	);
+
+	RenderMousePos(hdc);
 }
 
 void Program::LoadSound()
@@ -77,5 +81,15 @@ void Program::LoadSound()
 	SOUND->Add("John_Jump_Sound_FX", "Resource/Sounds/John_Jump_Sound_FX.mp3", MAIN_FX_CHANNEL, 0.0f);
 	SOUND->Add("Laura_Jump_Sound_FX", "Resource/Sounds/Laura_Jump_Sound_FX.mp3", MAIN_FX_CHANNEL, 0.0f);
 	SOUND->Add("Sarah_Jump_Sound_FX", "Resource/Sounds/Sarah_Jump_Sound_FX.mp3", MAIN_FX_CHANNEL, 0.0f);
+
+}
+
+void Program::RenderMousePos(HDC hdc)
+{
+	Vector2 mPos;
+	mPos = M_CAM->GetPos() + mousePos;
+	wstring renderString;
+	renderString = L"{x : " + (to_wstring(mPos.x)) + L", " + L"y : " + (to_wstring(mousePos.y)) + L"}";
+	TextOut(hdc, mPos.x, mPos.y + 10, renderString.c_str(), renderString.size());
 
 }

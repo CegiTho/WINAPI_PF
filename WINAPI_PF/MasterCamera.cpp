@@ -19,6 +19,7 @@ MasterCamera::MasterCamera()
 
 	ReleaseDC(hWnd, hdc);
 	SetBkMode(MasterCamera::backBuffer, TRANSPARENT);
+
 }
 
 MasterCamera::~MasterCamera()
@@ -41,14 +42,14 @@ void MasterCamera::Update()
 
 	{
 		if (screen->Left() < 0)
-			screen->center.x = offset.x;
+			screen->center.x = screen->size.x * 0.5;
 		if (screen->Right() > mapSize.x)
-			screen->center.x = mapSize.x - offset.x;
+			screen->center.x = mapSize.x - screen->size.x * 0.5;
 
 		if (screen->Top() < 0)
-			screen->center.y = offset.y;
+			screen->center.y = screen->size.y * 0.5;
 		if (screen->Bottom() > mapSize.y)
-			screen->center.y = mapSize.y - offset.y;
+			screen->center.y = mapSize.y - screen->size.y * 0.5;
 	}
 }
 
@@ -64,6 +65,8 @@ void MasterCamera::SetMapSize(Vector2 size, bool isHold)
 	screen->center.x = mapSize.x / 2;
 	screen->center.y = mapSize.y / 2;
 	this->isHold = isHold;
+	offset.x = size.x * 0.5;
+	offset.y = size.y * 0.5;
 
 	//MasterCamera::backBuffer가 CompatibleDC이지 hWnd랑 직접 관련있는 DC는 아니여서 그런가 아래 bitmap생성할 때 backBuffer넣으면 
 	//색이 안나옴.
@@ -82,6 +85,8 @@ void MasterCamera::SetMapSize(Vector2 size, bool isHold)
 	}
 	ReleaseDC(hWnd,hdc);
 
+	SelectObject(MasterCamera::backBuffer, (HGDIOBJ)hBitmap);
+	SelectObject(bleachDC, (HGDIOBJ)screenBleach);
 	
 }
 

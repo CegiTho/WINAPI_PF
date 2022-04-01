@@ -1,40 +1,41 @@
 #include "Framework.h"
-#include "Stage_1_2_Scene.h"
+#include "Stage_1_3_Scene.h"
 
-Stage_1_2_Scene::Stage_1_2_Scene()
+Stage_1_3_Scene::Stage_1_3_Scene()
 {
-	tag = "Stage_1-2";
+	tag = "Stage_1-3";
 	isEnd = false;
 
-	m_Obj = new ObjManager(this, STAGE_2);
-	m_Shade = new ShadeManager(this, STAGE_2);
+	m_Obj = new ObjManager(this, STAGE_3);
+	m_Shade = new ShadeManager(this, STAGE_3);
 }
 
-Stage_1_2_Scene::Stage_1_2_Scene(string tag)
+Stage_1_3_Scene::Stage_1_3_Scene(string tag)
 {
 	this->tag = tag;
 	isEnd = false;
 
-	m_Obj = new ObjManager(this, STAGE_2);
-	m_Shade = new ShadeManager(this, STAGE_2);
+	m_Obj = new ObjManager(this, STAGE_3);
+	m_Shade = new ShadeManager(this, STAGE_3);
+
 }
 
-Stage_1_2_Scene::Stage_1_2_Scene(STAGE_NUM stage)
+Stage_1_3_Scene::Stage_1_3_Scene(STAGE_NUM stage)
 {
-	tag = "Stage_1-2";
+	tag = "Stage_1-3";
 	isEnd = false;
 
-	m_Obj = new ObjManager(this, stage);
-	m_Shade = new ShadeManager(this, stage);
+	m_Obj = new ObjManager(this, STAGE_3);
+	m_Shade = new ShadeManager(this, STAGE_3);
 }
 
-Stage_1_2_Scene::~Stage_1_2_Scene()
+Stage_1_3_Scene::~Stage_1_3_Scene()
 {
 	delete m_Obj;
 	delete m_Shade;
 }
 
-void Stage_1_2_Scene::Update()
+void Stage_1_3_Scene::Update()
 {
 	if (KEYDOWN(VK_ESCAPE))
 		SCENE->ChangeScene("Main Menu");
@@ -46,13 +47,14 @@ void Stage_1_2_Scene::Update()
 		SCENE->DequeueScene();
 }
 
-void Stage_1_2_Scene::Render(HDC hdc)
+void Stage_1_3_Scene::Render(HDC hdc)
 {
 	m_Shade->Render(hdc);
 	m_Obj->Render(hdc);
+
 }
 
-void Stage_1_2_Scene::Start()
+void Stage_1_3_Scene::Start()
 {
 	vector<Character*> characters = m_Obj->GetCM()->GetObj();
 	for (Character* character : characters)
@@ -70,7 +72,7 @@ void Stage_1_2_Scene::Start()
 	m_Shade->StartSet();
 }
 
-void Stage_1_2_Scene::End()
+void Stage_1_3_Scene::End()
 {
 	isEnd = true;
 }

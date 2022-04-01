@@ -15,5 +15,6 @@ public:
 
 	void LoadSound();
 
+	void RenderMousePos(HDC hdc);
 
 };

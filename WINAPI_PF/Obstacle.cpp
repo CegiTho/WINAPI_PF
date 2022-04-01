@@ -4,6 +4,7 @@ Obstacle::Obstacle()
 {
 	isGoback = false;
 	id = ID::OBSTACLE;
+	time = 0.0;
 }
 
 Obstacle::~Obstacle()
@@ -24,23 +25,53 @@ void Obstacle::Move()
 {
 	if (isGoback == false)	//start -> end
 	{
-		this->rect->center = LERP(this->rect->center, destPos, DELTA * times);
+		time += DELTA;
+		Vector2 newPos = Math::SineInterpolation(startPos, destPos, times, time);
+		Vector2 delta = newPos - this->rect->center;
+		this->rect->center = newPos;
 		double diff = (destPos - this->rect->center).Length();
 		
-		if (diff < EPSILON && isLoop == true)
+		for (Character* character : moveWith)
+		{
+			character->GetRect()->center += delta;
+		}
+
+		if (diff <= EPSILON && isLoop == true)
+		{
 			isGoback = true;
+			time = 0.0;
+		}
 		else if (diff < EPSILON && isLoop == false)
 		{
 			isGoback = false;
 			isMove = false;
+			time = 0.0;
 		}
 	}
 	else					//end -> start
 	{
+		time += DELTA;
+		Vector2 newPos = Math::SineInterpolation(destPos, startPos, times, time);
+		Vector2 delta = newPos - this->rect->center;
+		this->rect->center = newPos;
+
+		for (Character* character : moveWith)
+		{
+			character->GetRect()->center += delta;
+		} 
+
 		double diff = (startPos - this->rect->center).Length();
 		if (diff < EPSILON)
+		{
 			isGoback = false;
-
-		this->rect->center = LERP(this->rect->center, startPos, DELTA * times);
+			time = 0.0;
+		}
 	}
+
+	moveWith.clear();
+}
+
+void Obstacle::AddMoveWith(Character* character)
+{
+	moveWith.emplace_back(character);
 }

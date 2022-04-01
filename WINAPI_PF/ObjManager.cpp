@@ -76,7 +76,8 @@ void ObjManager::LoadStage(STAGE_NUM num)
 	case STAGE_2:
 		file = "Resource/Stage_2_Data.xml";
 		break;
-	case STAGE_3:
+	case STAGE_3:		
+		file = "Resource/Stage_3_Data.xml";
 		break;
 	case STAGE_4:
 		file = "Resource/Stage_4_Data.xml";
@@ -172,7 +173,7 @@ void ObjManager::LoadObstacle(XmlElement* stageData)
 		if (isStatic == false)
 		{
 			isMove = data->IntAttribute("ismove");
-			isLoop = data->IntAttribute("isLoop");
+			isLoop = data->IntAttribute("isloop");
 			times = data->DoubleAttribute("times");
 		}
 
@@ -195,10 +196,12 @@ void ObjManager::LoadObstacle(XmlElement* stageData)
 			side[Side::DOWN] = data->IntAttribute("bottom");
 		}
 		data = data->NextSiblingElement("destposition0");
-		destPos.x = data->IntAttribute("posX");
-		destPos.y = data->IntAttribute("posY");
-		triggerIndex = data->IntAttribute("trigger_index");
-
+		if (data != nullptr)
+		{
+			destPos.x = data->IntAttribute("posX");
+			destPos.y = data->IntAttribute("posY");
+			triggerIndex = data->IntAttribute("trigger_index");
+		}
 		if (isShade == true)
 			shadeIndex.emplace_back(this->m_Obstacle->GetObj().size());
 
@@ -301,9 +304,12 @@ void ObjManager::LoadGoal(XmlElement* stageData)
 		startPos.y = data->IntAttribute("posY");
 
 		data = data->NextSiblingElement("destposition0");
-		endPos.x = data->IntAttribute("posX");
-		endPos.y = data->IntAttribute("posY");
-		triggerIndex = data->IntAttribute("trigger_index");
+		if (data != nullptr)
+		{
+			endPos.x = data->IntAttribute("posX");
+			endPos.y = data->IntAttribute("posY");
+			triggerIndex = data->IntAttribute("trigger_index");
+		}
 
 		if (isStatic == true)
 			this->PlusGoal(m_Character->GetObj()[charIndex], startPos);

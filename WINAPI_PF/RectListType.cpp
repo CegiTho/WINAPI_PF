@@ -187,7 +187,8 @@ void RectListType::Move()
 		//delta를 double로 써봤었는데 정수에서 미세하게 벗어난 n.***값에서 0.***값들때문에 의도보다 두배정도 더 움직였었음.
 		int delta = menu->GetRect()->center.x - this->visualBar->center.x;
 		this->visualBar->center.x += delta;
-		this->leftSide->center.x += delta;
+		int deltaX = leftSide->Right() - visualBar->Left();
+		this->leftSide->center.x += deltaX;
 		
 		for (Rect* rec : list)
 			rec->center.x += delta;

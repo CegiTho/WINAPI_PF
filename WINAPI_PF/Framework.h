@@ -60,7 +60,7 @@ using namespace std;
 #define CENTER_X WIN_WIDTH * 0.5
 #define CENTER_Y WIN_HEIGHT * 0.5
 
-#define PI 3.1
+#define PI 3.141592654
 
 #define RADIAN 180/PI
 

@@ -90,8 +90,8 @@
     <obs1>  <!--맵 외곽 하단.-->
       <basic_element type ="0" isstatic ="1" shade ="0"/>
       <move_info ismove ="0" isloop ="0" times="6.0"/>
-      <position posX ="1070" posY ="1040"/>
-      <size sizeX ="2140" sizeY ="20"/>
+      <position posX ="1070" posY ="1055"/>
+      <size sizeX ="2140" sizeY ="50"/>
       <side left ="-100" top ="-100" right ="-100" bottom ="-100"/>
       <destposition0 posX ="-1" posY ="-1" trigger_index ="-1"/>
     </obs1>
@@ -227,7 +227,7 @@
     </SavePoint_1>
   </SavePoint>
   <StageSize>
-    <size sizeX ="2150" sizeY ="1050"/>
+    <size sizeX ="2150" sizeY ="1080"/>
     <light isspot ="1" posX ="3000" posY ="1200"/>
     <!--light isspot ="0" constant ="3.0"/>-->
   </StageSize>

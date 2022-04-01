@@ -38,21 +38,24 @@ Character::~Character()
 
 void Character::Move()
 {
-	
-
 	if (isActive == false)
 		return;
 
 	if (KEYPRESS(VK_RIGHT) && side[LEFT] == false)
 	{
 		this->rect->center.x += speed * DELTA;
+		for (Character* character : moveWith)
+			character->GetRect()->center.x += speed * DELTA;
 	}
 
 	if (KEYPRESS(VK_LEFT) && side[RIGHT] == false)
 	{
 		this->rect->center.x -= speed * DELTA;
+		for (Character* character : moveWith)
+			character->GetRect()->center.x -= speed * DELTA;
 	}
 
+	moveWith.clear();
 }
 
 void Character::Render(HDC hdc)
@@ -119,6 +122,7 @@ void Character::CharacterCollision(Character* character)
 		{//down
 			this->side[DOWN] = true;
 			this->GetRect()->center.y += overlap.size.y;
+			this->AddMoveWith(character);
 		}
 		else if (isUpDown == true && overlap.center.y < other->center.y)
 		{//up
@@ -178,18 +182,22 @@ void Character::NormalCollision(NormalObstacle* obstacle)
 		if (isUpDown == true && overlap.center.y > other->center.y)
 		{//down
 			if (this->name == JAMES && this->isFalling == true)
+			{
 				SOUND->Play("All_Land_Sound_FX");
-				
+			}
+			obstacle->AddMoveWith(this);
 			this->side[DOWN] = true;
 			this->GetRect()->center.y += overlap.size.y;
 		}
 		else if (isUpDown == true && overlap.center.y < other->center.y)
 		{//up
 			if (this->isFalling == true)
+			{
 				SOUND->Play("All_Land_Sound_FX");
-
+			}
 			this->GetRect()->center.y -= overlap.size.y;
 			this->side[UP] = true;
+			obstacle->AddMoveWith(this);
 		}
 		else if (isUpDown == false && overlap.center.x > other->center.x)
 		{//right
@@ -222,6 +230,12 @@ void Character::SpikeCollision(SpikeObstacle* obstacle)
 				return;
 			}
 			this->side[DOWN] = true;
+			obstacle->AddMoveWith(this);			
+
+			if(this->GetName() ==Name::JAMES)
+			{
+				SOUND->Play("All_Land_Sound_FX");
+			}
 		}
 		else if (isUpDown == true && overlap.center.y < other->center.y)
 		{//up
@@ -232,6 +246,8 @@ void Character::SpikeCollision(SpikeObstacle* obstacle)
 				return;
 			}
 			this->side[UP] = true;
+			obstacle->AddMoveWith(this);
+			SOUND->Play("All_Land_Sound_FX");
 		}
 		else if (isUpDown == false && overlap.center.x > other->center.x)
 		{//right

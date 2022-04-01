@@ -14,6 +14,9 @@ protected:
 	bool isMove;
 	bool isLoop;
 	double times;
+	double time;
+
+	vector<Character*> moveWith;
 
 
 public:
@@ -30,6 +33,7 @@ public:
 	void AddDestPos(Vector2 newDest) { endPositions.push(newDest); }
 	virtual void Move();
 
+	void AddMoveWith(Character* character);
 };
 
 
