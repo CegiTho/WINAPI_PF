@@ -17,6 +17,7 @@ void Obstacle::SetIsMove(bool value)
 		return;
 
   	this->isMove = value;
+
 	destPos = endPositions.front();
 	endPositions.pop();
 }
@@ -43,6 +44,7 @@ void Obstacle::Move()
 		}
 		else if (diff < EPSILON && isLoop == false)
 		{
+			startPos = destPos;
 			isGoback = false;
 			isMove = false;
 			time = 0.0;
@@ -67,8 +69,6 @@ void Obstacle::Move()
 			time = 0.0;
 		}
 	}
-
-	moveWith.clear();
 }
 
 void Obstacle::AddMoveWith(Character* character)

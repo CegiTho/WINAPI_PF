@@ -72,6 +72,9 @@ void SpikeObstacle::Render(HDC hdc)
 
 	SelectObject(hdc, tempB);
 	SelectObject(hdc, tempP);
+
+	moveWith.clear();
+	moveWith.shrink_to_fit();
 }
 
 void SpikeObstacle::Move()

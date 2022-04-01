@@ -38,7 +38,7 @@ Trigger::Trigger(Character* owner, Obstacle* attachedObj, bool isHori, Side side
 	}
 
 
-	Vector2 pos = owner->GetRect()->center + offset;
+	Vector2 pos = attachedObj->GetRect()->center + offset;
 
 	rect = new Rect(pos, size);
 

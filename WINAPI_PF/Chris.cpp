@@ -66,13 +66,14 @@ void Chris::CreateChris(Vector2 pos)
 void Chris::Update(vector<T_Object*> obj)
 {
 	Move();
+	InitAgain();
+
 
 	Collision(obj);
 	ReturnSpawnPoint();
 	Jump();
 	anim->Update();
 
-	InitAgain();
 
 	if (isActive == false)
 		return;

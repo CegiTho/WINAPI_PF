@@ -54,8 +54,6 @@ void Character::Move()
 		for (Character* character : moveWith)
 			character->GetRect()->center.x -= speed * DELTA;
 	}
-
-	moveWith.clear();
 }
 
 void Character::Render(HDC hdc)
@@ -78,12 +76,17 @@ void Character::Render(HDC hdc)
 
 	SelectObject(hdc, tempB);
 	SelectObject(hdc, tempP);
+
+	
 }
 
 void Character::InitAgain()
 {
 	for (int i = 0; i < side.size(); i++)
 		side[i] = false;
+
+	moveWith.clear();
+	moveWith.shrink_to_fit();
 }
 
 void Character::Collision(vector<T_Object*> objects)
@@ -185,7 +188,6 @@ void Character::NormalCollision(NormalObstacle* obstacle)
 			{
 				SOUND->Play("All_Land_Sound_FX");
 			}
-			obstacle->AddMoveWith(this);
 			this->side[DOWN] = true;
 			this->GetRect()->center.y += overlap.size.y;
 		}

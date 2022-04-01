@@ -137,7 +137,7 @@
     </obs6>
     <obs7>  <!--move-->
       <basic_element type ="0" isstatic ="0"  shade ="1"/>
-      <move_info ismove ="0" isloop ="0" times="6.0"/>
+      <move_info ismove ="0" isloop ="0" times="2.0"/>
       <position posX ="800" posY ="1300"/>
       <size sizeX ="100" sizeY ="300"/>
       <side left ="-100" top ="-100" right ="-100" bottom ="-100"/>

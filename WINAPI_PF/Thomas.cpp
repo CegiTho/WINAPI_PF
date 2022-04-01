@@ -66,6 +66,7 @@ void Thomas::CreateThomas(Vector2 pos)
 void Thomas::Update(vector<T_Object*> obj)
 {
 	Move();
+	InitAgain();
 
 	Collision(obj);
 	ReturnSpawnPoint();
@@ -73,7 +74,6 @@ void Thomas::Update(vector<T_Object*> obj)
 	Jump();
 	anim->Update();
 
-	InitAgain();
 
 	if (isActive == false)
 		return;

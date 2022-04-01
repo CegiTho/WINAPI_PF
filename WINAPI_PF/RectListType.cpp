@@ -12,8 +12,8 @@ RectListType::RectListType(TextCell* menu)
 	Vector2 center = { WIN_WIDTH - size.x * 0.5,
 		menu->GetYLevel()[0] };
 	
-	visualBar = new Rect(center, size);
-	leftSide = new Rect(visualBar->Left() - size.x * 0.6,visualBar->Top(),visualBar->Left(),visualBar->Bottom());
+	visualBar = new Rect(center, { size.x + size.x * 0.6,size.y });
+	//leftSide = new Rect(visualBar->Left() - size.x * 0.6,visualBar->Top(),visualBar->Left(),visualBar->Bottom());
 
 	color = CreateSolidBrush(THOMAS_COLOR);
 	edge = CreatePen(PS_SOLID, 1, THOMAS_COLOR);
@@ -43,7 +43,7 @@ RectListType::RectListType(TextCell* menu)
 	stage = 0;
 	normalSize = 10;
 	highlightedSize = 30;
-	Vector2 start = { leftSide->Left() + 20,menu->GetYLevel()[0] };
+	Vector2 start = { visualBar->Left() + 20,menu->GetYLevel()[0] };
 	Vector2 period = { 40,0 };
 	for (int i = 0; i < 10; i++)
 		list.emplace_back(new Rect(start + period * i, { normalSize,normalSize }));
@@ -82,12 +82,11 @@ void RectListType::Render(HDC hdc)
 	SetTextAlign(hdc, TA_LEFT);
 	SetTextAlign(hdc, TA_TOP);
 
-	TextOutA(hdc, leftSide->Left(), leftSide->Top() - 50,
+	TextOutA(hdc, visualBar->Left(), visualBar->Top() - 50,
 		(to_string(menu->GetMenuIndex()) + "." + to_string(stage + 1)).c_str(),
 		(to_string(menu->GetMenuIndex()) + "." + to_string(stage + 1)).size());
 
 	visualBar->Render(hdc);
-	leftSide->Render(hdc);
 
 	SelectObject(hdc, stageColor);
 	SelectObject(hdc, stageEdge);
@@ -153,7 +152,6 @@ void RectListType::Move()
 	}
 
 	this->visualBar->center.y = LERP(this->visualBar->center.y, menu->GetYLevel()[menuIndex], DELTA * 5);
-	this->leftSide->center.y = LERP(this->leftSide->center.y, menu->GetYLevel()[menuIndex], DELTA * 5);
 
 	for (Rect* rec : list)
 		rec->center.y = LERP(rec->center.y, menu->GetYLevel()[menuIndex], DELTA * 5);
@@ -185,14 +183,13 @@ void RectListType::Move()
 	if (menu->GetMove() == true)
 	{
 		//delta를 double로 써봤었는데 정수에서 미세하게 벗어난 n.***값에서 0.***값들때문에 의도보다 두배정도 더 움직였었음.
-		int delta = menu->GetRect()->center.x - this->visualBar->center.x;
+		int delta = (menu->GetRect()->center.x - ((menu->GetRect()->size.x * 0.6)*0.5)) - this->visualBar->center.x;
 		this->visualBar->center.x += delta;
-		int deltaX = leftSide->Right() - visualBar->Left();
-		this->leftSide->center.x += deltaX;
 		
-		for (Rect* rec : list)
-			rec->center.x += delta;
-
+		for (int i = 0 ; i < list.size() ; i++)
+		{
+			list[i]->center.x = visualBar->Left() + 20 + 40*i;
+		}
 		for (Triangle* tri : deco)
 			tri->Move(delta);
 	}
@@ -202,7 +199,8 @@ void RectListType::Init()
 {
 	menuIndex = 0;
 	visualBar->center = { menu->GetRect()->center.x , menu->GetYLevel()[menuIndex] };
-	leftSide->center = { visualBar->Left() - visualBar->size.x * 0.6,menu->GetYLevel()[menuIndex] };
+	for (Rect* rect : list)
+		rect->center.y = menu->GetYLevel()[1];
 	stage = 0;
 
 	deco[0]->GetVertices()[0].y = visualBar->center.y - offset.y;

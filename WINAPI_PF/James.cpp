@@ -68,6 +68,7 @@ void James::Update(vector<T_Object*> obj)
 {
 	Move();
 
+	InitAgain();
 	Collision(obj);
 	ReturnSpawnPoint();
 
@@ -75,7 +76,6 @@ void James::Update(vector<T_Object*> obj)
 	anim->Update();
 
 
-	InitAgain();
 
 	if (isActive == false)
 		return;
