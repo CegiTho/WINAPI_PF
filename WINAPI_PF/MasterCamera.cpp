@@ -38,12 +38,7 @@ void MasterCamera::Update()
 	if (isHold == true)
 		return;
 
-	if (isClear == true)
-	{
-		ScreenClear();
-		return;
-	}
-	screen->center = LERP(screen->center, target->center, 0.03);
+	screen->center = LERP(screen->center, target->center, DELTA);
 
 	{
 		if (screen->Left() < 0)
@@ -93,9 +88,3 @@ void MasterCamera::SetMapSize(Vector2 size, bool isHold)
 	SelectObject(MasterCamera::backBuffer, (HGDIOBJ)hBitmap);
 	SelectObject(clearDC, (HGDIOBJ)screenClear);
 }
-
-void MasterCamera::ScreenClear()
-{
-	
-}
-

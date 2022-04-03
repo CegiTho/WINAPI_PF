@@ -6,6 +6,9 @@ protected:
 	ObjManager* m_Obj;
 	ShadeManager* m_Shade;
 
+	bool isStart = true;
+	double stageRunTime =0.0;
+
 public:
 	StageScene() {}
 	StageScene(string tag) {}

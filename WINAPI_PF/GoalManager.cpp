@@ -94,3 +94,12 @@ bool GoalManager::Check()
 
 	return isClear;
 }
+
+Goal* GoalManager::GetTargetGoal()
+{
+	for (auto goal : goals)
+	{
+		if (goal != nullptr)
+			return goal;
+	}
+}

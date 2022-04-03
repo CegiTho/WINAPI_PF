@@ -47,8 +47,8 @@ public:
 
 	HDC GetBackBuffer() { return this->backBuffer; }
 
-	void ScreenClear();
-
+	Rect* GetTarget() { return target; }
+	Vector2 GetDistanceFromCenter();
 	static HDC backBuffer;
 };
 

@@ -15,6 +15,7 @@ SpikeObstacle::SpikeObstacle(Vector2 center, Vector2 size, bool left, bool up, b
 
 	SetObs(center, size, left, up, right, down);
 
+	testP = CreatePen(PS_SOLID, 1, GREEN);
 }
 
 SpikeObstacle::SpikeObstacle(Vector2 center, Vector2 size, Vector2 pathEnd, 
@@ -70,6 +71,10 @@ void SpikeObstacle::Render(HDC hdc)
 		}
 	}
 
+	SelectObject(hdc, testP);
+	for (Line* l : test)
+		l->Render(hdc);
+
 	SelectObject(hdc, tempB);
 	SelectObject(hdc, tempP);
 
@@ -121,10 +126,7 @@ void SpikeObstacle::SetObs(Vector2 center, Vector2 size, bool left, bool up, boo
 	//구조물 크기는 (사각박스 + spike범위) 포함
 	//엄밀하게 히트박스에 해당됨.
 	//일단 사면 전부 spike달려있다고 가정하고 히트박스 생성.
-	Vector2 boxSize;
-	boxSize.x = (size.x * SPIKE_WIDTH) + (2 * SPIKE_HEIGHT);
-	boxSize.y = (size.y * SPIKE_WIDTH) + (2 * SPIKE_HEIGHT);
-	rect = new Rect(center, boxSize);
+	//+ 이렇게 하면 한 면에만 spike달려있는 경우 2*SPIKE_HEIGHT때문에 비는 영역 생김.
 
 	spikeSide.assign(4, false);
 
@@ -133,34 +135,49 @@ void SpikeObstacle::SetObs(Vector2 center, Vector2 size, bool left, bool up, boo
 	spikeSide[Side::RIGHT] = right;
 	spikeSide[Side::DOWN] = down;
 
+	Vector2 boxSize;
+	boxSize.x = (size.x * SPIKE_WIDTH);
+	boxSize.y = (size.y * SPIKE_WIDTH);
+
 	
 	{//Spike있는 면에 따른 출력용 Rect(renderRect)의 center조절
 		Vector2 renderBoxPos = center;
 		Vector2 renderBoxSize = boxSize;
+		Vector2 newCenter = center;
 		int delta = 0.5 * SPIKE_HEIGHT;
 
 		if (spikeSide[Side::LEFT] == true)
 		{
-			renderBoxPos.x += delta;
-			renderBoxSize.x -= SPIKE_HEIGHT;
+			boxSize.x += SPIKE_HEIGHT;
+			newCenter.x -= delta;
 		}
 		if (spikeSide[Side::RIGHT] == true)
 		{
-			renderBoxPos.x -= delta;
-			renderBoxSize.x -= SPIKE_HEIGHT;
+			boxSize.x += SPIKE_HEIGHT;
+			newCenter.x += delta;
+		
 		}
 		if (spikeSide[Side::UP] == true)
 		{
-			renderBoxPos.y += delta;
-			renderBoxSize.y -= SPIKE_HEIGHT;
+			boxSize.y += SPIKE_HEIGHT;
+			newCenter.y -= delta;
+		
 		}
 		if (spikeSide[Side::DOWN] == true)
 		{
-			renderBoxPos.y -= delta;
-			renderBoxSize.y -= SPIKE_HEIGHT;
+			boxSize.y += SPIKE_HEIGHT;
+			newCenter.y += delta;
 		}
 
+		rect = new Rect(newCenter, boxSize);
 		renderRect = new Rect(renderBoxPos, renderBoxSize);
+	}
+
+	{
+		test.emplace_back(new Line(rect->LeftTopV(), rect->RightTopV()));
+		test.emplace_back(new Line(rect->RightTopV(), rect->RightBottomV()));
+		test.emplace_back(new Line(rect->RightBottomV(), rect->LeftBottomV()));
+		test.emplace_back(new Line(rect->LeftBottomV(), rect->LeftTopV()));
 	}
 
 	SetSpikePolygon(renderRect);

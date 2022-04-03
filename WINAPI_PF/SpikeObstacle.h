@@ -1,6 +1,5 @@
 #pragma once
 
-#define Spike_Unit
 class SpikeObstacle : public Obstacle
 {
 private:
@@ -9,6 +8,8 @@ private:
 
 	Rect* renderRect;
 
+	vector<Line*> test;
+	HPEN testP;
 
 public:
 	SpikeObstacle(Vector2 center, Vector2 size,bool left,bool up,bool right,bool down);

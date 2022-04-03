@@ -25,6 +25,8 @@ public:
 
 	vector<Goal*> GetGoals() { return goals; }
 	void SetNowStage(STAGE_NUM value) { nowStage = value; }
+
+	Goal* GetTargetGoal();
 };
 
 

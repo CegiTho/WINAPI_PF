@@ -8,12 +8,16 @@ Stage_1_1_Scene::Stage_1_1_Scene()
 
 	m_Obj = new ObjManager(this,STAGE_1);
 	m_Shade = new ShadeManager(this,STAGE_1);
+
+	isStart = true;
+
 }
 
 Stage_1_1_Scene::Stage_1_1_Scene(string tag)
 {
 	this->tag = tag;
 	isEnd = false;
+	isStart = true;
 
 	m_Obj = new ObjManager(this, STAGE_1);
 	m_Shade = new ShadeManager(this, STAGE_1);
@@ -23,6 +27,7 @@ Stage_1_1_Scene::Stage_1_1_Scene(STAGE_NUM stage)
 {
 	tag = "Stage_1";
 	isEnd = false;
+	isStart = true;
 
 	m_Obj = new ObjManager(this,stage);
 	m_Shade = new ShadeManager(this,stage);
@@ -36,6 +41,23 @@ Stage_1_1_Scene::~Stage_1_1_Scene()
 
 void Stage_1_1_Scene::Update()
 {
+	if (isStart == true)
+	{
+		if (stageRunTime > 1.0)
+		{
+			M_CAM->TargetChange(m_Obj->GetCM()->GetTargetCharacter()->GetRect());
+			isStart = false;
+			stageRunTime = 0.0;
+		}
+		else
+		{
+			stageRunTime += DELTA;
+			return;
+		}
+		return;
+	}
+	
+
 	if (KEYDOWN(VK_ESCAPE))
 		SCENE->ChangeScene("Main Menu");
 

@@ -26,7 +26,7 @@ Program::Program(HWND hWindow)
 
 	SCENE->SetScene("Main Menu");
 
-	SOUND->Play("BGM",0.1f);
+	SOUND->Play("BGM",0.0f);
 }
 
 Program::~Program()

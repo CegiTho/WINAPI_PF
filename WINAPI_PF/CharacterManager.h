@@ -33,6 +33,7 @@ public:
 	void SetCharacterActive(Name character, bool isActive);
 
 	void Collision(vector<T_Object*> obj);
+	Character* GetTargetCharacter();
 
 };
 

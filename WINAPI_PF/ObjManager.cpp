@@ -70,7 +70,7 @@ void ObjManager::StartSet()
 			break;
 		}
 	}
-	M_CAM->TargetChange(activeCharacter->GetRect());
+	M_CAM->TargetChange(this->m_Goal->GetTargetGoal()->GetRect());
 	m_Character->SetCharacterActive(activeCharacter->GetName(), true);
 }
 

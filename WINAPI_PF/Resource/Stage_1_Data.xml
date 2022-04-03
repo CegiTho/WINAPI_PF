@@ -78,36 +78,36 @@
   <Obstacle>
     <!--isStatic : 움직이는지 아닌지 ,isMove : 움직이는 구조물이 처음부터 움직이는지 아닌지 ,음수 : 무시-->
     <!--type 0 = normal , type 1 = spike , type 2 = water-->
-    <!--map size = {2150 , 1050}-->
+    <!--map size = {2150 , 1080}-->
     <obs0>  <!--맵 외곽 상단.-->
       <basic_element type ="0" isstatic ="1"  shade ="0"/>
       <move_info ismove ="0" isloop ="0" times="6.0"/>
-      <position posX ="1070" posY ="10"/>
-      <size sizeX ="2140" sizeY ="20"/>
+      <position posX ="1075" posY ="10"/>
+      <size sizeX ="2150" sizeY ="20"/>
       <side left ="-100" top ="-100" right ="-100" bottom ="-100"/>
       <destposition0 posX ="-1" posY ="-1" trigger_index ="-1"/>
     </obs0>
     <obs1>  <!--맵 외곽 하단.-->
       <basic_element type ="0" isstatic ="1" shade ="0"/>
       <move_info ismove ="0" isloop ="0" times="6.0"/>
-      <position posX ="1070" posY ="1055"/>
-      <size sizeX ="2140" sizeY ="50"/>
+      <position posX ="1075" posY ="1055"/>
+      <size sizeX ="2150" sizeY ="50"/>
       <side left ="-100" top ="-100" right ="-100" bottom ="-100"/>
       <destposition0 posX ="-1" posY ="-1" trigger_index ="-1"/>
     </obs1>
     <obs2>  <!--맵 외곽 왼편.-->
       <basic_element type ="0" isstatic ="1" shade ="0"/>
       <move_info ismove ="0" isloop ="0" times="6.0"/>
-      <position posX ="10" posY ="525"/>
-      <size sizeX ="20" sizeY ="1050"/>
+      <position posX ="10" posY ="540"/>
+      <size sizeX ="20" sizeY ="1080"/>
       <side left ="-100" top ="-100" right ="-100" bottom ="-100"/>
       <destposition0 posX ="-1" posY ="-1" trigger_index ="-1"/>
     </obs2>
     <obs3>  <!--맵 외곽 오른편.-->
       <basic_element type ="0" isstatic ="1" shade ="0"/>
       <move_info ismove ="0" isloop ="0" times="6.0"/>
-      <position posX ="2140" posY ="550"/>
-      <size sizeX ="20" sizeY ="1050"/>
+      <position posX ="2150" posY ="540"/>
+      <size sizeX ="20" sizeY ="1080"/>
       <side left ="-100" top ="-100" right ="-100" bottom ="-100"/>
       <destposition0 posX ="-1" posY ="-1" trigger_index ="-1"/>
     </obs3>
@@ -200,11 +200,11 @@
       <destposition0 posX ="-1" posY ="-1" trigger_index ="-1"/>
     </obs14>
     <obs15>
-      <basic_element type ="0" isstatic ="1"  shade ="1"/>
+      <basic_element type ="1" isstatic ="1"  shade ="1"/>
       <move_info ismove ="0" isloop ="0" times="6.0"/>
-      <position posX ="2050" posY ="600"/>
-      <size sizeX ="200" sizeY ="200"/>
-      <side left ="-100" top ="-100" right ="-100" bottom ="-100"/>
+      <position posX ="2080" posY ="600"/>
+      <size sizeX ="13" sizeY ="11"/>
+      <side left ="1" top ="0" right ="0" bottom ="0"/>
       <destposition0 posX ="-1" posY ="-1" trigger_index ="-1" />
     </obs15>
   </Obstacle>

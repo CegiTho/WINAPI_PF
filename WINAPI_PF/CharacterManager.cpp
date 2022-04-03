@@ -161,3 +161,12 @@ void CharacterManager::Collision(vector<T_Object*> obj)
 			character->Collision(obj);
 	}
 }
+
+Character* CharacterManager::GetTargetCharacter()
+{
+	for (auto character : characters)
+	{
+		if (character != nullptr)
+			return character;
+	}
+}

@@ -8,6 +8,9 @@ Stage_1_3_Scene::Stage_1_3_Scene()
 
 	m_Obj = new ObjManager(this, STAGE_3);
 	m_Shade = new ShadeManager(this, STAGE_3);
+
+	isStart = true;
+
 }
 
 Stage_1_3_Scene::Stage_1_3_Scene(string tag)
@@ -37,6 +40,22 @@ Stage_1_3_Scene::~Stage_1_3_Scene()
 
 void Stage_1_3_Scene::Update()
 {
+	if (isStart == true)
+	{
+		if (stageRunTime > 1.0)
+		{
+			M_CAM->TargetChange(m_Obj->GetCM()->GetTargetCharacter()->GetRect());
+			isStart = false;
+			stageRunTime = 0.0;
+		}
+		else
+		{
+			stageRunTime += DELTA;
+			return;
+		}
+		return;
+	}
+
 	if (KEYDOWN(VK_ESCAPE))
 		SCENE->ChangeScene("Main Menu");
 
