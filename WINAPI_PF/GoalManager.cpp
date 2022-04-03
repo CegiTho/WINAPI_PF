@@ -27,7 +27,6 @@ void GoalManager::Update()
 	if (Check() == true)
 	{
 		SOUND->Play("Stage_Clear_Sound_FX");
-		//
 		SCENE->ChangeScene("Main Menu");
 		;//여기에 싱글톤으로 구현된 게임매니저에서 next stage함수 호출
 	}

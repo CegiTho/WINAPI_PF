@@ -45,6 +45,8 @@ void Stage_1_3_Scene::Update()
 
 	if (isEnd == true)
 		SCENE->DequeueScene();
+	
+	ClearCheck();
 }
 
 void Stage_1_3_Scene::Render(HDC hdc)

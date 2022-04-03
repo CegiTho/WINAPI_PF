@@ -44,6 +44,11 @@ void Stage_1_2_Scene::Update()
 
 	if (isEnd == true)
 		SCENE->DequeueScene();
+
+	if (m_Obj->GetClearStage() == true)
+		End();
+
+	ClearCheck();
 }
 
 void Stage_1_2_Scene::Render(HDC hdc)
@@ -72,5 +77,6 @@ void Stage_1_2_Scene::Start()
 
 void Stage_1_2_Scene::End()
 {
+	
 	isEnd = true;
 }

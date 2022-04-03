@@ -10,7 +10,7 @@
 
 #define CHRIS_SIZE {25,25}
 #define CHRIS_COLOR RGB(178,116,60)
-#define CHRIS_THRUST 300
+#define CHRIS_THRUST 400
 #define CHRIS_START {500,300}
 
 #define CLARE_SIZE {100,100}

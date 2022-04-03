@@ -10,6 +10,8 @@ ObjManager::ObjManager()
 
 ObjManager::ObjManager(STAGE_NUM num)
 {
+	clearStage = false;
+
 	m_Obstacle = new ObstacleManager();
 	m_Character = new CharacterManager();
 	m_Goal = new GoalManager();
@@ -19,6 +21,8 @@ ObjManager::ObjManager(STAGE_NUM num)
 
 ObjManager::ObjManager(Scene* owner, STAGE_NUM num)
 {
+	clearStage = false;
+
 	m_Obstacle = new ObstacleManager();
 	m_Character = new CharacterManager();
 	m_Goal = new GoalManager();
@@ -40,12 +44,17 @@ void ObjManager::Update()
 	m_Character->Update(objects);
 	m_Obstacle->Update();
 	m_Goal->Update();
+
+	if (m_Goal->Check() == true)
+		clearStage = true;
 }
 
 void ObjManager::Render(HDC hdc)
 {
-	m_Obstacle->Render(hdc);
 	m_Character->Render(hdc);
+	m_Obstacle->Render(hdc);
+	m_Character->PickRender(hdc);		
+
 	m_Goal->Render(hdc);
 }
 
@@ -61,7 +70,7 @@ void ObjManager::StartSet()
 			break;
 		}
 	}
-	M_CAM->TargetChange(activeCharacter);
+	M_CAM->TargetChange(activeCharacter->GetRect());
 	m_Character->SetCharacterActive(activeCharacter->GetName(), true);
 }
 

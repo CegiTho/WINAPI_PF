@@ -66,8 +66,8 @@ void Chris::CreateChris(Vector2 pos)
 void Chris::Update(vector<T_Object*> obj)
 {
 	Move();
-	InitAgain();
 
+	InitAgain();
 
 	Collision(obj);
 	ReturnSpawnPoint();

@@ -21,7 +21,7 @@ TestScene::TestScene()
 	}
 
 
-	M_CAM->TargetChange(m_Obj->GetCM()->GetObj()[THOMAS]);
+	M_CAM->TargetChange(m_Obj->GetCM()->GetObj()[THOMAS]->GetRect());
 	m_Obj->GetCM()->SetCharacterActive(THOMAS, true);
 
 	SOUND->Play("BGM");

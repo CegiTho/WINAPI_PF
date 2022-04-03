@@ -21,6 +21,7 @@ public:
 
 	void Update(vector<T_Object*> obj);
 	void Render(HDC hdc);
+	void PickRender(HDC hdc);
 
 	T_Object* PlusCharacter(Name name,Vector2 pos);
 

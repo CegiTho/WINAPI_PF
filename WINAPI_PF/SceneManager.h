@@ -40,6 +40,7 @@ public:
 
 	void DequeueScene();
 
+	const vector<string>* GetStageSeq() { return &stageSeq; }
 	void NextScene();
 };
 

@@ -93,11 +93,10 @@ void TextCell::VertMove()
 			menuIndex = 0;
 			return;
 		}
-		menuIndex = menuIndex < 0 ? 0 : menuIndex;
+		//menuIndex = menuIndex < 0 ? 0 : menuIndex;
 
+		SOUND->Play("Menu_Up_Sound_FX");
 		targetPos.y += fontHeight;
-		//activePos.y += fontHeight;
-		//hidedPos.y += fontHeight;
 	}
 	if (KEYDOWN(VK_DOWN))
 	{
@@ -108,10 +107,10 @@ void TextCell::VertMove()
 			menuIndex = renderMenu.size() - 1;
 			return;
 		}
-		menuIndex = menuIndex > renderMenu.size() - 1 ? renderMenu.size() - 1 : menuIndex;
+		SOUND->Play("Menu_Down_Sound_FX");
+		//menuIndex = menuIndex > renderMenu.size() - 1 ? renderMenu.size() - 1 : menuIndex;
 		targetPos.y -= fontHeight;
-		//activePos.y -= fontHeight;
-		//hidedPos.y -= fontHeight;
+		
 	}
 	
 	{

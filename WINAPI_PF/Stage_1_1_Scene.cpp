@@ -39,11 +39,17 @@ void Stage_1_1_Scene::Update()
 	if (KEYDOWN(VK_ESCAPE))
 		SCENE->ChangeScene("Main Menu");
 
+
 	m_Obj->Update();
 	m_Shade->Update();
 
 	if (isEnd == true)
 		SCENE->DequeueScene();
+	if (m_Obj->GetClearStage() == true)
+		End();
+
+	ClearCheck();
+
 }
 
 void Stage_1_1_Scene::Render(HDC hdc)

@@ -17,6 +17,9 @@ private:
 	GoalManager*		m_Goal;
 
 	Scene* owner;
+
+	bool clearStage;
+
 public:
 	ObjManager();
 	ObjManager(STAGE_NUM num);
@@ -30,6 +33,8 @@ public:
 
 	void Update();
 	void Render(HDC hdc);
+
+	bool GetClearStage() { return clearStage; }
 
 	void StartSet();
 

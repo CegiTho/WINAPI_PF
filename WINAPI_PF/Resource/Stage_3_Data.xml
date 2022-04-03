@@ -22,11 +22,11 @@
       <position posX ="1280" posY="740"/>
     </John>
     <Laura>
-      <basic_element consist="1" name ="5"/>
+      <basic_element consist="0" name ="5"/>
       <position posX ="-1" posY="-1"/>
     </Laura>
     <Sarah>
-      <basic_element consist="1" name ="6"/>
+      <basic_element consist="0" name ="6"/>
       <position posX ="1200" posY="540"/>
     </Sarah>
   </Character>
@@ -58,12 +58,12 @@
       <position posX="950" posY="800"/>
     </John>
     <Laura>
-      <basic_element consist ="1" isstatic ="1" />
+      <basic_element consist ="0" isstatic ="1" />
       <move_info ismove ="0" loop ="1" times ="1.0"/>
       <position posX="-1" posY="-1"/>
     </Laura>
     <Sarah>
-      <basic_element consist ="1" isstatic ="1"/>
+      <basic_element consist ="0" isstatic ="1"/>
       <move_info ismove ="0" loop ="0" times ="1.2"/>
       <position posX="1170" posY="2000"/>
     </Sarah>

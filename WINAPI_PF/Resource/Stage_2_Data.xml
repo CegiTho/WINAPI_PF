@@ -82,7 +82,7 @@
     <obs0>
       <!--맵 외곽 상단.-->
       <basic_element type ="0" isstatic ="0"  shade ="1"/>
-      <move_info ismove ="0" isloop ="0" times="3.0"/>
+      <move_info ismove ="0" isloop ="0" times="1.5"/>
       <position posX ="960" posY ="200"/>
       <size sizeX ="1300" sizeY ="10"/>
       <side left ="-100" top ="-100" right ="-100" bottom ="-100"/>
@@ -94,7 +94,7 @@
     <obs1>
     <!--맵 외곽 하단. 왼쪽-->
       <basic_element type ="0" isstatic ="0" shade ="1"/>
-      <move_info ismove ="0" isloop ="0" times="3.0"/>
+      <move_info ismove ="0" isloop ="0" times="1.5"/>
       <position posX ="630" posY ="900"/>
       <size sizeX ="650" sizeY ="10"/>
       <side left ="-100" top ="-100" right ="-100" bottom ="-100"/>
@@ -107,7 +107,7 @@
   <obs2>
       <!--맵 외곽 하단. 오른쪽-->
       <basic_element type ="0" isstatic ="0" shade ="1"/>
-      <move_info ismove ="0" isloop ="0" times="3.0"/>
+      <move_info ismove ="0" isloop ="0" times="1.5"/>
       <position posX ="1280" posY ="900"/>
       <size sizeX ="650" sizeY ="10"/>
       <side left ="-100" top ="-100" right ="-100" bottom ="-100"/>
@@ -120,7 +120,7 @@
     <obs3>
       <!--맵 외곽 왼편.-->
       <basic_element type ="0" isstatic ="0" shade ="1"/>
-      <move_info ismove ="0" isloop ="0" times="3.0"/>
+      <move_info ismove ="0" isloop ="0" times="1.5"/>
       <position posX ="400" posY ="540"/>
       <size sizeX ="10" sizeY ="800"/>
       <side left ="-100" top ="-100" right ="-100" bottom ="-100"/>
@@ -132,7 +132,7 @@
     <obs4>
       <!--맵 외곽 오른편.-->
       <basic_element type ="0" isstatic ="0" shade ="1"/>
-      <move_info ismove ="0" isloop ="0" times="3.0"/>
+      <move_info ismove ="0" isloop ="0" times="1.5"/>
       <position posX ="1500" posY ="540"/>
       <size sizeX ="10" sizeY ="800"/>
       <side left ="-100" top ="-100" right ="-100" bottom ="-100"/>

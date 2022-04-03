@@ -31,10 +31,13 @@ void CharacterManager::Render(HDC hdc)
 {
 	for (Character* obj : characters)
 	{
-		if(obj != nullptr && obj->GetRect()->Collision(M_CAM->GetScreen()) == true)
+		if (obj != nullptr && obj->GetRect()->Collision(M_CAM->GetScreen()) == true)
 			obj->Render(hdc);
 	}
+}
 
+void CharacterManager::PickRender(HDC hdc)
+{
 	HBRUSH oldB = (HBRUSH)SelectObject(hdc, pickColor);
 	HPEN oldP = (HPEN)SelectObject(hdc, pickEdge);
 	pick->Render(hdc);
@@ -111,7 +114,7 @@ void CharacterManager::CharacterRotation()
 			nowActive = indices[++index];
 		
 		SetCharacterActive(nowActive, true);
-		M_CAM->TargetChange(characters[nowActive]);
+		M_CAM->TargetChange(characters[nowActive]->GetRect());
 	}
 
 	if (KEYDOWN(KEYBOARD->GetPrevCharKey()) == true)
@@ -140,7 +143,7 @@ void CharacterManager::CharacterRotation()
 			nowActive = indices[--index];
 		
 		SetCharacterActive(nowActive, true);
-		M_CAM->TargetChange(characters[nowActive]);
+		M_CAM->TargetChange(characters[nowActive]->GetRect());
 	}
 }
 

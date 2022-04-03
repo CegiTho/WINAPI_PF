@@ -25,6 +25,8 @@ Program::Program(HWND hWindow)
 
 
 	SCENE->SetScene("Main Menu");
+
+	SOUND->Play("BGM",0.1f);
 }
 
 Program::~Program()
@@ -59,7 +61,6 @@ void Program::Render(HDC hdc)
 		M_CAM->GetBackBuffer(),M_CAM->GetPos().x, M_CAM->GetPos().y , SRCCOPY
 	);
 
-	RenderMousePos(hdc);
 }
 
 void Program::LoadSound()
@@ -81,15 +82,5 @@ void Program::LoadSound()
 	SOUND->Add("John_Jump_Sound_FX", "Resource/Sounds/John_Jump_Sound_FX.mp3", MAIN_FX_CHANNEL, 0.0f);
 	SOUND->Add("Laura_Jump_Sound_FX", "Resource/Sounds/Laura_Jump_Sound_FX.mp3", MAIN_FX_CHANNEL, 0.0f);
 	SOUND->Add("Sarah_Jump_Sound_FX", "Resource/Sounds/Sarah_Jump_Sound_FX.mp3", MAIN_FX_CHANNEL, 0.0f);
-
-}
-
-void Program::RenderMousePos(HDC hdc)
-{
-	Vector2 mPos;
-	mPos = M_CAM->GetPos() + mousePos;
-	wstring renderString;
-	renderString = L"{x : " + (to_wstring(mPos.x)) + L", " + L"y : " + (to_wstring(mousePos.y)) + L"}";
-	TextOut(hdc, mPos.x, mPos.y + 10, renderString.c_str(), renderString.size());
 
 }
