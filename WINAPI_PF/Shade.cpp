@@ -7,9 +7,13 @@ Shade::Shade(Rect* rect, double constant, STAGE_NUM stage)
 	{
 		points.emplace_back(new POINT[4]);
 	}
+	CreateShade();
 
+
+	/*
 	CreateCurtainShade();
 
+	*/
 	AlphaColor(stage);
 }
 
@@ -20,7 +24,7 @@ Shade::Shade(Rect* rect, Vector2* lSource, STAGE_NUM stage)
 	{
 		points.emplace_back(new POINT[4]);
 	}
-	CreateSpotShade();
+	CreateShade();
 
 	AlphaColor(stage);
 }
@@ -74,164 +78,115 @@ void Shade::AlphaColor(STAGE_NUM stage)
 	edge = CreatePen(PS_SOLID,1,RGB(op_Red, op_Green, op_Blue));
 }
 
-void Shade::CreateCurtainShade()
+void Shade::CreateShade()
 {
-	if (lSource != nullptr)
-		return;
+	shadeEdge = new POINT[6];
 
-	{//LeftTop - RightTop
-		points[0][0] = rect->LeftTop();
-		points[0][1] = Direction(points[0][0], constant, ShadeLength);
-		points[0][3] = rect->RightTop();
-		points[0][2] = Direction(points[0][3], constant, ShadeLength);
-	}
-	{//RightTop - RightBottom
-		points[1][0] = rect->RightTop();
-		points[1][1] = Direction(points[1][0], constant, ShadeLength);
-		points[1][3] = rect->RightBottom();
-		points[1][2] = Direction(points[1][3], constant, ShadeLength);
-	}
-	{//LeftTop - RightTop
-		points[2][0] = rect->RightBottom();
-		points[2][1] = Direction(points[2][0], constant, ShadeLength);
-		points[2][3] = rect->LeftBottom();
-		points[2][2] = Direction(points[2][3], constant, ShadeLength);
-	}
-	{//LeftTop - RightTop
-		points[3][0] = rect->LeftBottom();
-		points[3][1] = Direction(points[3][0], constant, ShadeLength);
-		points[3][3] = rect->LeftTop();
-		points[3][2] = Direction(points[3][3], constant, ShadeLength);
-	}
-}
-
-void Shade::CreateSpotShade()
-{
-	if (lSource == nullptr)
-		return;
-
-	double leftTop = atan2(rect->LeftTop().y - lSource->y, rect->LeftTop().x - lSource->x);
-	double rightTop = atan2(rect->RightTop().y - lSource->y, rect->RightTop().x - lSource->x);
-	double rightBottom = atan2(rect->RightBottom().y - lSource->y, rect->RightBottom().x - lSource->x);
-	double leftBottom = atan2(rect->LeftBottom().y - lSource->y, rect->LeftBottom().x - lSource->x);
-	
-	{//LeftTop - RightTop
-		points[0][0] = rect->LeftTop();
-		points[0][1] = Direction(points[0][0], leftTop, ShadeLength);
-		points[0][3] = rect->RightTop();
-		points[0][2] = Direction(points[0][3], rightTop, ShadeLength);
-	}
-	{//RightTop - RightBottom
-		points[1][0] = rect->RightTop();
-		points[1][1] = Direction(points[1][0], rightTop, ShadeLength);
-		points[1][3] = rect->RightBottom();
-		points[1][2] = Direction(points[1][3], rightBottom, ShadeLength);
-	}
-	{//RightBottom - LeftBottom
-		points[2][0] = rect->RightBottom();
-		points[2][1] = Direction(points[2][0], rightBottom, ShadeLength);
-		points[2][3] = rect->LeftBottom();
-		points[2][2] = Direction(points[2][3], leftBottom, ShadeLength);
-	}
-	{//LeftBottom - LeftTop
-		points[3][0] = rect->LeftBottom();
-		points[3][1] = Direction(points[3][0], leftBottom, ShadeLength);
-		points[3][3] = rect->LeftTop();
-		points[3][2] = Direction(points[3][3], leftTop, ShadeLength);
-	}
+	Update();
 }
 
 void Shade::Update()
 {
-	if(lSource == nullptr)
-		CurtainUpdate();
-	else
-		SpotUpdate();
-	
+	ProjectionUpdate();
+	SelectEdge();
 }
 
 void Shade::Render(HDC hdc)
 {
 	HBRUSH prevBrush = (HBRUSH)SelectObject(hdc, color);
 	HPEN prevPen = (HPEN)SelectObject(hdc, edge);
-	for (POINT* point : points)
-	{
-		Polygon(hdc, point, 4);
-	}
+	
+	Polygon(hdc, shadeEdge, 6);
+	
 	SelectObject(hdc, prevBrush);
 	SelectObject(hdc, prevPen);
 }
 
-void Shade::CurtainUpdate()
+void Shade::ProjectionUpdate()
 {
-	if (lSource != nullptr)
-		return;
+	//projection으로 생기는 멀리 있는 그림자의 종점을 지정
+	if (lSource == nullptr)
+	{
+		projection[PointSeq::LEFTBOTTOM] = Direction(this->rect->GetPoint(PointSeq::LEFTBOTTOM), constant, ShadeLength).GetPoint();
+		projection[PointSeq::RIGHTTOP] = Direction(this->rect->GetPoint(PointSeq::RIGHTTOP), constant, ShadeLength).GetPoint();
+		projection[PointSeq::LEFTTOP] = Direction(this->rect->GetPoint(PointSeq::LEFTTOP), constant, ShadeLength).GetPoint();
+		projection[PointSeq::RIGHTBOTTOM] = Direction(this->rect->GetPoint(PointSeq::RIGHTBOTTOM), constant, ShadeLength).GetPoint();
+	}
+	else
+	{
+		double leftTop = atan2(rect->LeftTop().y - lSource->y, rect->LeftTop().x - lSource->x);
+		double rightTop = atan2(rect->RightTop().y - lSource->y, rect->RightTop().x - lSource->x);
+		double rightBottom = atan2(rect->RightBottom().y - lSource->y, rect->RightBottom().x - lSource->x);
+		double leftBottom = atan2(rect->LeftBottom().y - lSource->y, rect->LeftBottom().x - lSource->x);
 
-	{//LeftTop - RightTop
-		points[0][0] = rect->LeftTop();
-		points[0][1] = Direction(points[0][0], constant, ShadeLength);
-		points[0][3] = rect->RightTop();
-		points[0][2] = Direction(points[0][3], constant, ShadeLength);
+		//lSource가 사다리꼴이 되어버리네;
+		projection[PointSeq::LEFTTOP] =
+			Direction(this->rect->GetPoint(PointSeq::LEFTTOP), leftTop, ShadeLength).GetPoint();
+		projection[PointSeq::RIGHTTOP] =
+			Direction(this->rect->GetPoint(PointSeq::RIGHTTOP), rightTop, ShadeLength).GetPoint();
+		projection[PointSeq::RIGHTBOTTOM] =
+			Direction(this->rect->GetPoint(PointSeq::RIGHTBOTTOM), rightBottom, ShadeLength).GetPoint();
+		projection[PointSeq::LEFTBOTTOM] =
+			Direction(this->rect->GetPoint(PointSeq::LEFTBOTTOM), leftBottom, ShadeLength).GetPoint();
 	}
-	{//RightTop - RightBottom
-		points[1][0] = rect->RightTop();
-		points[1][1] = Direction(points[1][0], constant, ShadeLength);
-		points[1][3] = rect->RightBottom();
-		points[1][2] = Direction(points[1][3], constant, ShadeLength);
-	}
-	{//LeftTop - RightTop
-		points[2][0] = rect->RightBottom();
-		points[2][1] = Direction(points[2][0], constant, ShadeLength);
-		points[2][3] = rect->LeftBottom();
-		points[2][2] = Direction(points[2][3], constant, ShadeLength);
-	}
-	{//LeftTop - RightTop
-		points[3][0] = rect->LeftBottom();
-		points[3][1] = Direction(points[3][0], constant, ShadeLength);
-		points[3][3] = rect->LeftTop();
-		points[3][2] = Direction(points[3][3], constant, ShadeLength);
-	}
+
 }
 
-void Shade::SpotUpdate()
+void Shade::SelectEdge()
 {
-	if (lSource == nullptr)
-		return;
+	//Projection된 종점에서 추려내야 하는 정점(this->rect,projection에서 각각 하나씩) 선별 후
+	//ShadeEdge완성.
+	double minLength = ShadeLength * ShadeLength;
+	for (int i = 0; i < 4; i++)
+	{
+		int odd = 3 - i;		//PointSeq 합이 3인것들이 최단거리 후보군임.
+		double length, x, y;
+		x = this->rect->GetPOINT((PointSeq)i).x - projection[(PointSeq)odd].x;
+		y = this->rect->GetPOINT((PointSeq)i).y - projection[(PointSeq)odd].y;
+		length = x * x + y * y;
+		if (length < minLength)
+		{
+			failedPoint_1 = (PointSeq)i;	//this->rect에서 탈락되는 꼭지점
+			failedPoint_2 = (PointSeq)odd;	//projection에서 탈락하는 꼭지점
+			minLength = length;
+		}
+	}
 
-	double leftTop = atan2(rect->LeftTop().y - lSource->y, rect->LeftTop().x - lSource->x);
-	double rightTop = atan2(rect->RightTop().y - lSource->y, rect->RightTop().x - lSource->x);
-	double rightBottom = atan2(rect->RightBottom().y - lSource->y, rect->RightBottom().x - lSource->x);
-	double leftBottom = atan2(rect->LeftBottom().y - lSource->y, rect->LeftBottom().x - lSource->x);
+	PointSeq originNext, projNext;
+	shadeEdge[0] = this->rect->GetPOINT(failedPoint_2);
+	shadeEdge[3] = projection[failedPoint_1];
 
-	{//LeftTop - RightTop
-		points[0][0] = rect->LeftTop();
-		points[0][1] = Direction(points[0][0], leftTop, ShadeLength);
-		points[0][3] = rect->RightTop();
-		points[0][2] = Direction(points[0][3], rightTop, ShadeLength);
+	if (failedPoint_1 == PointSeq::LEFTTOP || failedPoint_1 == PointSeq::RIGHTBOTTOM)
+	{//LeftTop : 0  RightTop : 1 LeftBottom : 2  RightBottom : 3
+	//규칙 만들거나 찾아본다고 염병했는데 이게 제일 무식하면서 간결한 조건같음.
+		originNext = PointSeq::RIGHTTOP;
+		projNext = PointSeq::LEFTBOTTOM;
 	}
-	{//RightTop - RightBottom
-		points[1][0] = rect->RightTop();
-		points[1][1] = Direction(points[1][0], rightTop, ShadeLength);
-		points[1][3] = rect->RightBottom();
-		points[1][2] = Direction(points[1][3], rightBottom, ShadeLength);
+	else
+	{
+		originNext = PointSeq::RIGHTBOTTOM;
+		projNext = PointSeq::LEFTTOP;
 	}
-	{//RightBottom - LeftBottom
-		points[2][0] = rect->RightBottom();
-		points[2][1] = Direction(points[2][0], rightBottom, ShadeLength);
-		points[2][3] = rect->LeftBottom();
-		points[2][2] = Direction(points[2][3], leftBottom, ShadeLength);
-	}
-	{//LeftBottom - LeftTop
-		points[3][0] = rect->LeftBottom();
-		points[3][1] = Direction(points[3][0], leftBottom, ShadeLength);
-		points[3][3] = rect->LeftTop();
-		points[3][2] = Direction(points[3][3], leftTop, ShadeLength);
-	}
+
+	shadeEdge[1] = this->rect->GetPOINT(originNext);
+	shadeEdge[2] = projection[originNext];
+
+	shadeEdge[4] = projection[projNext];
+	shadeEdge[5] = this->rect->GetPOINT(projNext);
 }
 
 POINT Shade::Direction(POINT origin, double inclination, double length)
 {
 	POINT endPos;
+	endPos.x = origin.x + cos(inclination) * length;
+	endPos.y = origin.y + sin(inclination) * length;
+
+	return endPos;
+}
+
+Vector2 Shade::Direction(Vector2 origin, double inclination, double length)
+{
+	Vector2 endPos;
 	endPos.x = origin.x + cos(inclination) * length;
 	endPos.y = origin.y + sin(inclination) * length;
 

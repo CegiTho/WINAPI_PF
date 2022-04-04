@@ -16,6 +16,10 @@ private:
 
 	vector<POINT*> points;
 
+	map<PointSeq, POINT> projection;
+	POINT* shadeEdge;
+	PointSeq failedPoint_1;
+	PointSeq failedPoint_2;
 
 	Vector2* lSource;
 	double constant;
@@ -33,16 +37,16 @@ public:
 
 	void AlphaColor(STAGE_NUM stage);
 
-	void CreateCurtainShade();
-	void CreateSpotShade();
+	void CreateShade();
 
 	void Update();
 	void Render(HDC hdc);
 
-	void CurtainUpdate();
-	void SpotUpdate();
+	void ProjectionUpdate();
+	void SelectEdge();
 
 	POINT Direction(POINT origin,double inclination,double length);
+	Vector2 Direction(Vector2 origin,double inclination,double length);
 
 
 };

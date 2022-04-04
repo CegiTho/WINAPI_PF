@@ -228,7 +228,7 @@
   </SavePoint>
   <StageSize>
     <size sizeX ="2150" sizeY ="1080"/>
-    <light isspot ="1" posX ="3000" posY ="1200"/>
+    <light isspot ="1" posX ="3000" posY ="900"/>
     <!--light isspot ="0" constant ="3.0"/>-->
   </StageSize>
 </StageElement>

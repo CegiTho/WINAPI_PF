@@ -67,3 +67,11 @@ enum CHANNEL
 	CHANNEL_COUNT
 	//FMOD soundSystem 초기화할 때 채널갯수 필요함
 };
+
+enum PointSeq
+{
+	LEFTTOP = 0,
+	RIGHTTOP = 1,
+	LEFTBOTTOM = 2,
+	RIGHTBOTTOM = 3
+};

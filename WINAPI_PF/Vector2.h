@@ -92,7 +92,7 @@ public:
 	{
 		return (x != value.x || y != value.y) ? true : false;
 	}
-
+	
 	double Cross(const Vector2& value) const;
 	double Dot(const Vector2& value) const;
 	double Length() const;
@@ -101,5 +101,12 @@ public:
 	Vector2 Normal() const;
 	void Normalize();
 
+	POINT GetPoint() 
+	{
+		POINT re;
+		re.x = this->x;
+		re.y = this->y;
+		return re;
+	}
 
 };

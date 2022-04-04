@@ -75,9 +75,50 @@ public:
 		return result;
 	}
 
-
 	double Area() { return (size.x * size.y); }
 
+	
+	//아래 두개함수는 사실 똑같은 함수임. POINT랑 Vector2가 호환이 지랄같아서 따로 만들어진것뿐임.
+	Vector2 GetPoint(PointSeq tag)
+	{
+		switch (tag)
+			{
+			case LEFTTOP:
+				return this->LeftTopV();
+				break;
+			case RIGHTTOP:
+				return this->RightTopV();
+				break;
+			case LEFTBOTTOM:
+				return this->LeftBottomV();
+				break;
+			case RIGHTBOTTOM:
+				return this->RightBottomV();
+				break;
+			default:
+				break;
+			}
+	}
 
+	POINT GetPOINT(PointSeq tag)
+	{
+		switch (tag)
+			{
+			case LEFTTOP:
+				return this->LeftTop();
+				break;
+			case RIGHTTOP:
+				return this->RightTop();
+				break;
+			case LEFTBOTTOM:
+				return this->LeftBottom();
+				break;
+			case RIGHTBOTTOM:
+				return this->RightBottom();
+				break;
+			default:
+				break;
+			}
+	}
 	
 };
