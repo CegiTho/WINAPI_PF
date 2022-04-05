@@ -1,6 +1,5 @@
 #pragma once
 
-#define MAXCHANNEL 2		//배경채널,이펙트채널
 
 using namespace FMOD;
 
@@ -12,9 +11,12 @@ private:
 
 	System* soundSystem;
 	map<string, Sound*> sounds;
-	
+	map<string, CHANNEL> keyAndChannel;
+	map<CHANNEL, float> channelVolume;
+
 	Channel* bgChannel;
-	Channel* fxChannel;
+	Channel* mainFXChannel;
+	Channel* subFXChannel;
 
 	static SoundManager* instance;
 
@@ -35,19 +37,19 @@ public:
 	}
 
 	void Update();
-	void Add(string key, string file, bool bgm = false);
+	void Add(string key, string file, CHANNEL channel);
+	void Add(string key, string file, CHANNEL channel,float volume);
 
-	void Play(string key, bool bgm = false);
-	void Play(string key, float volume, bool bgm = false);
-	void Play(string key, float volume, float frequencyRate, bool bgm = false);
+	void Play(string key);
+	void Play(string key, float volume);
 
-	void Stop(bool bgm);
-	void Pause(bool bgm);
-	void Resume(bool bgm);
+	void Stop(string key);
+	void Pause(string key);
+	void Resume(string key);
 
-	void SetBGMVolume(float volume);
-	void SetFXVolume(float volume);
+	void SetVolume(string tag, float volume);
 
+	void GetVolume(string tag, float* volume);
 };
 
 

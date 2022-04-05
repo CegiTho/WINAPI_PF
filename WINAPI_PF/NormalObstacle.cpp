@@ -4,21 +4,26 @@ NormalObstacle::NormalObstacle(Vector2 center, Vector2 size)
 {
 	rect = new Rect(center, size);
 
-	this->path = nullptr;
-	speed = 0;
-
+	this->startPos = center;
+	this->destPos = center;
+	this->times = 0;
+	this->isMove = false;
+	
 	color = CreateSolidBrush(BLACK);
 	edge = CreatePen(PS_SOLID, 1, BLACK);
 
 	type = Type::NORMAL;
 }
 
-NormalObstacle::NormalObstacle(Vector2 center, Vector2 size, Vector2 pathEnd,double speed)
+NormalObstacle::NormalObstacle(Vector2 center, Vector2 size, Vector2 pathEnd, bool isMove ,bool loop ,double speed)
 {
 	rect = new Rect(center, size);
 
-	this->speed = speed;
-	this->path = new Line(this->rect->center, pathEnd);
+	this->startPos = center;
+	endPositions.push(pathEnd);
+	this->SetIsMove(isMove);
+	this->times = speed;
+	this->isLoop = loop;
 
 	color = CreateSolidBrush(BLACK);
 	edge = CreatePen(PS_SOLID, 1, BLACK);
@@ -37,8 +42,10 @@ NormalObstacle::~NormalObstacle()
 
 void NormalObstacle::Update()
 {
-	if (isMove == true)
-		Move();
+	if (isMove == false)
+		return;
+
+	Move();
 }
 
 void NormalObstacle::Render(HDC hdc)
@@ -51,4 +58,6 @@ void NormalObstacle::Render(HDC hdc)
 	SelectObject(hdc, tempB);
 	SelectObject(hdc, tempP);
 
+	moveWith.clear();
+	moveWith.shrink_to_fit();
 }

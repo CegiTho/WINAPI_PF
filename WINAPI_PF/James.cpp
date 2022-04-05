@@ -26,13 +26,16 @@ void James::CreateJames(Vector2 pos)
 {
 	id = ID::CHARACTER;
 	name = Name::JAMES;
-	rect = new Rect(pos, JAMES_SIZE);
+	rect = new Rect(pos, JAMES_SIZE);	
+	renderRect = new Rect(pos, this->rect->size);
+
 	color = CreateSolidBrush(JAMES_COLOR);
 	edge = CreatePen(PS_SOLID, 1, JAMES_COLOR);
+	spawnPoint = rect->center;
 
 	speed = SPEED;
 	thrust = 0;
-	isActive = true;
+	isActive = false;
 	isJump = false;
 	isDoubleJump = false;
 	isFalling = true;
@@ -59,87 +62,31 @@ void James::CreateJames(Vector2 pos)
 		goal.emplace_back(Vector2(0, 0));
 		anim->SetAnim(State::GOAL, goal, 0.1);
 	}
-
 }
 
-void James::Collision(vector<T_Object*> objects)
-{
-	for (T_Object* object : objects)
-	{
-		if ((James*)object == this)
-			continue;
-
-		switch (object->GetID())
-		{
-		case ID::CHARACTER:
-			CharacterCollision(object);
-			break;
-		case ID::OBSTACLE:
-			ObstacleCollision(object);
-			break;
-		case ID::GOAL:
-			break;
-		}
-	}
-}
-
-void James::CharacterCollision(T_Object* character)
-{
-	switch (dynamic_cast<Character*>(this)->Collision(character))
-	{
-	//Laura충돌에서 제외
-	case Side::UP:
-		side[UP] = true;
-		break;
-	case Side::DOWN:
-		side[DOWN] = true;
-		break;
-	case Side::LEFT:
-		side[LEFT] = true;
-	case Side::RIGHT:
-		side[RIGHT] = true;
-		break;
-	case Side::NONE:
-		break;
-	}
-}
-
-void James::ObstacleCollision(T_Object* obstacle)
-{
-	switch (dynamic_cast<Character*>(this)->Collision(obstacle))
-	{
-	case Side::UP:
-		side[UP] = true;
-		break;
-	case Side::DOWN:
-		side[DOWN] = true;
-		break;
-	case Side::LEFT:
-		side[LEFT] = true;
-		break;
-	case Side::RIGHT:
-		side[RIGHT] = true;
-		break;
-	case Side::NONE:
-		break;
-	}
-
-}
-
-void James::Update()
+void James::Update(vector<T_Object*> obj)
 {
 	Move();
+
+	InitAgain();
+	Collision(obj);
+	ReturnSpawnPoint();
+
 	Jump();
 	anim->Update();
 
-	InitAgain();
+
+
+	if (isActive == false)
+		return;
 }
 
 void James::Jump()
 {
 	//======Jump===========
-	if (KEYDOWN(VK_UP) && isJump == false)
+	if (KEYDOWN(KEYBOARD->GetJumpKey()) && isJump == false && isActive == true)
 	{
+		SOUND->Play("Thomas_Jump_Sound_James_Also_FX");
 		thrust = JAMES_THRUST;
 		isJump = true;
 		side[DOWN] = false;
@@ -173,12 +120,6 @@ void James::Jump()
 	if (side[UP] == true)
 	{
 		this->thrust = 0;
-		isFalling = true;
+		//isFalling = true;
 	}
-}
-
-void James::InitAgain()
-{
-	for (int i = 0; i < side.size(); i++)
-		side[i] = false;
 }

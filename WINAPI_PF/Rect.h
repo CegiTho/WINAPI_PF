@@ -16,6 +16,8 @@ public:
 	~Rect();
 
 	virtual void Render(HDC hdc) override;
+	void Render(HDC hdc,Vector2 size);
+	void Render(HDC hdc, int left,int right,int top,int bottom);
 
 	//======object collision======
 	virtual bool Collision(Vector2 pos) override;
@@ -26,6 +28,8 @@ public:
 	//======object collision======
 
 	virtual void Set(Vector2 center, double radius) override;
+
+	void Move(double deltaX = 0.0, double deltaY = 0.0);
 	void SetRect(double left, double top, double right, double bottom);
 	void SetRect(Vector2 center, Vector2 size);
 
@@ -71,10 +75,50 @@ public:
 		return result;
 	}
 
-	void TestMethod();
-
 	double Area() { return (size.x * size.y); }
 
+	
+	//아래 두개함수는 사실 똑같은 함수임. POINT랑 Vector2가 호환이 지랄같아서 따로 만들어진것뿐임.
+	Vector2 GetPoint(PointSeq tag)
+	{
+		switch (tag)
+			{
+			case LEFTTOP:
+				return this->LeftTopV();
+				break;
+			case RIGHTTOP:
+				return this->RightTopV();
+				break;
+			case LEFTBOTTOM:
+				return this->LeftBottomV();
+				break;
+			case RIGHTBOTTOM:
+				return this->RightBottomV();
+				break;
+			default:
+				break;
+			}
+	}
 
+	POINT GetPOINT(PointSeq tag)
+	{
+		switch (tag)
+			{
+			case LEFTTOP:
+				return this->LeftTop();
+				break;
+			case RIGHTTOP:
+				return this->RightTop();
+				break;
+			case LEFTBOTTOM:
+				return this->LeftBottom();
+				break;
+			case RIGHTBOTTOM:
+				return this->RightBottom();
+				break;
+			default:
+				break;
+			}
+	}
 	
 };

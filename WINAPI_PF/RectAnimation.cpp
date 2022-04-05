@@ -5,7 +5,7 @@ RectAnimation::RectAnimation(Character* character)
 {
 	ratio.assign(State_Count,vector<Vector2>(5));
 	frameUpdateSec.assign(State_Count,0);
-	originSize = character->GetRect()->Size();
+	originSize = character->GetRenderRect()->Size();
 
 }
 
@@ -30,7 +30,7 @@ void RectAnimation::Update()
 
 void RectAnimation::Render(HDC hdc)
 {
-	character->GetRect()->Render(hdc);
+	character->GetRenderRect()->Render(hdc);
 }
 
 void RectAnimation::Play(State state)
@@ -43,13 +43,13 @@ void RectAnimation::Play(State state)
 
 		if (character->GetName() != Name::JAMES)
 		{
-			character->GetRect()->size.x = ratio[state][index].x;
-			character->GetRect()->size.y = ratio[state][index].y;
+			character->GetRenderRect()->size.x = ratio[state][index].x;
+			character->GetRenderRect()->size.y = ratio[state][index].y;
 		}
 		else
 		{
-			character->GetRect()->size.x = ratio[state][index].x;
-			character->GetRect()->size.y = ratio[state][index].y;
+			character->GetRenderRect()->size.x = ratio[state][index].x;
+			character->GetRenderRect()->size.y = ratio[state][index].y;
 		}
 
 
@@ -82,6 +82,4 @@ void RectAnimation::SetAnim(State state, vector<Vector2> anim,double frameUpdate
 		ratio[state][i] = originSize * anim[i];
 	}
 	this->frameUpdateSec[state] = frameUpdateSec;
-
-
 }

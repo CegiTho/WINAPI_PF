@@ -26,12 +26,14 @@ void Chris::CreateChris(Vector2 pos)
 	id = ID::CHARACTER;
 	name = Name::CHRIS;
 	rect = new Rect(pos, CHRIS_SIZE);
+	renderRect = new Rect(pos, CHRIS_SIZE);
 	color = CreateSolidBrush(CHRIS_COLOR);
 	edge = CreatePen(PS_SOLID, 1, CHRIS_COLOR);
+	spawnPoint = rect->center;
 
 	speed = SPEED;
 	thrust = 0;
-	isActive = true;
+	isActive = false;
 	isJump = false;
 	isDoubleJump = false;
 	isFalling = true;
@@ -61,89 +63,29 @@ void Chris::CreateChris(Vector2 pos)
 
 }
 
-void Chris::Collision(vector<T_Object*> objects)
-{
-	for (T_Object* object : objects)
-	{
-		if ((Chris*)object == this)
-			continue;
-
-		switch (object->GetID())
-		{
-		case ID::CHARACTER:
-			CharacterCollision(object);
-			break;
-		case ID::OBSTACLE:
-			ObstacleCollision(object);
-			break;
-		case ID::GOAL:
-			break;
-		}
-	}
-}
-
-void Chris::CharacterCollision(T_Object* character)
-{
-	switch (dynamic_cast<Character*>(this)->Collision(character))
-	{
-	case Side::UP:
-		if (dynamic_cast<Character*>(character)->GetName() == Name::LAURA)
-		{
-			dynamic_cast<Laura*>(character)->LauraJump(this);
-		}
-		else
-			side[UP] = true;
-		break;
-	case Side::DOWN:
-		side[DOWN] = true;
-		break;
-	case Side::LEFT:
-		side[LEFT] = true;
-	case Side::RIGHT:
-		side[RIGHT] = true;
-		break;
-	case Side::NONE:
-		break;
-	}
-}
-
-void Chris::ObstacleCollision(T_Object* obstacle)
-{
-	switch (dynamic_cast<Character*>(this)->Collision(obstacle))
-	{
-	case Side::UP:
-		side[UP] = true;
-		break;
-	case Side::DOWN:
-		side[DOWN] = true;
-		break;
-	case Side::LEFT:
-		side[LEFT] = true;
-		break;
-	case Side::RIGHT:
-		side[RIGHT] = true;
-		break;
-	case Side::NONE:
-		break;
-	}
-
-}
-
-void Chris::Update()
+void Chris::Update(vector<T_Object*> obj)
 {
 	Move();
+
+	InitAgain();
+
+	Collision(obj);
+	ReturnSpawnPoint();
 	Jump();
 	anim->Update();
 
-	InitAgain();
+
+	if (isActive == false)
+		return;
 
 }
 
 void Chris::Jump()
 {
 	//======Jump===========
-	if (KEYDOWN(VK_UP) && isJump == false )
+	if (KEYDOWN(KEYBOARD->GetJumpKey()) && isJump == false && isActive == true)
 	{
+		SOUND->Play("Chris_Jump_Sound_FX");
 		thrust = CHRIS_THRUST;
 		isJump = true;
 		side[UP] = false;
@@ -176,13 +118,7 @@ void Chris::Jump()
 	if (side[DOWN] == true)
 	{
 		this->thrust = 0;
-		isFalling = true;
+		//isFalling = true;
 	}
-}
-
-void Chris::InitAgain()
-{
-	for (int i = 0; i < side.size(); i++)
-		side[i] = false;
 }
 

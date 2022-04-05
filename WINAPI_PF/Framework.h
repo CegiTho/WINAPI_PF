@@ -10,6 +10,21 @@
 
 #include <cassert>
 
+//===========debug======================
+#define _CRTDBG_MAP_ALLOC
+#include <stdlib.h>
+#include <crtdbg.h>
+
+#ifdef _DEBUG
+#define DBG_NEW new( _NORMAL_BLOCK , __FILE__ , __LINE__ )
+// Replace _NORMAL_BLOCK with _CLIENT_BLOCK if you want the
+// allocations to be of _CLIENT_BLOCK type
+#else
+#define DBG_NEW new
+#endif
+//===========debug======================
+
+#include <random>
 #include <string>
 #include <map>
 #include <vector>
@@ -17,6 +32,9 @@
 #include <cmath>
 #include <functional>
 #include <queue>
+#include <list>
+#include <deque>
+#include <cassert>
 
 #include <Ole2.h>
 #include <gdiplus.h>
@@ -32,18 +50,17 @@
 
 using namespace std;
 
+
 #define WIN_START_X 100
 #define WIN_START_Y 100
 
-#define WIN_WIDTH 2200
-#define WIN_HEIGHT 1300
+#define WIN_WIDTH 1920
+#define WIN_HEIGHT 1080
 
 #define CENTER_X WIN_WIDTH * 0.5
 #define CENTER_Y WIN_HEIGHT * 0.5
 
-#define PI 3.141592
-
-
+#define PI 3.141592654
 
 #define RADIAN 180/PI
 
@@ -58,6 +75,7 @@ using namespace std;
 #define GRAY RGB(128,128,128)
 
 #define LERP(s,e,t) s + (e - s) * t
+#define CONST_LERP(s,e,t) s+(e-s)/t
 
 #define KEYBOARD Keyboard::Get()
 //#define KEYBOARD SyncKeyboard::Get()
@@ -87,12 +105,18 @@ SCAM이 실질적인 카메라이고 내가 원하는데로 동작하는 객체�
 
 
 //Framework Header
+#include "PreDefined.h"
+#include "Enum.h"
+
 #include "Vector2.h"
 #include "Object.h"
 #include "Line.h"
 #include "Rect.h"
 #include "Circle.h"
 #include "Polygon2.h"
+#include "Wave.h"
+#include "Cross.h"
+#include "Triangle.h"
 
 #include "RectAnimation.h"
 
@@ -122,8 +146,7 @@ SCAM이 실질적인 카메라이고 내가 원하는데로 동작하는 객체�
 
 
 //PF Object Header
-#include "PreDefined.h"
-#include "Enum.h"
+
 #include "T_Object.h"
 
 
@@ -137,11 +160,22 @@ SCAM이 실질적인 카메라이고 내가 원하는데로 동작하는 객체�
 #include "Sarah.h"
 
 #include "Goal.h"
+#include "SavePoint.h"
 
 #include "Shade.h"
 
 #include "Obstacle.h"
 #include "NormalObstacle.h"
+#include "SpikeObstacle.h"
+#include "Water.h"
+#include "Trigger.h"
+
+
+#include "TextCell.h"
+#include "TextCellSelect.h"
+#include "PercentType.h"
+#include "TextType.h"
+#include "RectListType.h"
 
 #include "CharacterManager.h"
 #include "ObstacleManager.h"
@@ -153,6 +187,9 @@ SCAM이 실질적인 카메라이고 내가 원하는데로 동작하는 객체�
 #include "Scene.h"
 #include "Program.h"
 
+#include "StageScene.h"
+#include "MenuScene.h"
+#include "MainMenuScene.h"
 
 extern Vector2 mousePos;
 extern HWND hWnd;

@@ -18,7 +18,6 @@ public:
 	Rect*	GetRect()	{ return rect; }
 	ID		GetID()		{ return id; }
 
-
 };
 
 

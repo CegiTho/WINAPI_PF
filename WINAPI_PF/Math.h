@@ -17,7 +17,7 @@ public:
 	static int Random(int min, int max);
 	static double Random(double min, double max);
 	static Vector2 RandomPoint(double min, double max);
-
+	static Vector2 SineInterpolation(Vector2 start, Vector2 end, double period, double time);
 
 };
 

@@ -26,15 +26,18 @@ void Clare::CreateClare(Vector2 pos)
 	id = ID::CHARACTER;
 	name = Name::CLARE;
 	rect = new Rect(pos, CLARE_SIZE);
+	renderRect = new Rect(pos, this->rect->size);
 	color = CreateSolidBrush(CLARE_COLOR);
 	edge = CreatePen(PS_SOLID, 1, CLARE_COLOR);
+	spawnPoint = rect->center;
 
 	speed = SPEED;
 	thrust = 0;
-	isActive = true;
+	isActive = false;
 	isJump = false;
 	isDoubleJump = false;
 	isFalling = true;
+	isEscape = false;
 	gravity = GRAVITY;
 
 	anim = new RectAnimation(this);
@@ -57,95 +60,55 @@ void Clare::CreateClare(Vector2 pos)
 		goal.emplace_back(Vector2(0.3, 0.3));
 		goal.emplace_back(Vector2(0, 0));
 		anim->SetAnim(State::GOAL, goal, 0.1);
-	}
+	} 
+	
 }
 
-void Clare::Collision(vector<T_Object*> objects)
-{
-	for (T_Object* object : objects)
-	{
-		if ((Clare*)object == this)
-			continue;
-
-		switch (object->GetID())
-		{
-		case ID::CHARACTER:
-			CharacterCollision(object);
-			break;
-		case ID::OBSTACLE:
-			ObstacleCollision(object);
-			break;
-		case ID::GOAL:
-			break;
-		}
-	}
-}
-
-void Clare::CharacterCollision(T_Object* character)
-{
-	switch (dynamic_cast<Character*>(this)->Collision(character))
-	{
-	case Side::UP:
-		if (dynamic_cast<Character*>(character)->GetName() == Name::LAURA)
-		{
-			dynamic_cast<Laura*>(character)->LauraJump(this);
-		}
-		else
-			side[UP] = true;
-		break;
-	case Side::DOWN:
-		side[DOWN] = true;
-		break;
-	case Side::LEFT:
-		side[LEFT] = true;
-	case Side::RIGHT:
-		side[RIGHT] = true;
-		break;
-	case Side::NONE:
-		break;
-	}
-}
-
-void Clare::ObstacleCollision(T_Object* obstacle)
-{
-	switch (dynamic_cast<Character*>(this)->Collision(obstacle))
-	{
-	case Side::UP:
-		side[UP] = true;
-		break;
-	case Side::DOWN:
-		side[DOWN] = true;
-		break;
-	case Side::LEFT:
-		side[LEFT] = true;
-		break;
-	case Side::RIGHT:
-		side[RIGHT] = true;
-		break;
-	case Side::NONE:
-		break;
-	}
-
-}
-
-void Clare::Update()
+void Clare::Update(vector<T_Object*> obj)
 {
 	Move();
+
+	InitAgain();
+	Collision(obj);
+	ReturnSpawnPoint();
+
 	Jump();
 	anim->Update();
 
-	InitAgain();
+
+	if (isActive == false)
+		return;
 }
 
 void Clare::Jump()
-{//======Jump===========
-	if (KEYDOWN(VK_UP) && isJump == false)
+{
+	if (isFloat == false)
 	{
+		floatingTime = 0.0;
+		if (isEscape == true)
+			isEscape = false;
+	}
+
+	//======Jump===========
+	if (KEYDOWN(KEYBOARD->GetJumpKey()) && isJump == false && isActive == true 
+		&& isFloat == false )		
+	{
+		SOUND->Play("Clare_Jump_Sound_FX");
 		thrust = CLARE_THRUST;
 		isJump = true;
 		side[UP] = false;
 		anim->SetState(State::JUMP);
 	}
+
+	//=========On Water=================
+	if (KEYDOWN(KEYBOARD->GetJumpKey()) == true && isActive == true && isFloat == true 
+		&& isEscape == false && side[DOWN] == false)
+	{//side[DOWN] == false조건은 떠있는동안 위에 다른 character있을 때 Jump하면 isEscape가 실패하면서 그대로 가라앉아버림.
+		isEscape = true;
+		isJump = true;
+		this->thrust += CLARE_THRUST * 1.4;
+	}
+	isFloat = false;
 
 	//======Falling===========
 	if (isFalling == true || isJump == true || side[UP] == true)
@@ -173,12 +136,61 @@ void Clare::Jump()
 	if (side[DOWN] == true)
 	{
 		this->thrust = 0;
-		isFalling = true;
+		//isFalling = true;
+	}
+	
+}
+
+void Clare::ReturnSpawnPoint()
+{
+	if (isPenetrated == true)
+		respawnDelay += DELTA;
+
+	if (respawnDelay >= 0.2)
+	{
+		this->rect->center = spawnPoint;
+		this->thrust = 0;
+		respawnDelay = 0.0;
+		isPenetrated = false;
 	}
 }
 
-void Clare::InitAgain()
+void Clare::OnWater(Water* obs)
 {
-	for (int i = 0; i < side.size(); i++)
-		side[i] = false;
+	if (floatingTime == 0.0)
+	{
+		this->thrust = 0;
+		isJump = false;
+		isFalling = false;
+		isEscape = false;
+		playOnce = false;
+
+		if (playOnce == false)
+		{
+			SOUND->Play("Water_Collision_Sound_FX");
+			playOnce = true;
+		}
+	}
+	
+	if (isEscape == true)
+		return;
+	isJump = false;
+
+	this->thrust += gravity * DELTA;
+	floatingTime += DELTA;
+
+	double surfaceLevel = obs->GetRect()->Top();
+	if (floatingTime > 4.0)
+	{
+		this->rect->center.y = surfaceLevel;
+		return;
+	}
+
+	double height = 30.0;		//의미없음 
+	double angular = 2 * PI * 2;	//수면에서 위치의 감쇠진동주기(1/angular sec)
+	double dampTime = 0.3;		//감쇠계수(시간에 따르므로 약 dampTime sec 마다 1/exp만큼 감쇠)
+	double damp = -height * exp(-floatingTime * 0.8) * cos(angular * floatingTime);
+	
+	this->rect->center.y = surfaceLevel + damp;
+	
 }

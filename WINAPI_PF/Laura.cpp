@@ -25,12 +25,15 @@ void Laura::CreateLaura(Vector2 pos)
 	id = ID::CHARACTER;
 	name = Name::LAURA;
 	rect = new Rect(pos, LAURA_SIZE);
+	renderRect = new Rect(pos, this->rect->size);
+
 	color = CreateSolidBrush(LAURA_COLOR);
 	edge = CreatePen(PS_SOLID, 1, LAURA_COLOR);
+	spawnPoint = rect->center;
 
 	speed = SPEED;
 	thrust = 0;
-	isActive = true;
+	isActive = false;
 	isJump = false;
 	isDoubleJump = false;
 	isFalling = true;
@@ -103,94 +106,36 @@ void Laura::LauraJump(Character* character)
 		thrust = SARAH_THRUST + LAURA_ADD_THRUST;
 		character->SetThrust(thrust);
 		character->SetJump(true);
+		static_cast<Sarah*>(character)->SetDoubleJump(false);
 		character->SetSide(UP, false);
 		character->SetAnim(State::JUMP);
 		break;
 	default:
 		break;
 	}
-	
-	
 }
 
-void Laura::Collision(vector<T_Object*> objects)
+void Laura::Update(vector<T_Object*> obj)
 {
-	for (T_Object* object : objects)
-	{
-		if ((Laura*)object == this)
-			continue;
+	Move();
+	InitAgain();
 
-		switch (object->GetID())
-		{
-		case ID::CHARACTER:
-			CharacterCollision(object);
-			break;
-		case ID::OBSTACLE:
-			ObstacleCollision(object);
-			break;
-		case ID::GOAL:
-			break;
-		}
-	}
+ 	Collision(obj);
+	ReturnSpawnPoint();
 
-
-}
-
-void Laura::CharacterCollision(T_Object* character)
-{
-	switch (dynamic_cast<Character*>(this)->Collision(character))
-	{
-	case Side::UP:
-		side[UP] = true;
-		break;
-	case Side::DOWN:
-		side[DOWN] = true;
-		break;
-	case Side::LEFT:
-		side[LEFT] = true;
-	case Side::RIGHT:
-		side[RIGHT] = true;
-		break;
-	case Side::NONE:
-		break;
-	}
-}
-
-void Laura::ObstacleCollision(T_Object* obstacle)
-{
-	switch (dynamic_cast<Character*>(this)->Collision(obstacle))
-	{
-	case Side::UP:
-		side[UP] = true;
-		break;
-	case Side::DOWN:
-		side[DOWN] = true;
-		break;
-	case Side::LEFT:
-		side[LEFT] = true;
-		break;
-	case Side::RIGHT:
-		side[RIGHT] = true;
-		break;
-	case Side::NONE:
-		break;
-	}
-
-}
-
-void Laura::Update()
-{
-	//Move();
 	Jump();
 	anim->Update();
 
-	InitAgain();
+
+	if (isActive == false)
+		return;
 }
 
 void Laura::Jump()
 {//======Jump===========
-	if (KEYDOWN(VK_UP) && isJump == false)
+	if (KEYDOWN(KEYBOARD->GetJumpKey()) && isJump == false && isActive == true)
 	{
+		SOUND->Play("Laura_Jump_Sound_FX");
 		thrust = LAURA_THRUST;
 		isJump = true;
 		side[UP] = false;
@@ -224,13 +169,8 @@ void Laura::Jump()
 	if (side[DOWN] == true)
 	{
 		this->thrust = 0;
-		isFalling = true;
+		//isFalling = true;
 	}
 
 }
 
-void Laura::InitAgain()
-{
-	for (int i = 0; i < side.size(); i++)
-		side[i] = false;
-}

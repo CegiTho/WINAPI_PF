@@ -27,6 +27,6 @@ public:
 	Vector2& Start() { return start; }
 	Vector2& End() { return end; }
 
-
+	Vector2 Center() { return { (start.x + end.x) / 2,(start.y + end.y) / 2 }; }
 };
 

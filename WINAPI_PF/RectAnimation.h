@@ -9,6 +9,7 @@ enum State
 	JUMP,
 	GOAL,
 	IDLE,
+	SPAWN,
 	State_Count
 };
 

@@ -3,23 +3,28 @@
 
 TestScene::TestScene()
 {
-	//double constant = 2;
+	isEnd = false;
 	Vector2 lSource = { 300,200 };
 
-	m_Shade = new ShadeManager(STAGE_4, lSource);
+	m_Obj = new ObjManager(STAGE_4);
+	m_Shade = new ShadeManager(this,STAGE_4, lSource);		//여기서 masterCamera의 DC랑 연결된 bitmap사이즈가 결정됨.
 
-	m_Obj = new ObjManager();
-
-	m_Obj->LoadStage(STAGE_4);
 
 	for (Character* character : m_Obj->GetCM()->GetObj())
 	{
 		if (character != nullptr)
 			m_Shade->SetShade(character);
 	}
-	m_Shade->SetShade(m_Obj->GetOM()->GetObj()[2]);
+	for (int i : m_Obj->NeedShade())
+	{
+		m_Shade->SetShade(m_Obj->GetOM()->GetObj()[i]);
+	}
 
-	M_CAM->TargetChange(m_Obj->GetCM()->GetObj()[THOMAS]);
+
+	M_CAM->TargetChange(m_Obj->GetCM()->GetObj()[THOMAS]->GetRect());
+	m_Obj->GetCM()->SetCharacterActive(THOMAS, true);
+
+	SOUND->Play("BGM");
 }
 
 TestScene::~TestScene()
@@ -31,21 +36,19 @@ TestScene::~TestScene()
 
 void TestScene::Update()
 {
+	if (KEYDOWN(VK_ESCAPE))
+		SCENE->ChangeScene("Main Menu");
+
 	m_Obj->Update();
-
 	m_Shade->Update();
-
 	
+	if (isEnd == true)
+		SCENE->DequeueScene();
 }
 
 void TestScene::Render(HDC hdc)
 {
-	m_Shade->Render();
+	m_Shade->Render(hdc);
+	m_Obj->Render(hdc);
 
-	m_Obj->Render(m_Shade->GetMemDC());
-
-	BitBlt(
-		hdc, 0, 0, WIN_WIDTH, WIN_HEIGHT,
-		m_Shade->GetMemDC(), M_CAM->GetPos().x, M_CAM->GetPos().y,
-	SRCCOPY);
 }

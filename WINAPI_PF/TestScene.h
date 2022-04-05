@@ -7,6 +7,8 @@ private:
 	
 	ShadeManager* m_Shade;
 
+	bool isEnd;
+
 public:
 	TestScene();
 	~TestScene();
@@ -15,6 +17,8 @@ public:
 	virtual void Update() override;
 	virtual void Render(HDC hdc) override;
 
+	void Start() override {}
+	void End() override { isEnd = true; }
 
 
 };

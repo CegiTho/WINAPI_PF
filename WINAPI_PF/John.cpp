@@ -12,6 +12,12 @@ John::John(Vector2 pos)
 
 John::~John()
 {
+	delete rect;
+
+	DeleteObject(color);
+	DeleteObject(edge);
+
+	delete anim;
 }
 
 void John::CreateJohn(Vector2 pos)
@@ -19,12 +25,15 @@ void John::CreateJohn(Vector2 pos)
 	id = ID::CHARACTER;
 	name = Name::JOHN;
 	rect = new Rect(pos, JOHN_SIZE);
+	renderRect = new Rect(pos, this->rect->size);
+
 	color = CreateSolidBrush(JOHN_COLOR);
 	edge = CreatePen(PS_SOLID, 1, JOHN_COLOR);
+	spawnPoint = rect->center;
 
 	speed = SPEED;
 	thrust = 0;
-	isActive = true;
+	isActive = false;
 	isJump = false;
 	isDoubleJump = false;
 	isFalling = true;
@@ -54,93 +63,28 @@ void John::CreateJohn(Vector2 pos)
 
 }
 
-void John::Collision(vector<T_Object*> objects)
-{
-	for (T_Object* object : objects)
-	{
-		if ((John*)object == this)
-			continue;
-
-		switch (object->GetID())
-		{
-		case ID::CHARACTER:
-			CharacterCollision(object);
-			break;
-		case ID::OBSTACLE:
-			ObstacleCollision(object);
-			break;
-		case ID::GOAL:
-			break;
-		}
-	}
-}
-
-void John::CharacterCollision(T_Object* character)
-{
-	switch (dynamic_cast<Character*>(this)->Collision(character))
-	{
-	case Side::UP:
-		if (dynamic_cast<Character*>(character)->GetName() == Name::LAURA)
-		{
-			dynamic_cast<Laura*>(character)->LauraJump(this);
-		}
-		else
-			side[UP] = true;
-		break;
-	case Side::DOWN:
-		side[DOWN] = true;
-		break;
-	case Side::LEFT:
-		side[LEFT] = true;
-	case Side::RIGHT:
-		side[RIGHT] = true;
-		break;
-	case Side::NONE:
-		break;
-	}
-}
-
-void John::ObstacleCollision(T_Object* obstacle)
-{
-	switch (dynamic_cast<Character*>(this)->Collision(obstacle))
-	{
-	case Side::UP:
-		side[UP] = true;
-		break;
-	case Side::DOWN:
-		side[DOWN] = true;
-		break;
-	case Side::LEFT:
-		side[LEFT] = true;
-		break;
-	case Side::RIGHT:
-		side[RIGHT] = true;
-		break;
-	case Side::NONE:
-		break;
-	}
-
-}
-
-void John::InitAgain()
-{
-	for (int i = 0; i < side.size(); i++)
-		side[i] = false;
-}
-
-void John::Update()
+void John::Update(vector<T_Object*> obj)
 {
 	Move();
-	Jump();
-	anim->Update();
 
 	InitAgain();
+
+	Collision(obj);
+	ReturnSpawnPoint();
+
+	Jump();
+	anim->Update();
+	
+
+	if (isActive == false)
+		return;
 }
 
 void John::Jump()
 {//======Jump===========
-	if (KEYDOWN(VK_UP) && isJump == false)
+	if (KEYDOWN(KEYBOARD->GetJumpKey()) && isJump == false && isActive == true)
 	{
+		SOUND->Play("John_Jump_Sound_FX");
 		thrust = JOHN_THRUST;
 		isJump = true;
 		side[UP] = false;
@@ -174,6 +118,6 @@ void John::Jump()
 	if (side[DOWN] == true)
 	{
 		this->thrust = 0;
-		isFalling = true;
+		//isFalling = true;
 	}
 }

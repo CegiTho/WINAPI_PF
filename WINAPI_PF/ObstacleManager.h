@@ -4,7 +4,7 @@ class ObstacleManager
 {
 private:
 	vector<Obstacle*> obstacles;
-
+	vector<Trigger*> triggers;
 
 public:
 	ObstacleManager();
@@ -12,12 +12,16 @@ public:
 
 	void Update();
 	void Render(HDC hdc);
-	void Render(HDC hdc, Vector2 offset);
 
+	T_Object* PlusTrigger(Character* owner, Obstacle* stachedDest, bool isHori, Side side, double dist);
 	T_Object* PlusObstacle(Type type, Vector2 center, Vector2 size);
-	void PlusObstacle(Type type, Vector2 center, Vector2 size,Vector2 pathEnd,double speed);
+	T_Object* PlusObstacle(Type type, Vector2 startPos,Vector2 endPos, Vector2 size, bool isMove, bool isLoop,double times);
+	T_Object* PlusObstacle(Vector2 center, Vector2 size,bool left , bool up , bool right,bool down);
+	T_Object* PlusObstacle(Vector2 startPos,Vector2 endPos, Vector2 size,bool left , bool up , bool right,bool down, 
+		bool isMove, bool isLoop,double times);
 
 	vector<Obstacle*> GetObj() { return obstacles; }
+	vector<Trigger*> GetTriggers() { return triggers; }
 };
 
 

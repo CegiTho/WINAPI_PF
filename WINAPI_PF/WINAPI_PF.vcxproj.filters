@@ -52,6 +52,18 @@
     <Filter Include="Framework\GameObject\Origin">
       <UniqueIdentifier>{a0751f74-76c4-4ca9-a36e-461c55ba5689}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Framework\GameObject\Scene\MenuScene">
+      <UniqueIdentifier>{b32359ee-3d72-45fe-ac46-ca38417e8d32}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Framework\GameObject\MenuObject">
+      <UniqueIdentifier>{9f4b8bac-eb68-4485-a593-d9cf90b79c49}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Framework\GameObject\Trigger">
+      <UniqueIdentifier>{22c31d7f-16e5-4482-b72f-fd78e45e2656}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Framework\GameObject\Scene\StageScene">
+      <UniqueIdentifier>{aad49506-2595-48bb-a1d4-1c62d765ee9b}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Framework.h">
@@ -207,6 +219,69 @@
     <ClInclude Include="MasterCamera.h">
       <Filter>Framework\Utility</Filter>
     </ClInclude>
+    <ClInclude Include="SpikeObstacle.h">
+      <Filter>Framework\GameObject\Obstacle</Filter>
+    </ClInclude>
+    <ClInclude Include="GameStreamManager.h">
+      <Filter>Framework\GameObject\Manager</Filter>
+    </ClInclude>
+    <ClInclude Include="Water.h">
+      <Filter>Framework\GameObject\Obstacle</Filter>
+    </ClInclude>
+    <ClInclude Include="Wave.h">
+      <Filter>Framework\BasicObject</Filter>
+    </ClInclude>
+    <ClInclude Include="SavePoint.h">
+      <Filter>Framework\GameObject\Goal</Filter>
+    </ClInclude>
+    <ClInclude Include="Cross.h">
+      <Filter>Framework\BasicObject</Filter>
+    </ClInclude>
+    <ClInclude Include="Triangle.h">
+      <Filter>Framework\BasicObject</Filter>
+    </ClInclude>
+    <ClInclude Include="MenuScene.h">
+      <Filter>Framework\GameObject\Scene\MenuScene</Filter>
+    </ClInclude>
+    <ClInclude Include="MainMenuScene.h">
+      <Filter>Framework\GameObject\Scene\MenuScene</Filter>
+    </ClInclude>
+    <ClInclude Include="SettingMenuScene.h">
+      <Filter>Framework\GameObject\Scene\MenuScene</Filter>
+    </ClInclude>
+    <ClInclude Include="TextCell.h">
+      <Filter>Framework\GameObject\MenuObject</Filter>
+    </ClInclude>
+    <ClInclude Include="TextCellSelect.h">
+      <Filter>Framework\GameObject\MenuObject</Filter>
+    </ClInclude>
+    <ClInclude Include="PercentType.h">
+      <Filter>Framework\GameObject\MenuObject</Filter>
+    </ClInclude>
+    <ClInclude Include="TextType.h">
+      <Filter>Framework\GameObject\MenuObject</Filter>
+    </ClInclude>
+    <ClInclude Include="RectListType.h">
+      <Filter>Framework\GameObject\MenuObject</Filter>
+    </ClInclude>
+    <ClInclude Include="ScenarioSelectMenuScene.h">
+      <Filter>Framework\GameObject\Scene\MenuScene</Filter>
+    </ClInclude>
+    <ClInclude Include="Trigger.h">
+      <Filter>Framework\GameObject\Trigger</Filter>
+    </ClInclude>
+    <ClInclude Include="Stage_1_1_Scene.h">
+      <Filter>Framework\GameObject\Scene\StageScene</Filter>
+    </ClInclude>
+    <ClInclude Include="StageScene.h">
+      <Filter>Framework\GameObject\Scene\StageScene</Filter>
+    </ClInclude>
+    <ClInclude Include="Stage_1_2_Scene.h">
+      <Filter>Framework\GameObject\Scene\StageScene</Filter>
+    </ClInclude>
+    <ClInclude Include="Stage_1_3_Scene.h">
+      <Filter>Framework\GameObject\Scene\StageScene</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="WINAPI_PF.cpp">
@@ -341,6 +416,66 @@
     <ClCompile Include="MasterCamera.cpp">
       <Filter>Framework\Utility</Filter>
     </ClCompile>
+    <ClCompile Include="SpikeObstacle.cpp">
+      <Filter>Framework\GameObject\Obstacle</Filter>
+    </ClCompile>
+    <ClCompile Include="Water.cpp">
+      <Filter>Framework\GameObject\Obstacle</Filter>
+    </ClCompile>
+    <ClCompile Include="Wave.cpp">
+      <Filter>Framework\BasicObject</Filter>
+    </ClCompile>
+    <ClCompile Include="SavePoint.cpp">
+      <Filter>Framework\GameObject\Goal</Filter>
+    </ClCompile>
+    <ClCompile Include="Cross.cpp">
+      <Filter>Framework\BasicObject</Filter>
+    </ClCompile>
+    <ClCompile Include="GameStreamManager.cpp">
+      <Filter>Framework\GameObject\Manager</Filter>
+    </ClCompile>
+    <ClCompile Include="Triangle.cpp">
+      <Filter>Framework\BasicObject</Filter>
+    </ClCompile>
+    <ClCompile Include="MenuScene.cpp">
+      <Filter>Framework\GameObject\Scene\MenuScene</Filter>
+    </ClCompile>
+    <ClCompile Include="MainMenuScene.cpp">
+      <Filter>Framework\GameObject\Scene\MenuScene</Filter>
+    </ClCompile>
+    <ClCompile Include="SettingMenuScene.cpp">
+      <Filter>Framework\GameObject\Scene\MenuScene</Filter>
+    </ClCompile>
+    <ClCompile Include="TextCell.cpp">
+      <Filter>Framework\GameObject\MenuObject</Filter>
+    </ClCompile>
+    <ClCompile Include="TextCellSelect.cpp">
+      <Filter>Framework\GameObject\MenuObject</Filter>
+    </ClCompile>
+    <ClCompile Include="PercentType.cpp">
+      <Filter>Framework\GameObject\MenuObject</Filter>
+    </ClCompile>
+    <ClCompile Include="TextType.cpp">
+      <Filter>Framework\GameObject\MenuObject</Filter>
+    </ClCompile>
+    <ClCompile Include="RectListType.cpp">
+      <Filter>Framework\GameObject\MenuObject</Filter>
+    </ClCompile>
+    <ClCompile Include="ScenarioSelectMenuScene.cpp">
+      <Filter>Framework\GameObject\Scene\MenuScene</Filter>
+    </ClCompile>
+    <ClCompile Include="Trigger.cpp">
+      <Filter>Framework\GameObject\Trigger</Filter>
+    </ClCompile>
+    <ClCompile Include="Stage_1_1_Scene.cpp">
+      <Filter>Framework\GameObject\Scene\StageScene</Filter>
+    </ClCompile>
+    <ClCompile Include="Stage_1_2_Scene.cpp">
+      <Filter>Framework\GameObject\Scene\StageScene</Filter>
+    </ClCompile>
+    <ClCompile Include="Stage_1_3_Scene.cpp">
+      <Filter>Framework\GameObject\Scene\StageScene</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="WINAPI_PF.rc">
@@ -356,10 +491,16 @@
     </Image>
   </ItemGroup>
   <ItemGroup>
-    <Xml Include="Resource\Stage_4_Data.xml">
+    <Xml Include="Resource\Stage_3_Data.xml">
       <Filter>리소스 파일</Filter>
     </Xml>
-    <Xml Include="Resource\Stage_3_Data.xml">
+    <Xml Include="Resource\Stage_2_Data.xml">
+      <Filter>리소스 파일</Filter>
+    </Xml>
+    <Xml Include="Resource\Stage_1_Data.xml">
+      <Filter>리소스 파일</Filter>
+    </Xml>
+    <Xml Include="Resource\Stage_4_Data.xml">
       <Filter>리소스 파일</Filter>
     </Xml>
   </ItemGroup>

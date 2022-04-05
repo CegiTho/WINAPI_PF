@@ -31,11 +31,11 @@ void Texture::UpdateBorderLine(Rect* rect)
 
 void Texture::DrawBorderLine(Rect* rect)
 {
-	SelectObject(Program::backBuffer, borderPen);
+	SelectObject(MasterCamera::backBuffer, borderPen);
 
 	UpdateBorderLine(rect);
 
 	for (Line line : borderLine)
-		line.Render(Program::backBuffer);
+		line.Render(MasterCamera::backBuffer);
 
 }

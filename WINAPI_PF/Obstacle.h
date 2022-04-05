@@ -1,12 +1,22 @@
 #pragma once
 
+#define FAR_AWAY {10000,10000}
+
 class Obstacle : public T_Object
 {
 protected:
 	Type type;
+
+	Vector2 startPos;
+	Vector2 destPos;
+	queue<Vector2> endPositions;
+	bool isGoback;
 	bool isMove;
-	Line* path;
-	double speed;
+	bool isLoop;
+	double times;
+	double time;
+
+	vector<Character*> moveWith;
 
 
 public:
@@ -15,12 +25,15 @@ public:
 
 	virtual void Update() = 0;
 	virtual void Render(HDC hdc) = 0;
-
+	virtual Rect* GetRenderRect() = 0;
 	
-	void SetIsMove(bool value) { isMove = value; }
+	void SetIsMove(bool value);
 	Type GetType() { return type; }
-	void Move();
+	
+	void AddDestPos(Vector2 newDest) { endPositions.push(newDest); }
+	virtual void Move();
 
+	void AddMoveWith(Character* character);
 };
 
 

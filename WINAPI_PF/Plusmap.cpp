@@ -30,7 +30,7 @@ Plusmap::~Plusmap()
 
 void Plusmap::CreatePlusmap(wstring file, Gdiplus::Color transColor)
 {
-	graphics = new Gdiplus::Graphics(Program::backBuffer);
+	graphics = new Gdiplus::Graphics(MasterCamera::backBuffer);
 	image = Gdiplus::Image::FromFile(file.c_str());
 
 	originSize.x = image->GetWidth();

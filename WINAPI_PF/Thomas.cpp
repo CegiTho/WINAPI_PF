@@ -26,12 +26,15 @@ void Thomas::CreateThomas(Vector2 pos)
 	id = ID::CHARACTER;
 	name = Name::THOMAS;
 	rect = new Rect(pos, THOMAS_SIZE);
+	renderRect = new Rect(pos, this->rect->size);
+
 	color = CreateSolidBrush(THOMAS_COLOR);
 	edge = CreatePen(PS_SOLID, 1, THOMAS_COLOR);
+	spawnPoint = rect->center;
 
 	speed = SPEED;
 	thrust = 0;
-	isActive = true;
+	isActive = false;
 	isJump = false;
 	isDoubleJump = false;
 	isFalling = true;
@@ -60,21 +63,28 @@ void Thomas::CreateThomas(Vector2 pos)
 	}
 }
 
-void Thomas::Update()
+void Thomas::Update(vector<T_Object*> obj)
 {
 	Move();
+	InitAgain();
+
+	Collision(obj);
+	ReturnSpawnPoint();
+
 	Jump();
 	anim->Update();
 
-	InitAgain();
 
+	if (isActive == false)
+		return;
 }
 
 void Thomas::Jump()
 {
 	//======Jump===========
-	if (KEYDOWN(VK_UP) && isJump == false)
+	if (KEYDOWN(KEYBOARD->GetJumpKey()) && isJump == false && isActive == true)
 	{
+		SOUND->Play("Thomas_Jump_Sound_James_Also_FX");
 		thrust = THOMAS_THRUST;
 		isJump = true;
 		side[UP] = false;
@@ -112,80 +122,3 @@ void Thomas::Jump()
 	}
 
 }
-
-void Thomas::InitAgain()
-{
-	for (int i = 0 ; i < side.size() ; i++)
-		side[i] = false;
-}
-
-void Thomas::Collision(vector<T_Object*> objects)
-{
-	for (T_Object* object : objects)
-	{
-		if ((Thomas*)object == this)
-			continue;
-
-		switch (object->GetID())
-		{
-		case ID::CHARACTER:
-			CharacterCollision(object);
-			break;
-		case ID::OBSTACLE:
-			ObstacleCollision(object);
-			break;
-		case ID::GOAL:
-			break;
-		}
-	}
-
-	
-}
-
-void Thomas::CharacterCollision(T_Object* character)
-{
-	switch (dynamic_cast<Character*>(this)->Collision(character))
-	{
-	case Side::UP:
-		if (dynamic_cast<Character*>(character)->GetName() == Name::LAURA)
-		{
-			dynamic_cast<Laura*>(character)->LauraJump(this);
-		}
-		else
-			side[UP] = true;
-		break;
-	case Side::DOWN:
-		side[DOWN] = true;
-		break;
-	case Side::LEFT:
-		side[LEFT] = true;
-	case Side::RIGHT:
-		side[RIGHT] = true;
-		break;
-	case Side::NONE:
-		break;
-	}
-}
-
-void Thomas::ObstacleCollision(T_Object* obstacle)
-{
-	switch (dynamic_cast<Character*>(this)->Collision(obstacle))
-	{
-	case Side::UP:
-		side[UP] = true;
-		break;
-	case Side::DOWN:
-		side[DOWN] = true;
-		break;
-	case Side::LEFT:
-		side[LEFT] = true;
-		break;
-	case Side::RIGHT:
-		side[RIGHT] = true;
-		break;
-	case Side::NONE:
-		break;
-	}
-
-}
-

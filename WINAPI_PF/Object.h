@@ -17,9 +17,9 @@ public:
 
 	//========Collision========
 	virtual bool Collision(Vector2 pos) { return true; }			//rect,circle에만 필요함.
-	virtual bool Collision(Line* line) = 0;
-	virtual bool Collision(Circle* circle) = 0;
-	virtual bool Collision(Rect* rect) = 0;
+	virtual bool Collision(Line* line) { return true; }
+	virtual bool Collision(Circle* circle) { return true; }
+	virtual bool Collision(Rect* rect) { return true; }
 	//========Collision========
 
 };

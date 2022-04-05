@@ -8,7 +8,8 @@ private:
 	SceneManager();
 	~SceneManager();
 
-
+	queue<Scene*> sceneSeq;
+	vector<string> stageSeq;
 	map<string, Scene*> scenes;
 	Scene* curScene;
 
@@ -35,6 +36,11 @@ public:
 
 	Scene* Add(string key, Scene* scene);
 	void ChangeScene(string key);
+	void SetScene(string key);
 
+	void DequeueScene();
+
+	const vector<string>* GetStageSeq() { return &stageSeq; }
+	void NextScene();
 };
 
