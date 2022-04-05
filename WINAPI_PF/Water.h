@@ -9,6 +9,7 @@ private:
 
 	Rect* renderRect;
 	
+	HBRUSH magenta;
 	HBRUSH surfaceColor;
 	HPEN surfaceEdge;
 	

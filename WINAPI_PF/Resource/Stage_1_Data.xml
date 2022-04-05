@@ -186,8 +186,8 @@
     <obs13>
       <basic_element type ="2" isstatic ="1"  shade ="0"/>
       <move_info ismove ="0" isloop ="0" times="6.0"/>
-      <position posX ="1750" posY ="915"/>
-      <size sizeX ="800" sizeY ="235"/>
+      <position posX ="1745" posY ="915"/>
+      <size sizeX ="790" sizeY ="235"/>
       <side left ="-100" top ="-100" right ="-100" bottom ="-100"/>
       <destposition0 posX ="-1" posY ="-1" trigger_index ="-1"/>
     </obs13>

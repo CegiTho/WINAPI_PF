@@ -11,10 +11,7 @@ Spot : 광원 존재. 발산형
 class Shade
 {
 private:
-	T_Object* object;
 	Rect* rect;
-
-	vector<POINT*> points;
 
 	map<PointSeq, POINT> projection;
 	POINT* shadeEdge;

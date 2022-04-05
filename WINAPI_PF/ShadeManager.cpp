@@ -35,6 +35,9 @@ ShadeManager::~ShadeManager()
 
 	if (isSpotLight == true)
 		delete lSource;
+
+	for (Shade* s : shade)
+		delete s;
 }
 
 void ShadeManager::LoadDCSize(STAGE_NUM num)
@@ -52,7 +55,6 @@ void ShadeManager::LoadDCSize(STAGE_NUM num)
 		file = "Resource/Stage_3_Data.xml";
 		break;
 	case STAGE_4:		
-		file = "Resource/Stage_4_Data.xml";
 		break;
 	case STAGE_5:
 		break;

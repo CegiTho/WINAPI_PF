@@ -31,7 +31,7 @@ MainMenuScene::MainMenuScene(string tag)
     menuList.emplace_back("Setting");
     menuList.emplace_back("Exit");
     tags = menuList;
-    tags[0] = "Stage_1_1";
+    tags[0] = "Stage_1-1";
 
     menu = new TextCell(menuList, tags);
 

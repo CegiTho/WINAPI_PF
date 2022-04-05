@@ -7,7 +7,7 @@
 //더구나 water하나때문에 m_Obj만을 위한 DC를 따로 만들어 내고 
 
 #define ALPHA_WATER 50
-#define ALPHA_SURFACE 150
+#define ALPHA_SURFACE 180
 
 #define HEIGHT 4
 #define PI 3.1
@@ -54,6 +54,7 @@ Water::~Water()
 
 void Water::Set( Vector2 pos, Vector2 size)
 {
+	magenta = CreateSolidBrush(MAGENTA);
 	rect = new Rect(pos, size);
 	renderRect = new Rect({ size.x / 2,size.y / 2 }, size);
 	
@@ -62,8 +63,8 @@ void Water::Set( Vector2 pos, Vector2 size)
 	color = CreateSolidBrush(RGB(180, 180, 180));
 	edge = CreatePen(PS_SOLID, 1, RGB(180, 180, 180));
 
-	surfaceColor = CreateSolidBrush(RGB(200, 200, 200));
-	surfaceEdge = CreatePen(PS_SOLID, 1, RGB(200, 200, 200));
+	surfaceColor = CreateSolidBrush(RGB(255, 255, 255));
+	surfaceEdge = CreatePen(PS_SOLID, 1, RGB(255, 255, 255));
 
 	SurfaceEffect();
 
@@ -163,17 +164,24 @@ void Water::Render(HDC hdc)
 	//rectDC
 	SelectObject(rectDC, color);
 	SelectObject(rectDC, edge);
-
+	
+	//renderRect랑 rect가 y값이 다름(물 위아래로 넘실거리는것때문에.)
+	//그래서 아래 코드가 필요함.
 	BitBlt(rectDC, 0, 0, rect->size.x, rect->size.y,
 		hdc, rect->LeftTopV().x, rect->LeftTopV().y ,SRCCOPY);
-
+	
 	//****************************************************
 	//까먹은게 있는데 renderRect 표면 오르락내리락 만들고 나서 wave들 위치도 맞춰서 바꿔야됨.
 	//기준점 중심으로 위아래 오르락내리락 하게 만들어서 wave.move함수랑 같이 사용해야할듯.
 	//*****************************************************
 	renderRect->Render(rectDC);
 	//transparentDC
-	PatBlt(transparentDC, 0, 0, rect->size.x, 2 * HEIGHT, WHITENESS);
+
+	SelectObject(transparentDC, magenta);
+	PatBlt(transparentDC, 0, 0, rect->size.x, 2 * HEIGHT, PATCOPY);
+
+	//BitBlt(surfaceDC, 0, 0, rect->size.x, 2 * HEIGHT,
+	//	hdc, rect->LeftTopV().x, rect->Bottom() - renderRect->size.y - HEIGHT,SRCCOPY);
 
 	SelectObject(transparentDC, surfaceColor);
 	SelectObject(transparentDC, surfaceEdge);
@@ -189,24 +197,26 @@ void Water::Render(HDC hdc)
 	}
 
 	//==========post process============
-	//transparentDC는 WHITENESS로 patblt 안하면 원하는데로 출력이 안나옴.
 	// 1.bitmap의 디폴트상태가 흰색 or검은색 둘중 하나일줄 알았는데 그게 아닌거같음.
 	// 2.surfaceDC위에 transparentDC를 alphaBlend하는 과정에서 transparentDC의 패턴화된 WHITENESS 배경이 넘어가는거같음.
 	// 2-2.인줄 알았는데 surfaceAlpha값이 작아지면 whiteness된 색이 그대로 안넘어가서 안지워짐. 
 	// surfaceDC,transparentDC 둘 다 whiteness로 patblt해줘야함
-	//transparentDC,memDC,rectDC,surfaceDC  <- 이거 세개만 남기고 전부 제거.
-	PatBlt(surfaceDC, 0, 0, rect->size.x, 2 * HEIGHT, WHITENESS);
-
-	blendFunc.SourceConstantAlpha = ALPHA_SURFACE;
-	GdiAlphaBlend(surfaceDC, 0, 0, rect->size.x, 2 * HEIGHT, transparentDC, 0, 0, rect->size.x, 2 * HEIGHT, blendFunc);
-
+	//transparentDC,memDC,rectDC  <- 이거 세개만 남기고 전부 제거.
 	blendFunc.SourceConstantAlpha = ALPHA_WATER;
 	GdiAlphaBlend(memDC, 0, HEIGHT, rect->size.x, rect->size.y, rectDC, 0, 0, rect->size.x,rect->size.y,blendFunc);
 
+	BitBlt(surfaceDC, 0, 0, rect->size.x, 2 * HEIGHT,
+		memDC, 0, (rect->size.y + HEIGHT) - (renderRect->size.y + HEIGHT), SRCCOPY);
+	
+	GdiTransparentBlt(surfaceDC, 0, 0, rect->size.x, 2 * HEIGHT, transparentDC, 0, 0, rect->size.x, 2 * HEIGHT, MAGENTA);
+	
 	blendFunc.SourceConstantAlpha = ALPHA_SURFACE;
-	GdiTransparentBlt(memDC, 0, renderRect->Top() , rect->size.x, 2 * HEIGHT, surfaceDC, 0, 0, rect->size.x, 2 * HEIGHT, WHITE);
+	GdiAlphaBlend(memDC, 0, (rect->size.y + HEIGHT) - (renderRect->size.y + HEIGHT), rect->size.x, 2 * HEIGHT, 
+		surfaceDC, 0, 0, rect->size.x, 2 * HEIGHT, blendFunc);
+
 	BitBlt(hdc, rect->LeftTopV().x, rect->LeftTopV().y - HEIGHT, rect->size.x, rect->size.y + HEIGHT,memDC, 0, 0, SRCCOPY);
 	
+
 
 	//BitBlt(hdc, rect->LeftTopV().x, rect->LeftTopV().y - HEIGHT, rect->size.x, 2 * HEIGHT, transparentDC, 0, 0, SRCCOPY);
 	//BitBlt(hdc, rect->LeftTopV().x, rect->LeftTopV().y - HEIGHT, rect->size.x, 2 * HEIGHT, surfaceDC, 0, 0, SRCCOPY);

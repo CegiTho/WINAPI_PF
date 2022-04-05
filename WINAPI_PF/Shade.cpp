@@ -3,27 +3,15 @@
 Shade::Shade(Rect* rect, double constant, STAGE_NUM stage)
 	: rect(rect),lSource(nullptr), constant(constant), isStatic(true)
 {
-	for (int i = 0; i < 4; i++)
-	{
-		points.emplace_back(new POINT[4]);
-	}
+
 	CreateShade();
 
-
-	/*
-	CreateCurtainShade();
-
-	*/
 	AlphaColor(stage);
 }
 
 Shade::Shade(Rect* rect, Vector2* lSource, STAGE_NUM stage)
 	: rect(rect), lSource(lSource), constant(0), isStatic(true)
 {
-	for (int i = 0; i < 4; i++)
-	{
-		points.emplace_back(new POINT[4]);
-	}
 	CreateShade();
 
 	AlphaColor(stage);
@@ -31,10 +19,8 @@ Shade::Shade(Rect* rect, Vector2* lSource, STAGE_NUM stage)
 
 Shade::~Shade()
 {
-	for (POINT* point : points)
-		delete point;
+	delete[] shadeEdge;
 
-	delete object;
 	DeleteObject(color);
 	DeleteObject(edge);
 }
@@ -119,7 +105,6 @@ void Shade::ProjectionUpdate()
 		double rightBottom = atan2(rect->RightBottom().y - lSource->y, rect->RightBottom().x - lSource->x);
 		double leftBottom = atan2(rect->LeftBottom().y - lSource->y, rect->LeftBottom().x - lSource->x);
 
-		//lSource가 사다리꼴이 되어버리네;
 		projection[PointSeq::LEFTTOP] =
 			Direction(this->rect->GetPoint(PointSeq::LEFTTOP), leftTop, ShadeLength).GetPoint();
 		projection[PointSeq::RIGHTTOP] =
@@ -146,8 +131,8 @@ void Shade::SelectEdge()
 		length = x * x + y * y;
 		if (length < minLength)
 		{
-			failedPoint_1 = (PointSeq)i;	//this->rect에서 탈락되는 꼭지점
-			failedPoint_2 = (PointSeq)odd;	//projection에서 탈락하는 꼭지점
+			failedPoint_1 = (PointSeq)i;	//this->rect에서 탈락되는 정점
+			failedPoint_2 = (PointSeq)odd;	//projection에서 탈락하는 정점
 			minLength = length;
 		}
 	}

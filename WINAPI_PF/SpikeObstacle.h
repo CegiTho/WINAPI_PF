@@ -8,9 +8,6 @@ private:
 
 	Rect* renderRect;
 
-	vector<Line*> test;
-	HPEN testP;
-
 public:
 	SpikeObstacle(Vector2 center, Vector2 size,bool left,bool up,bool right,bool down);
 	SpikeObstacle(Vector2 center, Vector2 size,Vector2 pathEnd,double times, bool isMove,bool isLoop, bool left, bool up, bool right, bool down);

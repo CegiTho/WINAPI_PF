@@ -14,8 +14,6 @@ SpikeObstacle::SpikeObstacle(Vector2 center, Vector2 size, bool left, bool up, b
 	this->destPos = center;
 
 	SetObs(center, size, left, up, right, down);
-
-	testP = CreatePen(PS_SOLID, 1, GREEN);
 }
 
 SpikeObstacle::SpikeObstacle(Vector2 center, Vector2 size, Vector2 pathEnd, 
@@ -70,10 +68,6 @@ void SpikeObstacle::Render(HDC hdc)
 			pol->Render(hdc);
 		}
 	}
-
-	SelectObject(hdc, testP);
-	for (Line* l : test)
-		l->Render(hdc);
 
 	SelectObject(hdc, tempB);
 	SelectObject(hdc, tempP);
@@ -171,13 +165,6 @@ void SpikeObstacle::SetObs(Vector2 center, Vector2 size, bool left, bool up, boo
 
 		rect = new Rect(newCenter, boxSize);
 		renderRect = new Rect(renderBoxPos, renderBoxSize);
-	}
-
-	{
-		test.emplace_back(new Line(rect->LeftTopV(), rect->RightTopV()));
-		test.emplace_back(new Line(rect->RightTopV(), rect->RightBottomV()));
-		test.emplace_back(new Line(rect->RightBottomV(), rect->LeftBottomV()));
-		test.emplace_back(new Line(rect->LeftBottomV(), rect->LeftTopV()));
 	}
 
 	SetSpikePolygon(renderRect);
