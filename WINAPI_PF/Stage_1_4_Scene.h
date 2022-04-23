@@ -1,14 +1,14 @@
 #pragma once
 
-class Stage_1_3_Scene : public StageScene
+class Stage_1_4_Scene : public StageScene
 {
 private:
 
 
-public:
-	Stage_1_3_Scene(string tag);
-	~Stage_1_3_Scene();
 
+public:
+	Stage_1_4_Scene(string tag);
+	~Stage_1_4_Scene();
 
 	virtual void Update() override;
 	virtual void Render(HDC hdc) override;
@@ -17,3 +17,5 @@ public:
 	virtual void End() override;
 
 };
+
+

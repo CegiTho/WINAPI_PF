@@ -118,7 +118,6 @@ void Chris::Jump()
 	if (side[DOWN] == true)
 	{
 		this->thrust = 0;
-		//isFalling = true;
 	}
 }
 

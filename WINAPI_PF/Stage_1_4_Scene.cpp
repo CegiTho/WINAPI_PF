@@ -1,42 +1,40 @@
 #include "Framework.h"
-#include "Stage_1_1_Scene.h"
+#include "Stage_1_4_Scene.h"
 
-Stage_1_1_Scene::Stage_1_1_Scene(string tag)
+Stage_1_4_Scene::Stage_1_4_Scene(string tag)
 {
 	this->tag = tag;
 	isEnd = false;
-	isStart = true;
 
-	m_Obj = new ObjManager(this, STAGE_1);
-	m_Shade = new ShadeManager(this, STAGE_1);
+	m_Obj = new ObjManager(this, STAGE_4);
+	m_Shade = new ShadeManager(this, STAGE_4);
 }
 
-Stage_1_1_Scene::~Stage_1_1_Scene()
+Stage_1_4_Scene::~Stage_1_4_Scene()
 {
 	delete m_Obj;
 	delete m_Shade;
 }
 
-void Stage_1_1_Scene::Update()
+void Stage_1_4_Scene::Update()
 {
 	if (this->isStart == true)
 		InitTarget();
 
 	m_Obj->Update();
 	m_Shade->Update();
-
+	
 	ChangeScene();
-
 	ClearCheck();
 }
 
-void Stage_1_1_Scene::Render(HDC hdc)
+void Stage_1_4_Scene::Render(HDC hdc)
 {
 	m_Shade->Render(hdc);
 	m_Obj->Render(hdc);
 }
 
-void Stage_1_1_Scene::Start()
+void Stage_1_4_Scene::Start()
 {
 	vector<Character*> characters = m_Obj->GetCM()->GetObj();
 	for (Character* character : characters)
@@ -54,7 +52,7 @@ void Stage_1_1_Scene::Start()
 	m_Shade->StartSet();
 }
 
-void Stage_1_1_Scene::End()
+void Stage_1_4_Scene::End()
 {
-	this->isEnd = true;
+	isEnd = true;
 }

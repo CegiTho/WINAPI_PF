@@ -203,6 +203,7 @@
     <ClInclude Include="Stage_1_1_Scene.h" />
     <ClInclude Include="Stage_1_2_Scene.h" />
     <ClInclude Include="Stage_1_3_Scene.h" />
+    <ClInclude Include="Stage_1_4_Scene.h" />
     <ClInclude Include="SyncKeyboard.h" />
     <ClInclude Include="targetver.h" />
     <ClInclude Include="TestScene.h" />
@@ -272,9 +273,11 @@
     <ClCompile Include="ShadeManager.cpp" />
     <ClCompile Include="SoundManager.cpp" />
     <ClCompile Include="SpikeObstacle.cpp" />
+    <ClCompile Include="StageScene.cpp" />
     <ClCompile Include="Stage_1_1_Scene.cpp" />
     <ClCompile Include="Stage_1_2_Scene.cpp" />
     <ClCompile Include="Stage_1_3_Scene.cpp" />
+    <ClCompile Include="Stage_1_4_Scene.cpp" />
     <ClCompile Include="SyncKeyboard.cpp" />
     <ClCompile Include="TestScene.cpp" />
     <ClCompile Include="TextCell.cpp" />

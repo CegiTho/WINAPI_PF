@@ -66,7 +66,6 @@ void John::CreateJohn(Vector2 pos)
 void John::Update(vector<T_Object*> obj)
 {
 	Move();
-
 	InitAgain();
 
 	Collision(obj);
@@ -74,7 +73,6 @@ void John::Update(vector<T_Object*> obj)
 
 	Jump();
 	anim->Update();
-	
 
 	if (isActive == false)
 		return;
@@ -118,6 +116,5 @@ void John::Jump()
 	if (side[DOWN] == true)
 	{
 		this->thrust = 0;
-		//isFalling = true;
 	}
 }

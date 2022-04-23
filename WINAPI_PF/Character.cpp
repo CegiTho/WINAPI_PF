@@ -108,9 +108,7 @@ void Character::Collision(vector<T_Object*> objects)
 				break;
 			}
 		}
-
 	}
-
 }
 
 void Character::CharacterCollision(Character* character)
@@ -121,36 +119,43 @@ void Character::CharacterCollision(Character* character)
 	if (this->GetRect()->Collision(&overlap, other) == true)
 	{
 		bool isUpDown = overlap.size.x > overlap.size.y;
-		if (isUpDown == true && overlap.center.y > other->center.y)
-		{//down
-			this->side[DOWN] = true;
-			this->GetRect()->center.y += overlap.size.y;
-			this->AddMoveWith(character);
-		}
-		else if (isUpDown == true && overlap.center.y < other->center.y)
-		{//up
-			this->GetRect()->center.y -= overlap.size.y;
-
-			if (character->GetName() == Name::LAURA)
-			{
-				string tag = this->GetNameString() + "_Jump_Sound_FX";
-				SOUND->Play(tag);
-				dynamic_cast<Laura*>(character)->LauraJump(this);
-				return;
+		if (isUpDown == true)
+		{
+			this->thrust = 0;
+			if (overlap.center.y > other->center.y)
+			{//down
+				this->GetRect()->center.y += overlap.size.y;
+				this->side[DOWN] = true;
+				this->AddMoveWith(character);
 			}
-			if(this->isFalling == true)
-				SOUND->Play("All_Land_Sound_FX");
-			this->side[UP] = true;
+			else
+			{//up
+				this->GetRect()->center.y -= overlap.size.y;
+
+				if (character->GetName() == Name::LAURA)
+				{
+					string tag = this->GetNameString() + "_Jump_Sound_FX";
+					SOUND->Play(tag);
+					dynamic_cast<Laura*>(character)->LauraJump(this);
+					return;
+				}
+				if (this->isFalling == true)
+					SOUND->Play("All_Land_Sound_FX");
+				this->side[UP] = true;
+			}
 		}
-		else if (isUpDown == false && overlap.center.x > other->center.x)
-		{//right
-			this->GetRect()->center.x += overlap.size.x;
-			this->side[RIGHT] = true;
-		}
-		else if (isUpDown == false && overlap.center.x < other->center.x)
-		{//left
-			this->GetRect()->center.x -= overlap.size.x;
-			this->side[LEFT] = true;
+		else if (isUpDown == false)
+		{
+  			if(overlap.center.x > other->center.x)
+			{//right
+				this->GetRect()->center.x += overlap.size.x;
+				this->side[RIGHT] = true;
+			}
+			else
+			{//left
+				this->GetRect()->center.x -= overlap.size.x;
+				this->side[LEFT] = true;
+			}
 		}
 	}
 }
@@ -335,6 +340,9 @@ void Character::ReturnSpawnPoint()
 			SOUND->Play("Water_Collision_Sound_FX");
 		}
 	}
+	else
+		return;
+
 	if (respawnDelay >= 0.2)
 	{
 		this->rect->center = spawnPoint;

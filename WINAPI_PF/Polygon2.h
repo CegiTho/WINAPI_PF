@@ -26,7 +26,7 @@ public:
 
 	vector<Vector2*> GetVertices() { return vertices; }
 
-	void Shift(vector<Vector2> vertices);
+	void Shift(vector<Vector2>& vertices);
 
 
 };

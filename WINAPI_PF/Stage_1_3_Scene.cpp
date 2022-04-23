@@ -1,18 +1,6 @@
 #include "Framework.h"
 #include "Stage_1_3_Scene.h"
 
-Stage_1_3_Scene::Stage_1_3_Scene()
-{
-	tag = "Stage_1-3";
-	isEnd = false;
-
-	m_Obj = new ObjManager(this, STAGE_3);
-	m_Shade = new ShadeManager(this, STAGE_3);
-
-	isStart = true;
-
-}
-
 Stage_1_3_Scene::Stage_1_3_Scene(string tag)
 {
 	this->tag = tag;
@@ -23,15 +11,6 @@ Stage_1_3_Scene::Stage_1_3_Scene(string tag)
 
 }
 
-Stage_1_3_Scene::Stage_1_3_Scene(STAGE_NUM stage)
-{
-	tag = "Stage_1-3";
-	isEnd = false;
-
-	m_Obj = new ObjManager(this, STAGE_3);
-	m_Shade = new ShadeManager(this, STAGE_3);
-}
-
 Stage_1_3_Scene::~Stage_1_3_Scene()
 {
 	delete m_Obj;
@@ -40,31 +19,13 @@ Stage_1_3_Scene::~Stage_1_3_Scene()
 
 void Stage_1_3_Scene::Update()
 {
-	if (isStart == true)
-	{
-		if (stageRunTime > 1.0)
-		{
-			M_CAM->TargetChange(m_Obj->GetCM()->GetTargetCharacter()->GetRect());
-			isStart = false;
-			stageRunTime = 0.0;
-		}
-		else
-		{
-			stageRunTime += DELTA;
-			return;
-		}
-		return;
-	}
-
-	if (KEYDOWN(VK_ESCAPE))
-		SCENE->ChangeScene("Main Menu");
+	if (this->isStart == true)
+		InitTarget();
 
 	m_Obj->Update();
 	m_Shade->Update();
 
-	if (isEnd == true)
-		SCENE->DequeueScene();
-	
+	ChangeScene();
 	ClearCheck();
 }
 

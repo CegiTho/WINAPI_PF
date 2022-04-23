@@ -49,7 +49,7 @@ public:
 
 	void SetVolume(string tag, float volume);
 
-	void GetVolume(string tag, float* volume);
+	map<CHANNEL, float> GetVolume() { return channelVolume; }
 };
 
 

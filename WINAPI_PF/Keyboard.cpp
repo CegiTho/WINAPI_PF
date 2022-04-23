@@ -52,3 +52,33 @@ void Keyboard::SetKey(int wParam)
 	key = (char)wParam;
 	needConfirm = true;
 }
+
+void Keyboard::SetJumpKey(char value)
+{
+	jump = value; 
+
+	if (nextChar == value)
+		nextChar = 0x7C;
+	if (prevChar == value)
+		prevChar = 0x7C;
+}
+
+void Keyboard::SetNextKey(char value)
+{
+	nextChar = value;
+
+	if (jump == value)
+		jump = 0x7C;
+	if (prevChar == value)
+		prevChar = 0x7C;
+}
+
+void Keyboard::SetPrevKey(char value)
+{
+	prevChar = value;
+
+	if (nextChar == value)
+		nextChar = 0x7C;
+	if (jump == value)
+		jump = 0x7C;
+}

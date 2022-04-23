@@ -3,76 +3,76 @@
   <Character>
     <Thomas>
       <basic_element consist="1" name ="0"/>
-      <position posX="500" posY="540"/>
+      <position posX="990" posY="460"/>
     </Thomas>
     <Chris>
       <basic_element consist="1" name ="1"/>
-      <position posX ="600" posY="500"/>
+      <position posX ="930" posY="800"/>
     </Chris>
     <Clare>
       <basic_element consist="1" name ="2"/>
-      <position posX ="700" posY="500"/>
+      <position posX ="800" posY="315"/>
     </Clare>
     <James>
       <basic_element consist="1" name ="3"/>
-      <position posX ="1300" posY="540"/>
+      <position posX ="1240" posY="300"/>
     </James>
     <John>
       <basic_element consist="1" name ="4"/>
-      <position posX ="800" posY="500"/>
+      <position posX ="1280" posY="740"/>
     </John>
     <Laura>
       <basic_element consist="1" name ="5"/>
-      <position posX ="900" posY="500"/>
+      <position posX ="1400" posY="900"/>
     </Laura>
     <Sarah>
       <basic_element consist="1" name ="6"/>
-      <position posX ="1000" posY="540"/>
+      <position posX ="1200" posY="540"/>
     </Sarah>
   </Character>
   <Goal>
     <!--NULL -1  Thomas 0  Chris 1 Clare 2 James 3  John 4  Laura 5 Sarah 6-->
     <Thomas>
       <basic_element consist ="1" isstatic ="0" />
-      <move_info ismove ="1" loop ="1" times ="1.2"/>
-      <position posX="750" posY="2000"/>
-      <destposition0 posX="750" posY="732" trigger_index ="4"/>
+      <move_info ismove ="0" loop ="0" times ="3.0"/>
+      <position posX="840" posY="2000"/>
+      <destposition0 posX="840" posY="1037" trigger_index ="2"/>
     </Thomas>
     <Chris >
       <basic_element consist ="1" isstatic ="0" />
-      <move_info ismove ="1" loop ="1" times ="3.0"/>
-      <position posX="-1" posY="-1"/>
-      <destposition0 posX="-1" posY="-1" trigger_index ="-1"/>
+      <move_info ismove ="0" loop ="0" times ="3.0"/>
+      <position posX="1400" posY="2000"/>
+      <destposition0 posX="1400" posY="1047" trigger_index ="2"/>
     </Chris>
     <Clare>
       <basic_element consist ="1" isstatic ="0" />
-      <move_info ismove ="1" loop ="1" times ="3.0"/>
-      <position posX="-1" posY="-1"/>
-      <destposition0 posX="-1" posY="-1" trigger_index ="-1"/>
+      <move_info ismove ="0" loop ="0" times ="3.0"/>
+      <position posX="150" posY="2000"/>
+      <destposition0 posX="150" posY="910" trigger_index ="2"/>
     </Clare>
     <James>
       <basic_element consist ="1" isstatic ="0"/>
-      <move_info  ismove ="1" loop ="1" times ="1.2"/>
-      <position posX="960" posY="2000"/>
-      <destposition0 posX="960" posY="468" trigger_index ="4"/>
+      <move_info  ismove ="0" loop ="0" times ="3.0"/>
+      <position posX="670" posY="2000"/>
+      <destposition0 posX="670" posY="43" trigger_index ="2"/>
     </James>
     <John>
       <basic_element consist ="1" isstatic ="0" />
-      <move_info ismove ="1" loop ="1" times ="3.0"/>
-      <position posX="-1" posY="-1"/>
-      <destposition0 posX="-1" posY="-1" trigger_index ="-1"/>
+      <move_info ismove ="0" loop ="0" times ="3.0"/>
+      <position posX="950" posY="2000"/>
+      <destposition0 posX="950" posY="1010" trigger_index ="2"/>
     </John>
     <Laura>
       <basic_element consist ="1" isstatic ="0" />
-      <move_info ismove ="1" loop ="1" times ="1.0"/>
-      <position posX="-1" posY="-1"/>
-      <destposition0 posX="-1" posY="-1" trigger_index ="-1"/>
+      <move_info ismove ="0" loop ="0" times ="3.0"/>
+      <position posX="750" posY="2000"/>
+      <destposition0 posX="750" posY="1049" trigger_index ="2"/>
     </Laura>
     <Sarah>
       <basic_element consist ="1" isstatic ="0"/>
-      <move_info ismove ="1" loop ="1" times ="1.2"/>
-      <position posX="1170" posY="2000"/>
-      <destposition0 posX="1150" posY="740" trigger_index ="-1"/>
+      <move_info ismove ="0" loop ="0" times ="3.0"/>
+      <position posX="1770" posY="2000"/>
+      <destposition0 posX="1770" posY="845" trigger_index ="2"/>
     </Sarah>
   </Goal>
   <Obstacle>
@@ -80,132 +80,120 @@
     <!--type 0 = normal , type 1 = spike , type 2 = water-->
     <!--mapSize = {1920,1080}-->
     <obs0>
-      <!--맵 외곽 왼편.-->
-      <basic_element type ="0" isstatic ="0"  shade ="0"/>
+      <basic_element type ="0" isstatic ="1"  shade ="0"/>
       <move_info ismove ="0" isloop ="0" times="3.0"/>
-      <position posX ="255" posY ="540"/>
-      <size sizeX ="510" sizeY ="1080"/>
+      <position posX ="960" posY ="10"/>
+      <size sizeX ="1920" sizeY ="20"/>
       <side left ="-100" top ="-100" right ="-100" bottom ="-100"/>
     </obs0>
     <obs1>
-      <!--맵 외곽 상단-->
       <basic_element type ="0" isstatic ="1" shade ="0"/>
       <move_info ismove ="0" isloop ="0" times="3.0"/>
-      <position posX ="960" posY ="45"/>
-      <size sizeX ="900" sizeY ="90"/>
+      <position posX ="960" posY ="1070"/>
+      <size sizeX ="1920" sizeY ="20"/>
       <side left ="-100" top ="-100" right ="-100" bottom ="-100"/>
     </obs1>
     <obs2>
-      <!--맵 외곽 오른쪽-->
       <basic_element type ="0" isstatic ="1" shade ="0"/>
-      <move_info ismove ="0" isloop ="0" times="3.0"/>
-      <position posX ="1665" posY ="540"/>
-      <size sizeX ="510" sizeY ="1080"/>
+      <move_info ismove ="0" isloop ="0" times="1.0"/>
+      <position posX ="10" posY ="540"/>
+      <size sizeX ="20" sizeY ="1080"/>
       <side left ="-100" top ="-100" right ="-100" bottom ="-100"/>
     </obs2>
     <obs3>
-      <!--맵 외곽 하단..-->
       <basic_element type ="0" isstatic ="1" shade ="0"/>
       <move_info ismove ="0" isloop ="0" times="3.0"/>
-      <position posX ="960" posY ="1035"/>
-      <size sizeX ="900" sizeY ="90"/>
+      <position posX ="1910" posY ="540"/>
+      <size sizeX ="20" sizeY ="1080"/>
       <side left ="-100" top ="-100" right ="-100" bottom ="-100"/>
     </obs3>
     <obs4>
-      <basic_element type ="0" isstatic ="1" shade ="0"/>
+      <basic_element type ="2" isstatic ="1" shade ="0"/>
       <move_info ismove ="0" isloop ="0" times="3.0"/>
-      <position posX ="1500" posY ="540"/>
-      <size sizeX ="10" sizeY ="800"/>
+      <position posX ="320" posY ="985"/>
+      <size sizeX ="600" sizeY ="150"/>
       <side left ="-100" top ="-100" right ="-100" bottom ="-100"/>
     </obs4>
     <obs5>
-      <basic_element type ="0" isstatic ="1" shade ="0"/>
+      <basic_element type ="0" isstatic ="1" shade ="1"/>
       <move_info ismove ="0" isloop ="0" times="3.0"/>
-      <position posX ="950" posY ="2540"/>
-      <size sizeX ="460" sizeY ="10"/>
+      <position posX ="620" posY ="960"/>
+      <size sizeX ="100" sizeY ="200"/>
       <side left ="-100" top ="-100" right ="-100" bottom ="-100"/>
     </obs5>
     <obs6>
-      <basic_element type ="0" isstatic ="1" shade ="0"/>
+      <basic_element type ="0" isstatic ="0" shade ="1"/>
       <move_info ismove ="0" isloop ="0" times="3.0"/>
-      <position posX ="950" posY ="2540"/>
-      <size sizeX ="460" sizeY ="10"/>
+      <position posX ="1850" posY ="2000"/>
+      <size sizeX ="100" sizeY ="300"/>
       <side left ="-100" top ="-100" right ="-100" bottom ="-100"/>
-      <destposition0 posX ="950" posY ="760" trigger_index ="4"/>
+      <destposition0 posX ="1850" posY ="910" trigger_index ="0"/>
     </obs6>
     <obs7>
-      <basic_element type ="0" isstatic ="1" shade ="0"/>
+      <basic_element type ="0" isstatic ="0" shade ="1"/>
       <move_info ismove ="0" isloop ="0" times="3.0"/>
-      <position posX ="950" posY ="2540"/>
-      <size sizeX ="460" sizeY ="10"/>
+      <position posX ="1750" posY ="1900"/>
+      <size sizeX ="100" sizeY ="200"/>
       <side left ="-100" top ="-100" right ="-100" bottom ="-100"/>
+      <destposition0 posX ="1750" posY ="960" trigger_index ="0"/>
     </obs7>
     <obs8>
-      <basic_element type ="0" isstatic ="1" shade ="0"/>
+      <basic_element type ="1" isstatic ="0" shade ="1"/>
       <move_info ismove ="0" isloop ="0" times="3.0"/>
-      <position posX ="950" posY ="2540"/>
-      <size sizeX ="460" sizeY ="10"/>
-      <side left ="-100" top ="-100" right ="-100" bottom ="-100"/>
+      <position posX ="1650" posY ="1800"/>
+      <size sizeX ="6" sizeY ="6"/>
+      <side left ="1" top ="0" right ="0" bottom ="0"/>
+      <destposition0 posX ="1650" posY ="1010" trigger_index ="0"/>
     </obs8>
     <obs9>
-      <basic_element type ="0" isstatic ="1" shade ="0"/>
+      <basic_element type ="0" isstatic ="0" shade ="1"/>
       <move_info ismove ="0" isloop ="0" times="3.0"/>
-      <position posX ="950" posY ="2540"/>
-      <size sizeX ="460" sizeY ="10"/>
-      <side left ="-100" top ="-100" right ="-100" bottom ="-100"/>
+      <position posX ="70" posY ="-2000"/>
+      <size sizeX ="100" sizeY ="240"/>
+      <side left ="1" top ="0" right ="0" bottom ="0"/>
+      <destposition0 posX ="70" posY ="140" trigger_index ="1"/>
     </obs9>
     <obs10>
-      <basic_element type ="0" isstatic ="1" shade ="0"/>
+      <basic_element type ="0" isstatic ="0" shade ="1"/>
       <move_info ismove ="0" isloop ="0" times="3.0"/>
-      <position posX ="950" posY ="2540"/>
-      <size sizeX ="460" sizeY ="10"/>
-      <side left ="-100" top ="-100" right ="-100" bottom ="-100"/>
+      <position posX ="170" posY ="-2000"/>
+      <size sizeX ="100" sizeY ="160"/>
+      <side left ="1" top ="0" right ="0" bottom ="0"/>
+      <destposition0 posX ="170" posY ="100" trigger_index ="1"/>
     </obs10>
     <obs11>
-      <basic_element type ="0" isstatic ="1" shade ="0"/>
+      <basic_element type ="0" isstatic ="0" shade ="1"/>
       <move_info ismove ="0" isloop ="0" times="3.0"/>
-      <position posX ="950" posY ="2540"/>
-      <size sizeX ="460" sizeY ="10"/>
-      <side left ="-100" top ="-100" right ="-100" bottom ="-100"/>
+      <position posX ="70" posY ="-2000"/>
+      <size sizeX ="270" sizeY ="80"/>
+      <side left ="1" top ="0" right ="0" bottom ="0"/>
+      <destposition0 posX ="270" posY ="60" trigger_index ="1"/>
     </obs11>
-    <obs12>
-      <basic_element type ="0" isstatic ="1" shade ="0"/>
-      <move_info ismove ="0" isloop ="0" times="3.0"/>
-      <position posX ="950" posY ="2540"/>
-      <size sizeX ="460" sizeY ="10"/>
-      <side left ="-100" top ="-100" right ="-100" bottom ="-100"/>
-    </obs12>
-    <obs13>
-      <basic_element type ="0" isstatic ="1" shade ="0"/>
-      <move_info ismove ="0" isloop ="0" times="3.0"/>
-      <position posX ="950" posY ="2540"/>
-      <size sizeX ="460" sizeY ="10"/>
-      <side left ="-100" top ="-100" right ="-100" bottom ="-100"/>
-    </obs13>
-    <obs14>
-      <basic_element type ="0" isstatic ="1" shade ="0"/>
-      <move_info ismove ="0" isloop ="0" times="3.0"/>
-      <position posX ="950" posY ="2540"/>
-      <size sizeX ="460" sizeY ="10"/>
-      <side left ="-100" top ="-100" right ="-100" bottom ="-100"/>
-    </obs14>
-    <obs15>
-      <basic_element type ="0" isstatic ="1" shade ="0"/>
-      <move_info ismove ="0" isloop ="0" times="3.0"/>
-      <position posX ="950" posY ="2540"/>
-      <size sizeX ="460" sizeY ="10"/>
-      <side left ="-100" top ="-100" right ="-100" bottom ="-100"/>
-    </obs15>
   </Obstacle>
-  <Trigger>
+<Trigger>
     <!--NULL -1  Thomas 0  Chris 1 Clare 2 James 3  John 4  Laura 5 Sarah 6-->
     <!--side  up = 0  down = 1   right = 2   left = 3-->
-  </Trigger>
+    <trigger0>
+      <basic_element owner ="4" ishori="0"/>
+      <attached_index obstacle_index ="2" dist ="80" side ="2" />
+    </trigger0>
+    <trigger1>
+      <basic_element owner ="6" ishori="0"/>
+      <attached_index obstacle_index ="3" dist ="-50" side ="3" />
+    </trigger1>
+    <trigger2>
+      <basic_element owner ="3" ishori="0"/>
+      <attached_index obstacle_index ="2" dist ="-100" side ="2" />
+    </trigger2>
+   <!-- <trigger1>
+      <basic_element owner ="4" ishori="0" />
+      <attached_index obstacle_index ="2" dist ="0" side ="2"/>
+    </trigger1>-->
+    </Trigger>
   <SavePoint>
   </SavePoint>
   <StageSize>
     <size sizeX ="1920" sizeY ="1080"/>
-    <light isspot ="0" constant ="1.0"/>
-    <!--<light isspot ="1" posX ="3000" posY ="1200"/>-->
+   <light isspot ="1" posX ="-400" posY ="-30"/>
   </StageSize>
 </StageElement>

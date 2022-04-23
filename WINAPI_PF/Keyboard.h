@@ -20,6 +20,19 @@ private:
 	~Keyboard();
 
 	static Keyboard* instance;
+
+
+	byte curState[KEYMAX];
+	byte oldState[KEYMAX];
+	byte mapState[KEYMAX];
+
+	char key;
+	bool needConfirm;
+
+	char jump = VK_SPACE;
+	char nextChar = 'E';
+	char prevChar = 'Q';
+
 public:
 	static Keyboard* Get()				
 	{
@@ -48,9 +61,9 @@ public:
 	void SetConfirm(bool value) { needConfirm = value; }
 	void SetKey(int wParam);
 
-	void SetJumpKey(char value) { jump = value; }
-	void SetNextKey(char value) { nextChar = value; }
-	void SetPrevKey(char value) { prevChar = value; }
+	void SetJumpKey(char value);
+	void SetNextKey(char value);
+	void SetPrevKey(char value);
 
 	char GetJumpKey() { return jump; }
 	char GetNextCharKey() { return nextChar; }
@@ -58,17 +71,7 @@ public:
 
 	char GetKeyboardValue(int key) { return mapState[key]; }
 	
-private:
-	byte curState[KEYMAX];
-	byte oldState[KEYMAX];
-	byte mapState[KEYMAX];
 
-	char key;
-	bool needConfirm;
-
-	char jump = VK_SPACE;
-	char nextChar = 'E';
-	char prevChar = 'Q';
 };
 
 

@@ -22,25 +22,11 @@ public:
 	ObjManager* GetObjManager() { return m_Obj; }
 	ShadeManager* GetShadeManager() { return m_Shade; }
 
-	void ClearCheck()
-	{
-		if (m_Obj->GetClearStage() == true)
-		{
-			vector<string> stageSeq = *SCENE->GetStageSeq();
-			string nextStageTag;
-			vector<string>::iterator iter = find(stageSeq.begin(), stageSeq.end(), this->tag);
-			if (iter != stageSeq.end())
-			{
-				iter++;
-				if (iter != stageSeq.end())
-					nextStageTag = *iter;
-				if (iter == stageSeq.end())
-					nextStageTag = "Main Menu";
+	void InitTarget();
+	void ChangeScene();
 
-				SCENE->ChangeScene(nextStageTag);
-			}
-		}
-	}
+	void ClearCheck();
+	
 
 };
 

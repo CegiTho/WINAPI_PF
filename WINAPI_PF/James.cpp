@@ -120,6 +120,5 @@ void James::Jump()
 	if (side[UP] == true)
 	{
 		this->thrust = 0;
-		//isFalling = true;
 	}
 }

@@ -46,6 +46,7 @@ PercentType::PercentType(TextCell* menu)
 	font = CreateFont(45, 0, 0, 0, 10, false, false, false, HANGUL_CHARSET, 100, 0, 0, 0, L"¾ÖÇÃ»êµ¹°íµñ³×¿À ±½°Ô TTF");
 
 	volMem.assign(menu->GetTags().size()," 0 %");
+	VolumeUpdate();
 }
 
 PercentType::~PercentType()
@@ -66,6 +67,8 @@ void PercentType::Update()
 	if (menu->GetActive() == false && menu->GetMove() == false)
 		Init();
 	
+	VolumeUpdate();
+
 }
 
 void PercentType::Render(HDC hdc)
@@ -103,10 +106,11 @@ void PercentType::Select()
 
 	string num;
 
-	if (volMem[menuIndex] == "100 %")
+	if (volMem[menuIndex] == "100%")
 		num = "100"; 
 	else
 		num = volMem[menuIndex].substr(0, 2);
+
 	int vol = stoi(num);
 	rect->center.x = line->Start().x + (vol * 0.1 * seg);
 
@@ -205,6 +209,31 @@ void PercentType::Init()
 
 	deco[0]->SetRender(false);
 	deco[1]->SetRender(true);
+
+
+}
+
+void PercentType::VolumeUpdate()
+{
+	map<CHANNEL, float> volumeTable = SOUND->GetVolume();
+
+	for (auto volume : volumeTable)
+	{
+		int vol;
+		switch (volume.first)
+		{
+		case MAIN_FX_CHANNEL:
+		case SUB_FX_CHANNEL:
+			vol = volume.second * 100;
+			volMem[1] = to_string(vol) + "%";
+			break;
+		case BG_CHANNEL:			
+			vol = volume.second * 100;
+			volMem[2] = to_string(vol) + "%";
+			break;
+		
+		}
+	}
 
 
 }

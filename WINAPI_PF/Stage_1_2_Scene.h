@@ -6,9 +6,7 @@ private:
 
 
 public:
-	Stage_1_2_Scene();
 	Stage_1_2_Scene(string tag);
-	Stage_1_2_Scene(STAGE_NUM stage);
 	~Stage_1_2_Scene();
 
 	virtual void Update() override;

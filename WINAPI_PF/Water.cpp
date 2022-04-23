@@ -165,43 +165,31 @@ void Water::Render(HDC hdc)
 	SelectObject(rectDC, color);
 	SelectObject(rectDC, edge);
 	
-	//renderRect랑 rect가 y값이 다름(물 위아래로 넘실거리는것때문에.)
-	//그래서 아래 코드가 필요함.
+	//Note//rect != renderRect
 	BitBlt(rectDC, 0, 0, rect->size.x, rect->size.y,
 		hdc, rect->LeftTopV().x, rect->LeftTopV().y ,SRCCOPY);
 	
-	//****************************************************
-	//까먹은게 있는데 renderRect 표면 오르락내리락 만들고 나서 wave들 위치도 맞춰서 바꿔야됨.
-	//기준점 중심으로 위아래 오르락내리락 하게 만들어서 wave.move함수랑 같이 사용해야할듯.
-	//*****************************************************
 	renderRect->Render(rectDC);
-	//transparentDC
 
+	//transparentDC
 	SelectObject(transparentDC, magenta);
 	PatBlt(transparentDC, 0, 0, rect->size.x, 2 * HEIGHT, PATCOPY);
-
-	//BitBlt(surfaceDC, 0, 0, rect->size.x, 2 * HEIGHT,
-	//	hdc, rect->LeftTopV().x, rect->Bottom() - renderRect->size.y - HEIGHT,SRCCOPY);
 
 	SelectObject(transparentDC, surfaceColor);
 	SelectObject(transparentDC, surfaceEdge);
 
 	for (int i = 0; i < right.size(); i++)
-	{
 		right[i]->Render(transparentDC);
-	}
 	
 	for (int i = 0; i < left.size(); i++)
-	{
 		left[i]->Render(transparentDC);
-	}
+
+	// 1.surfaceDC위에 transparentDC를 alphaBlend하는 과정에서 transparentDC의 패턴화된 WHITENESS 배경이 넘어가는거같음.
+	// 1-2.인줄 알았는데 surfaceAlpha값이 작아지면 whiteness된 색이 그대로 안넘어가서 안지워짐. 
+	// surfaceDC,transparentDC 둘 다 whiteness로 patblt해줘야함
+	//transparentDC,memDC,rectDC,surfaceDC <- 이거 네개만 남기고 전부 제거.
 
 	//==========post process============
-	// 1.bitmap의 디폴트상태가 흰색 or검은색 둘중 하나일줄 알았는데 그게 아닌거같음.
-	// 2.surfaceDC위에 transparentDC를 alphaBlend하는 과정에서 transparentDC의 패턴화된 WHITENESS 배경이 넘어가는거같음.
-	// 2-2.인줄 알았는데 surfaceAlpha값이 작아지면 whiteness된 색이 그대로 안넘어가서 안지워짐. 
-	// surfaceDC,transparentDC 둘 다 whiteness로 patblt해줘야함
-	//transparentDC,memDC,rectDC  <- 이거 세개만 남기고 전부 제거.
 	blendFunc.SourceConstantAlpha = ALPHA_WATER;
 	GdiAlphaBlend(memDC, 0, HEIGHT, rect->size.x, rect->size.y, rectDC, 0, 0, rect->size.x,rect->size.y,blendFunc);
 
@@ -215,15 +203,6 @@ void Water::Render(HDC hdc)
 		surfaceDC, 0, 0, rect->size.x, 2 * HEIGHT, blendFunc);
 
 	BitBlt(hdc, rect->LeftTopV().x, rect->LeftTopV().y - HEIGHT, rect->size.x, rect->size.y + HEIGHT,memDC, 0, 0, SRCCOPY);
-	
-
-
-	//BitBlt(hdc, rect->LeftTopV().x, rect->LeftTopV().y - HEIGHT, rect->size.x, 2 * HEIGHT, transparentDC, 0, 0, SRCCOPY);
-	//BitBlt(hdc, rect->LeftTopV().x, rect->LeftTopV().y - HEIGHT, rect->size.x, 2 * HEIGHT, surfaceDC, 0, 0, SRCCOPY);
-	//BitBlt(hdc, rect->LeftTopV().x, rect->LeftTopV().y - HEIGHT, rect->size.x, rect->size.y + HEIGHT,tempDC, 0, 0, SRCCOPY);
-	//BitBlt(hdc, rect->LeftTopV().x, rect->LeftTopV().y + HEIGHT, rect->size.x, rect->size.y + HEIGHT,tempDC, 0, 0, SRCCOPY);
-	//BitBlt(hdc, rect->LeftTopV().x, rect->LeftTopV().y + HEIGHT, rect->size.x, rect->size.y + HEIGHT,tempDC, 0, 0, SRCCOPY);
-	//BitBlt(hdc, rect->LeftTopV().x, rect->LeftTopV().y, rect->size.x, rect->size.y + HEIGHT, secTransparentDC, 0, 0, SRCCOPY);
 }
 
 Rect* Water::GetRenderRect()

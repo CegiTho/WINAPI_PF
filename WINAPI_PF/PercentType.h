@@ -20,6 +20,7 @@ public:
 	virtual void Move() override;
 	virtual void Init() override;
 
+	void VolumeUpdate();
 };
 
 

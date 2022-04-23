@@ -87,23 +87,25 @@ void SoundManager::Play(string key)
 {
 	if (sounds.find(key) == sounds.end())
 		return;
+
 	//Stop(key);
 	switch (keyAndChannel[key])
 	{
 	case MAIN_FX_CHANNEL:
-		soundSystem->playSound(sounds[key], nullptr, false, &mainFXChannel);
+		soundSystem->playSound(sounds[key], nullptr, true, &mainFXChannel);
 		mainFXChannel->setVolume(channelVolume[MAIN_FX_CHANNEL]);
-		//mainFXChannel->setPaused(false);
+		mainFXChannel->setPaused(false);
 		break;
 	case SUB_FX_CHANNEL:
-		soundSystem->playSound(sounds[key], nullptr, false, &subFXChannel);
+		soundSystem->playSound(sounds[key], nullptr, true, &subFXChannel);
 		subFXChannel->setVolume(channelVolume[SUB_FX_CHANNEL]);
-		//subFXChannel->setPaused(false);
+		subFXChannel->setPaused(false);
 		break;
 	case BG_CHANNEL:
-		soundSystem->playSound(sounds[key], nullptr, false, &bgChannel);
+		soundSystem->playSound(sounds[key], nullptr, true, &bgChannel);
 		bgChannel->setVolume(channelVolume[BG_CHANNEL]);
-		//bgChannel->setPaused(false);
+		bgChannel->setPaused(false);
+		bgChannel->setPriority(0);
 		break;
 	}
 
@@ -113,6 +115,7 @@ void SoundManager::Play(string key, float volume)
 {
 	if (sounds.find(key) == sounds.end())
 		return;
+
 	//Stop(key);
 	switch (keyAndChannel[key])
 	{
@@ -125,14 +128,15 @@ void SoundManager::Play(string key, float volume)
 	case SUB_FX_CHANNEL:
 		soundSystem->playSound(sounds[key], nullptr, true, &subFXChannel);
 		channelVolume[SUB_FX_CHANNEL] = volume;
-		mainFXChannel->setVolume(channelVolume[SUB_FX_CHANNEL]);
-		mainFXChannel->setPaused(false);
+		subFXChannel->setVolume(channelVolume[SUB_FX_CHANNEL]);
+		subFXChannel->setPaused(false);
 		break;
 	case BG_CHANNEL:
-		soundSystem->playSound(sounds[key], nullptr, true, &bgChannel);
+ 		soundSystem->playSound(sounds[key], nullptr, true, &bgChannel);
 		channelVolume[BG_CHANNEL] = volume;
 		bgChannel->setVolume(channelVolume[BG_CHANNEL]);
 		bgChannel->setPaused(false);
+		bgChannel->setPriority(0);
 		break;
 	}
 }
@@ -154,7 +158,6 @@ void SoundManager::Stop(string key)
 	case BG_CHANNEL:
 		bgChannel->stop();
 		break;
-
 	}
 }
 
@@ -202,6 +205,8 @@ void SoundManager::Resume(string key)
 //따라서 그 이전엔 Set~Volume 호출해봐야 의미없음.
 void SoundManager::SetVolume(string tag, float volume)
 {
+	float test;
+
 	if (tag.find("FX") != string::npos)
 	{//fxChannel
 		channelVolume[MAIN_FX_CHANNEL] = volume;

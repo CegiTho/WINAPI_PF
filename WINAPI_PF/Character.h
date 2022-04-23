@@ -53,7 +53,6 @@ public:
 
 	void SetActive(bool active) { this->isActive = active; }
 	void SetAnim(State value) { anim->SetState(value); }
-	void SetSide(Side index, bool value) { side[index] = value; }
 	void SetJump(bool value) { isJump = value; }
 	void SetThrust(double value) { thrust = value; }
 	void SetGoal(bool value) { isGoal = value; }
@@ -79,6 +78,7 @@ public:
 
 	virtual void ReturnSpawnPoint();
 	void SetSpawnPoint(Rect* rect);
+	void SetSide(Side side, bool value) { this->side[side] = value; }
 	Vector2 GetSpawnPoint() { return spawnPoint; }
 
 	string GetNameString();

@@ -282,6 +282,9 @@
     <ClInclude Include="Stage_1_3_Scene.h">
       <Filter>Framework\GameObject\Scene\StageScene</Filter>
     </ClInclude>
+    <ClInclude Include="Stage_1_4_Scene.h">
+      <Filter>Framework\GameObject\Scene\StageScene</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="WINAPI_PF.cpp">
@@ -474,6 +477,12 @@
       <Filter>Framework\GameObject\Scene\StageScene</Filter>
     </ClCompile>
     <ClCompile Include="Stage_1_3_Scene.cpp">
+      <Filter>Framework\GameObject\Scene\StageScene</Filter>
+    </ClCompile>
+    <ClCompile Include="Stage_1_4_Scene.cpp">
+      <Filter>Framework\GameObject\Scene\StageScene</Filter>
+    </ClCompile>
+    <ClCompile Include="StageScene.cpp">
       <Filter>Framework\GameObject\Scene\StageScene</Filter>
     </ClCompile>
   </ItemGroup>

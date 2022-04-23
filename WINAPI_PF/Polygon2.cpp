@@ -73,7 +73,7 @@ void Polygon2::SetArr(Character* character)
 	points[2].y = points[0].y - deltaY;
 }
 
-void Polygon2::Shift(vector<Vector2> vertices)
+void Polygon2::Shift(vector<Vector2>& vertices)
 {
 	if (vertices.size() != this->vertices.size())
 		return;

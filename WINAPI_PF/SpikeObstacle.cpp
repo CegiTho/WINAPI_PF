@@ -43,7 +43,6 @@ SpikeObstacle::~SpikeObstacle()
 	
 	DeleteObject(color);
 	DeleteObject(edge);
-
 }
 
 void SpikeObstacle::Update()
@@ -65,7 +64,8 @@ void SpikeObstacle::Render(HDC hdc)
 	{
 		for (Polygon2* pol : spikes)
 		{
-			pol->Render(hdc);
+			if(pol != nullptr)
+				pol->Render(hdc);
 		}
 	}
 
@@ -80,36 +80,54 @@ void SpikeObstacle::Move()
 {
 	if (isGoback == false)	//start -> end
 	{
-		Vector2 prevPos = this->rect->center;
-		this->rect->center = LERP(this->rect->center, destPos, DELTA * times);
-		this->renderRect->center = LERP(this->renderRect->center, destPos, DELTA * times);
-		
+		time += DELTA;
+		Vector2 newPos = Math::SineInterpolation(startPos, destPos, times, time);
+		Vector2 delta = newPos - this->rect->center;
+		this->renderRect->center = newPos;
+		double diff = (destPos - this->rect->center).Length();
+		this->rect->center += delta;
+
 		ShiftPoint();
 
-		double diff = (destPos - this->rect->center).Length();
+		for (Character* character : moveWith)
+		{
+			character->GetRect()->center += delta;
+		}
 
-		if (diff < EPSILON && isLoop == true)
+		if (diff <= EPSILON && isLoop == true)
+		{
 			isGoback = true;
+			time = 0.0;
+		}
 		else if (diff < EPSILON && isLoop == false)
 		{
+			startPos = destPos;
 			isGoback = false;
 			isMove = false;
+			time = 0.0;
 		}
 	}
 	else					//end -> start
 	{
-		Vector2 prevPos = this->rect->center;
-		this->rect->center = LERP(this->rect->center, startPos, DELTA * times);
-		this->renderRect->center = LERP(this->renderRect->center, startPos, DELTA * times);
+		time += DELTA;
+		Vector2 newPos = Math::SineInterpolation(destPos, startPos, times, time);
+		Vector2 delta = newPos - this->rect->center;
+		this->renderRect->center = newPos;
+		this->rect->center += delta;
 
 		ShiftPoint();
 
+		for (Character* character : moveWith)
+		{
+			character->GetRect()->center += delta;
+		}
 
 		double diff = (startPos - this->rect->center).Length();
 		if (diff < EPSILON)
+		{
 			isGoback = false;
-
-		this->rect->center = LERP(this->rect->center, startPos, DELTA * times);
+			time = 0.0;
+		}
 	}
 }
 
@@ -172,6 +190,7 @@ void SpikeObstacle::SetObs(Vector2 center, Vector2 size, bool left, bool up, boo
 
 void SpikeObstacle::SetSpikePolygon(Rect* renderRect)
 {
+	spikes.assign(4, nullptr);
 	int delta = SPIKE_WIDTH / 2;
 
 	if (spikeSide[LEFT] == true)
@@ -189,7 +208,7 @@ void SpikeObstacle::SetSpikePolygon(Rect* renderRect)
 			vertices.emplace_back(new Vector2({ startPoint.x , startPoint.y + (delta * (2 * i + 2)) }));		//모서리랑 붙어있는부분
 		}
 
-		spikes.emplace_back(new Polygon2(vertices));
+		spikes[LEFT] = new Polygon2(vertices);
 		for (Vector2* vector : vertices)
 			delete vector;
 	}
@@ -208,7 +227,7 @@ void SpikeObstacle::SetSpikePolygon(Rect* renderRect)
 			vertices.emplace_back(new Vector2({ startPoint.x , startPoint.y + (delta * (2 * i + 2)) }));		//모서리랑 붙어있는부분
 		}
 
-		spikes.emplace_back(new Polygon2(vertices));
+		spikes[RIGHT] = new Polygon2(vertices);
 		for (Vector2* vector : vertices)
 			delete vector;
 
@@ -229,7 +248,7 @@ void SpikeObstacle::SetSpikePolygon(Rect* renderRect)
 			vertices.emplace_back(new Vector2({ startPoint.x + (delta * (2 * i + 2)) , startPoint.y }));		//모서리랑 붙어있는부분
 		}
 
-		spikes.emplace_back(new Polygon2(vertices));
+		spikes[UP] = new Polygon2(vertices);
 		for (Vector2* vector : vertices)
 			delete vector;
 	}
@@ -248,7 +267,7 @@ void SpikeObstacle::SetSpikePolygon(Rect* renderRect)
 			vertices.emplace_back(new Vector2({ startPoint.x + (delta * (2 * i + 2)) , startPoint.y }));			//모서리랑 붙어있는부분
 		}
 
-		spikes.emplace_back(new Polygon2(vertices));
+		spikes[DOWN] = new Polygon2(vertices);
 		for (Vector2* vector : vertices)
 			delete vector;
 	}

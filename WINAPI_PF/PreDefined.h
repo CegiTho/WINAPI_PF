@@ -30,7 +30,7 @@
 
 #define LAURA_SIZE {100,22}
 #define LAURA_COLOR RGB(165,55,83)
-#define LAURA_THRUST 400
+#define LAURA_THRUST 430
 #define LAURA_START {1300,300}
 #define LAURA_ADD_THRUST 300
 
@@ -40,7 +40,7 @@
 #define SARAH_START {1500,300}
 
 //==========Moving=============
-#define SPEED 400
+#define SPEED 300
 #define GRAVITY 980
 
 //==========Obstacle===========
@@ -55,8 +55,7 @@
 #define BG_COLOR_1 RGB(39,25,24)
 #define BG_COLOR_2 RGB(33,51,54)
 #define BG_COLOR_3 RGB(36,37,25)
-//#define BG_COLOR_4 RGB(21,25,47)   //4-6
-#define BG_COLOR_4 RGB(60,60,35)
+#define BG_COLOR_4 RGB(34,42,45)
 #define BG_COLOR_5 RGB(34,42,45)
 
 #define SYMBOL_INTERVAL 70

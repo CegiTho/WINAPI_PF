@@ -67,14 +67,13 @@ void Clare::CreateClare(Vector2 pos)
 void Clare::Update(vector<T_Object*> obj)
 {
 	Move();
-
 	InitAgain();
+
 	Collision(obj);
 	ReturnSpawnPoint();
 
 	Jump();
 	anim->Update();
-
 
 	if (isActive == false)
 		return;
@@ -136,7 +135,6 @@ void Clare::Jump()
 	if (side[DOWN] == true)
 	{
 		this->thrust = 0;
-		//isFalling = true;
 	}
 	
 }

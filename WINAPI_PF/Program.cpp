@@ -8,6 +8,7 @@
 #include "Stage_1_1_Scene.h"
 #include "Stage_1_2_Scene.h"
 #include "Stage_1_3_Scene.h"
+#include "Stage_1_4_Scene.h"
 
 Program::Program(HWND hWindow)
 {
@@ -22,15 +23,16 @@ Program::Program(HWND hWindow)
 	SCENE->Add("Stage_1-1", new Stage_1_1_Scene("Stage_1-1"));
 	SCENE->Add("Stage_1-2", new Stage_1_2_Scene("Stage_1-2"));
 	SCENE->Add("Stage_1-3", new Stage_1_3_Scene("Stage_1-3"));
+	SCENE->Add("Stage_1-4", new Stage_1_4_Scene("Stage_1-4"));
 
 
 	SCENE->SetScene("Main Menu");
 
-	SOUND->Play("BGM",0.0f);
+	SOUND->Play("BGM",0.1f);
 }
 
 Program::~Program()
-{
+{ 
 
 }
 

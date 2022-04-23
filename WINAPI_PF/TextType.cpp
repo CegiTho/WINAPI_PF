@@ -38,12 +38,9 @@ TextType::TextType(TextCell* menu)
 
 	//key를 vector말고 map에 담아놓는거? map<string,UCHAR> tag랑 UCHAR
 	for (int i = 0; i < menu->GetTags().size(); i++)
-		key[menu->GetTags()[i]] = ' ';
+		key[menu->GetTags()[i]] = 0xfe;
 
-	key["Jump"] = KEYBOARD->GetJumpKey();
-	key["Next Character"] = KEYBOARD->GetNextCharKey();
-	key["Prev Character"] = KEYBOARD->GetPrevCharKey();
-
+	
 }
 
 TextType::~TextType()
@@ -53,13 +50,14 @@ TextType::~TextType()
 
 void TextType::Update()
 {
-
 	Move();
 	if(menu->GetActive() ==true)
 		Select();
 
 	if (menu->GetActive() == false && menu->GetMove() == false)
 		Init();
+
+	KeyUpdate();
 }
 
 void TextType::Render(HDC hdc)
@@ -79,12 +77,14 @@ void TextType::Render(HDC hdc)
 	char k = key[now];
 	if (k == VK_SPACE)//그냥 두면 공백으로 나와서 입력을 시각적으로 확인할 방법이 없음
 		temp = "SPACE";
+	else if (k == 0x7C)
+		temp = "N/A";
 	else
 		temp.insert(0,1,k);
 
 	SetTextAlign(hdc, TA_LEFT);
 	SetTextAlign(hdc, TA_TOP);
-	TextOutA(hdc, menu->GetRect()->Left() - 500, menu->GetYLevel()[menuIndex] - 25,
+	TextOutA(hdc, menu->GetRect()->Left() - 600, menu->GetYLevel()[menuIndex] - 25,
 		(now + " : " + temp).c_str(),(now + " : " +temp).size());
 
 	for (Triangle* tri : deco)
@@ -114,24 +114,12 @@ void TextType::Select()
 		string k(1,temp);
 
 		if (now == "Jump")
-		{
 			KEYBOARD->SetJumpKey(temp);
-			//VK_UP은 Vertical Move때문에 안넣었음.
-			if (KEYBOARD->GetJumpKey() == VK_SPACE)
-				key[now] = VK_SPACE;
-			else
-				key[now] = temp;
-		}
 		else if (now == "Next Character")
-		{
-			KEYBOARD->SetNextKey(temp);
-			key[now] = temp;
-		}
+			KEYBOARD->SetNextKey(temp); 
 		else if (now == "Prev Character")
-		{
 			KEYBOARD->SetPrevKey(temp);
-			key[now] = temp;
-		}
+	
 		KEYBOARD->SetConfirm(false);
 	}
 }
@@ -191,4 +179,11 @@ void TextType::Init()
 
 	deco[0]->SetRender(false);
 	deco[1]->SetRender(true);
+}
+
+void TextType::KeyUpdate()
+{
+	key["Jump"] = KEYBOARD->GetJumpKey();
+	key["Next Character"] = KEYBOARD->GetNextCharKey();
+	key["Prev Character"] = KEYBOARD->GetPrevCharKey();
 }
